@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import "./App.css";
 import logo from "./logo.svg";
 import Router from "./Router";
@@ -6,10 +7,10 @@ function App() {
   return (
     <div className="bg-slate-200 min-h-screen relative">
       <header className="bg-violet fixed flex h-12 items-stretch px-4 space-x-4 text-white w-full">
-        <div className="align-center flex items-center">
+        <Link className="align-center flex items-center" to="/">
           <img className="h-8 inline-block mr-2 w-8" src={logo} alt="Logo" />
           <div>Events</div>
-        </div>
+        </Link>
         <input
           className="flex-grow flex-shrink hidden my-2 px-2 rounded-lg bg-white bg-opacity-70 sm:block"
           type="text"

@@ -5,13 +5,16 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import { DummyEvent, EventGroup } from "./Event";
 
 const EventPage = () => {
+  const params = useParams();
+
   const event = {
-    id: 3,
+    id: params.id,
     title: "E-Learning Stammtisch",
-    organiser: "Hochschuldidaktische Arbeitsstelle",
+    organiser: { id: 2, name: "Hochschuldidaktische Arbeitsstelle" },
     date: "14. September, 15:00 Uhr",
     venue: "Online Event",
     desc: `
@@ -27,7 +30,9 @@ const EventPage = () => {
     <>
       <div className="flex">
         <div className="bg-neutral-200 flex flex-col gap-2 h-72 p-8 w-72">
-          <div>{event.organiser}</div>
+          <Link to={`/organiser/${event.organiser.id}`}>
+            {event.organiser.name}
+          </Link>
           <div>{event.location}</div>
           <div>{event.date}</div>
           <div className="flex gap-4 justify-end">
@@ -44,9 +49,12 @@ const EventPage = () => {
           <button className="bg-violet p-2 rounded-xl text-white">
             Anmelden
           </button>
-          <button className="bg-slate-400 p-2 rounded-xl">
+          <Link
+            className="bg-slate-400 p-2 rounded-xl text-center"
+            to={`/organiser/${event.organiser.id}`}
+          >
             Veranstalter kontaktieren
-          </button>
+          </Link>
         </div>
         <img className="flex-grow h-72 object-cover" src={event.image} alt="" />
       </div>
