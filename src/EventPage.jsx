@@ -37,36 +37,41 @@ const EventPage = () => {
       >
         <div
           className="mx-auto mt-16 bg-white rounded-xl overflow-hidden"
-          style={{ width: "72rem" }}
+          style={{ width: "60rem" }}
           onClick={(e) => e.stopPropagation()}
         >
           <div
-            className="grid grid-cols-6 items-stretch justify-items-stretch"
-            style={{ gridTemplateRows: "24rem max-content" }}
+            className="grid grid-cols-5 items-stretch justify-items-stretch"
+            style={{ gridTemplateRows: "16rem max-content" }}
           >
-            <div className="bg-neutral-200 col-span-3 p-10">
-              <div className="font-semibold text-lg">{event.title}</div>
+            <img className="col-span-2 object-cover" src={event.image} alt="" />
+            <div className="bg-neutral-200 col-span-3 p-10 text-right">
+              <div className="font-medium text-2xl">{event.title}</div>
               <Link
-                className="hover:underline text-neutral-500"
+                className="block hover:underline mb-4 text-neutral-500"
                 to={`/organiser/${event.organiser.id}`}
               >
                 {event.organiser.name}
               </Link>
-              <div className="mb-4">{event.location}</div>
+              <div className="">S2|03&nbsp;123</div>
               <div>{event.date}</div>
               <div className="flex-grow" />
-              <button className="bg-violet p-2 rounded-xl text-white">
-                Anmelden
-              </button>
-              <div className="flex gap-4 justify-evenly mt-2">
-                <button onClick={() => setFav(!fav)}>
+              <div className="flex gap-10 justify-end mt-6">
+                <div />
+                <button
+                  className={fav ? "text-red-700" : "text-neutral-600"}
+                  onClick={() => setFav(!fav)}
+                >
                   <FontAwesomeIcon
                     className="h-6"
                     icon={fav ? faSolidHeart : faRegularHeart}
                   />
                 </button>
-                <button>
+                <button className="text-neutral-600">
                   <FontAwesomeIcon className="h-6" icon={faShareFromSquare} />
+                </button>
+                <button className="bg-violet p-2 px-8 rounded-xl text-white">
+                  Anmelden
                 </button>
               </div>
               {/* <Link
@@ -76,13 +81,17 @@ const EventPage = () => {
                 Veranstalter kontaktieren
               </Link> */}
             </div>
-            <img className="col-span-3 object-cover" src={event.image} alt="" />
-            <div className="col-span-4 p-4 pl-10">
+          </div>
+          <div
+            className="gap-10 grid grid-cols-5 items-stretch justify-items-stretch p-10 pb-0"
+            style={{ gridTemplateRows: "20.5rem max-content" }}
+          >
+            <div className="col-span-3">
               <p>{event.desc}</p>
             </div>
             <img
               alt={event.venue}
-              className="col-span-2 h-96 object-cover"
+              className="col-span-2 object-cover"
               src="https://tile.openstreetmap.org/16/34344/22261.png"
             />
             {/* <iframe
@@ -96,6 +105,15 @@ const EventPage = () => {
               <a id="largeMapLink" target="_blank" href="https://www.bing.com/maps?cp=49.999795027127405~4022.999725341797&amp;sty=r&amp;lvl=11&amp;FORM=MBEDLD">View Larger Map</a> &nbsp; | &nbsp;
               <a id="dirMapLink" target="_blank" href="https://www.bing.com/maps/directions?cp=49.999795027127405~4022.999725341797&amp;sty=r&amp;lvl=11&amp;rtp=~pos.49.999795027127405_4022.999725341797____&amp;FORM=MBEDLD">Get Directions</a>
             </div> */}
+            <div
+              className="bg-neutral-200 col-span-2 gap-2 grid p-4 rounded-xl"
+              style={{ gridTemplateColumns: "1fr 2fr" }}
+            >
+              <div className="text-neutral-600">Adresse:</div>
+              <div>S2|03&nbsp;123</div>
+              <div className="text-neutral-600">Preis:</div>
+              <div>Kostenlos</div>
+            </div>
           </div>
           <div className="pb-10">
             <EventGroup title="Weitere Events von diesem Veranstalter">

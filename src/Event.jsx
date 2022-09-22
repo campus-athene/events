@@ -75,23 +75,34 @@ export const EventGroup = ({ className, children, title }) => {
 const Event = ({ id, title, organiser, date, image }) => {
   return (
     <Link
-      className="bg-slate-200 h-52 rounded-xl text-sm w-48 transition-transform"
+      className="bg-slate-200 block h-56 rounded-xl text-sm w-48 transition-transform"
       to={`/event/${id}`}
     >
       <img
-        className="h-32 object-cover rounded-t-xl w-48 mb-1.5"
+        className="h-32 object-cover rounded-t-xl w-48 mb-1"
         src={image}
         alt=""
       />
-      <div className="overflow-hidden px-2 pt-1 text-ellipsis whitespace-nowrap font-medium">
+      <div className="overflow-hidden px-3 pt-1 text-ellipsis whitespace-nowrap font-medium">
         {title}
       </div>
-      <div className="overflow-hidden px-2 pt-1 text-ellipsis whitespace-nowrap text-neutral-500 text-xs">
+      <Link
+        className="block overflow-hidden px-3 pt-1 text-ellipsis whitespace-nowrap text-neutral-500 text-xs hover:underline"
+        onClick={(e) => e.stopPropagation()}
+        to="/organiser/1"
+      >
         {organiser}
-      </div>
-      <div className="overflow-hidden px-2 pt-1 text-ellipsis whitespace-nowrap text-xs">
+      </Link>
+      <div className="overflow-hidden px-3 pt-1 text-ellipsis whitespace-nowrap text-xs">
         {date}
       </div>
+      <a
+        className="block overflow-hidden px-3 pt-1 text-ellipsis whitespace-nowrap text-xs hover:underline"
+        href="https://maps.google.de"
+        onClick={(e) => e.stopPropagation()}
+      >
+        S2|03&nbsp;123
+      </a>
     </Link>
   );
 };
@@ -99,7 +110,7 @@ const Event = ({ id, title, organiser, date, image }) => {
 export const Highlight = ({ id, title, organiser, date, image }) => {
   return (
     <Link
-      className="bg-slate-400 rounded-xl text-sm flex flex-shrink-0"
+      className="bg-slate-200 rounded-xl text-sm flex flex-shrink-0"
       to={`/event/${id}`}
       style={{ width: "33rem" }}
     >
@@ -110,15 +121,26 @@ export const Highlight = ({ id, title, organiser, date, image }) => {
         alt=""
       />
       <div className="flex-grow flex-shrink">
-        <div className="overflow-hidden px-2 pt-1 text-ellipsis whitespace-nowrap text-xl">
+        <div className="overflow-hidden px-4 pt-3 text-ellipsis whitespace-nowrap text-xl font-medium">
           {title}
         </div>
-        <div className="overflow-hidden px-2 pt-1 text-ellipsis whitespace-nowrap text-lg text-neutral-800">
+        <Link
+          className="block overflow-hidden px-4 pt-1 text-ellipsis whitespace-nowrap text-neutral-500 text-lg hover:underline"
+          onClick={(e) => e.stopPropagation()}
+          to="/organiser/1"
+        >
           {organiser}
-        </div>
-        <div className="overflow-hidden px-2 pt-1 text-ellipsis whitespace-nowrap">
+        </Link>
+        <div className="overflow-hidden px-4 pt-1 text-ellipsis whitespace-nowrap">
           {date}
         </div>
+        <a
+          className="block overflow-hidden px-4 pt-1 text-ellipsis whitespace-nowrap hover:underline"
+          href="https://maps.google.de"
+          onClick={(e) => e.stopPropagation()}
+        >
+          S2|03&nbsp;123
+        </a>
       </div>
     </Link>
   );
