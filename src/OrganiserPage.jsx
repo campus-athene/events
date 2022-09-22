@@ -23,9 +23,9 @@ const OrganiserPage = () => {
   return (
     <>
       <img alt="" src={organiser.headerImg} />
-      <div className="flex">
-        <div className="flex-grow mr-4 mt-4">
-          <h1 className="mb-2 text-xl">{organiser.name}</h1>
+      <div className="flex px-10">
+        <div className="flex-grow mr-4 mt-10">
+          <h1 className="mb-2 font-medium text-2xl">{organiser.name}</h1>
           <p>{organiser.desc}</p>
         </div>
         <div className="flex flex-col flex-shrink-0">

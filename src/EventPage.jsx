@@ -5,11 +5,13 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { DummyEvent, EventGroup } from "./Event";
+import Home from "./Home";
 
 const EventPage = () => {
   const params = useParams();
+  const navigate = useNavigate();
 
   const event = {
     id: params.id,
@@ -28,58 +30,88 @@ const EventPage = () => {
 
   return (
     <>
-      <div className="flex">
-        <div className="bg-neutral-200 flex flex-col gap-2 h-72 p-8 w-72">
-          <Link to={`/organiser/${event.organiser.id}`}>
-            {event.organiser.name}
-          </Link>
-          <div>{event.location}</div>
-          <div>{event.date}</div>
-          <div className="flex gap-4 justify-end">
-            <button onClick={() => setFav(!fav)}>
-              <FontAwesomeIcon
-                className="h-6"
-                icon={fav ? faSolidHeart : faRegularHeart}
-              />
-            </button>
-            <button>
-              <FontAwesomeIcon className="h-6" icon={faShareFromSquare} />
-            </button>
-          </div>
-          <button className="bg-violet p-2 rounded-xl text-white">
-            Anmelden
-          </button>
-          <Link
-            className="bg-slate-400 p-2 rounded-xl text-center"
-            to={`/organiser/${event.organiser.id}`}
+      <Home />
+      <div
+        className="absolute top-0 left-0 right-0 bottom-0 bg-black bg-opacity-50 backdrop-blur-sm"
+        onClick={() => navigate(-1)}
+      >
+        <div
+          className="mx-auto mt-16 bg-white rounded-xl overflow-hidden"
+          style={{ width: "72rem" }}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div
+            className="grid grid-cols-6 items-stretch justify-items-stretch"
+            style={{ gridTemplateRows: "24rem max-content" }}
           >
-            Veranstalter kontaktieren
-          </Link>
+            <div className="bg-neutral-200 col-span-3 p-10">
+              <div className="font-semibold text-lg">{event.title}</div>
+              <Link
+                className="hover:underline text-neutral-500"
+                to={`/organiser/${event.organiser.id}`}
+              >
+                {event.organiser.name}
+              </Link>
+              <div className="mb-4">{event.location}</div>
+              <div>{event.date}</div>
+              <div className="flex-grow" />
+              <button className="bg-violet p-2 rounded-xl text-white">
+                Anmelden
+              </button>
+              <div className="flex gap-4 justify-evenly mt-2">
+                <button onClick={() => setFav(!fav)}>
+                  <FontAwesomeIcon
+                    className="h-6"
+                    icon={fav ? faSolidHeart : faRegularHeart}
+                  />
+                </button>
+                <button>
+                  <FontAwesomeIcon className="h-6" icon={faShareFromSquare} />
+                </button>
+              </div>
+              {/* <Link
+                className="bg-slate-400 p-2 rounded-xl text-center"
+                to={`/organiser/${event.organiser.id}`}
+              >
+                Veranstalter kontaktieren
+              </Link> */}
+            </div>
+            <img className="col-span-3 object-cover" src={event.image} alt="" />
+            <div className="col-span-4 p-4 pl-10">
+              <p>{event.desc}</p>
+            </div>
+            <img
+              alt={event.venue}
+              className="col-span-2 h-96 object-cover"
+              src="https://tile.openstreetmap.org/16/34344/22261.png"
+            />
+            {/* <iframe
+              className="col-span-2 h-96 bg-slate-400"
+              title="Veranstaltungsort"
+              frameBorder="0"
+              src="https://www.bing.com/maps/embed?h=400&amp;w=500&amp;cp=49.999795027127405~4022.999725341797&amp;lvl=11&amp;typ=d&amp;sty=r&amp;src=SHELL&amp;FORM=MBEDV8"
+              scrolling="no"
+            ></iframe> */}
+            {/* <div style="white-space: nowrap; text-align: center; width: 500px; padding: 6px 0;">
+              <a id="largeMapLink" target="_blank" href="https://www.bing.com/maps?cp=49.999795027127405~4022.999725341797&amp;sty=r&amp;lvl=11&amp;FORM=MBEDLD">View Larger Map</a> &nbsp; | &nbsp;
+              <a id="dirMapLink" target="_blank" href="https://www.bing.com/maps/directions?cp=49.999795027127405~4022.999725341797&amp;sty=r&amp;lvl=11&amp;rtp=~pos.49.999795027127405_4022.999725341797____&amp;FORM=MBEDLD">Get Directions</a>
+            </div> */}
+          </div>
+          <div className="pb-10">
+            <EventGroup title="Weitere Events von diesem Veranstalter">
+              <DummyEvent />
+              <DummyEvent />
+              <DummyEvent />
+            </EventGroup>
+            <EventGroup title="Ähnliche Events, die Dich interessieren könnten">
+              <DummyEvent />
+              <DummyEvent />
+              <DummyEvent />
+              <DummyEvent />
+            </EventGroup>
+          </div>
         </div>
-        <img className="flex-grow h-72 object-cover" src={event.image} alt="" />
       </div>
-      <div className="flex">
-        <div className="mr-4 mt-4">
-          <h1 className="mb-2 text-xl">{event.title}</h1>
-          <p>{event.desc}</p>
-        </div>
-        <img
-          alt={event.venue}
-          className="object-cover"
-          src="https://tile.openstreetmap.org/16/34344/22261.png"
-        />
-      </div>
-      <EventGroup title="Weitere Events von diesem Veranstalter">
-        <DummyEvent />
-        <DummyEvent />
-        <DummyEvent />
-      </EventGroup>
-      <EventGroup title="Ähnliche Events, die Dich interessieren könnten">
-        <DummyEvent />
-        <DummyEvent />
-        <DummyEvent />
-        <DummyEvent />
-      </EventGroup>
     </>
   );
 };
