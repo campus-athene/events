@@ -149,7 +149,7 @@ export const Highlight = ({
         src={image}
         alt=""
       />
-      <div className="flex-grow flex-shrink">
+      <div className="flex-grow min-w-0">
         <div className="overflow-hidden px-4 pt-3 text-ellipsis whitespace-nowrap text-xl font-medium">
           {title}
         </div>

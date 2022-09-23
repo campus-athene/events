@@ -79,6 +79,25 @@ const dummyData = {
       image:
         "https://2.bp.blogspot.com/-rEIg1QmTeOw/V4xJ9d6PxuI/AAAAAAAADvE/hVsSJEJPemQarZDRNXE_j20uhXvo-TkkACLcB/w1200-h630-p-k-no-nu/-882475_w1020h450c1cx509cy249.jpg",
     })),
+    {
+      id: 5,
+      title: "Start-up & Innovation Day 2022",
+      organiser: {
+        id: 5,
+        name: "HIGHEST Innovations- & Gründungszentrum ",
+      },
+      date: "20. Oktober 2022",
+      venue: "darmstadtium",
+      price: "Kostenlos",
+      desc: `
+        Endlich wieder live! Am 20. Oktober 2022 öffnen sich die Türen des darmstadiums zum 6. Start-up & Innovation Day der TU Darmstadt. Hier treffen Founderspirit und Innovationsgeist auf Wirtschaft, Wissenschaft und Politik.
+        Auf der Start-up Messe erwarten Sie einen ganzen Tag lang Innovationsprojekte und (Tech)Start-ups von ersten Ideen oder frühen Innovationen bis hin zu wissens-und technologiebasierten Gründungen, die bereits einen erfolgreichen Markteintritt geschafft haben. Auch sind zahlreiche Netzwerkpartner und Gründungsunterstützende Organisationen aus der Gründerszene des Rhein-Main-Gebiets mit Ständen vor Ort und zeigen die enorme Innovationskraft der Region.
+        Begleitet wird die Messe von einem spannenden Rahmenprogramm, u.a. mit Tom Plümmer (Co-founder, Wingcopter), Bettine Schmitz (auxxo, Investorin des Jahres 2022) und Simon Müller (watxx, Viessmann Group), einer Pitch Corner und zahlreichen Möglichkeiten zum Austausch und Netzwerken – z.B. auf der HIGHEST xchange area.
+        Lassen Sie sich am #Innoday2022 vom Erfindergeist und der lebendigen (Tech)Start-up-Szene inspirieren, knüpfen Sie wertvolle Kontakte und bahnen neue Kooperationen an. Sichern Sie sich JETZT Ihr kostenfreies Ticket!
+        `,
+      image:
+        "https://www.tu-darmstadt.de/media/daa_responsives_design/04_wissenstransfer_medien/highest/veranstaltungen_8/startup___innovation_da/bilder_26/Header-Innoday_0x570.jpg",
+    },
   ],
   organisers: [
     {
@@ -124,6 +143,17 @@ const dummyData = {
         "https://www.osp-rheinland.nrw/wp-content/uploads/2018/12/Saebelfechten.jpg",
       logo: "https://image.shutterstock.com/image-vector/classic-sport-premium-club-black-600w-411900751.jpg",
     },
+    {
+      id: 5,
+      name: "HIGHEST Innovations- & Gründungszentrum",
+      desc: `
+        Ob es um eine Erfindungsmeldung oder eine Unternehmensgründung geht. Bei Interesse an der Zusammenarbeit mit Start-ups oder der Entwicklung von Patenten, das Team von HIGHEST hilft gerne weiter. Wir unterstützen Wissenschaftlerinnen und Wissenschaftler, Studierende und Unternehmen, wenn es um den Transfer von Ideen und Know-how in Wirtschaft und Gesellschaft geht.
+        Unsere Beratungsteams gehen dabei individuell auf Bedürfnisse und Fragen ein, unterstützen Euch aus Ideen Produkte zu generieren und begleiten Euch auf dem Weg zum eigenen Start-up. Diese Leistungen sind kostenfrei und selbstverständlich streng vertraulich. Auch ohne eine konkret ausgearbeitete Idee für ein Gründungsvorhaben kann man sich an HIGHEST wenden und beraten lassen.
+        `,
+      headerImg:
+        "https://www.tu-darmstadt.de/media/daa_responsives_design/04_wissenstransfer_medien/highest/Header_Startseiten_01.png",
+      logo: "https://www.tu-darmstadt.de/media/daa_responsives_design/04_wissenstransfer_medien/highest/HIGHEST_200827_gross_HIGHEST.jpg",
+    },
   ],
 };
 
@@ -133,6 +163,7 @@ export const event1 = getEventById(1);
 export const event2 = getEventById(2);
 export const event3 = getEventById(33);
 export const event4 = getEventById(40);
+export const event5 = getEventById(5);
 
 export const getOrganiserById = (id) =>
   dummyData.organisers.filter((o) => o.id === id)[0];

@@ -7,7 +7,7 @@ import {
   HeaderGroup,
   Highlight as HighlightTemplate,
 } from "./Components";
-import { event1, event2, event3, event4 } from "./dummyData";
+import { event1, event2, event3, event4, event5 } from "./dummyData";
 import { EventModal } from "./EventPage";
 
 const Home = () => {
@@ -57,8 +57,8 @@ const Home = () => {
         />
       </Link>
       <EventGroup title="Highlights">
+        <Highlight event={event5} />
         <Highlight event={event1} />
-        <Highlight event={event2} />
       </EventGroup>
       <Header className="mx-10">Empfehlungen für Dich</Header>
       <div className="mx-10 text-sm">Was interessiert Dich?</div>
@@ -73,6 +73,7 @@ const Home = () => {
       <EventGroup>
         <Event event={event4} />
         <Event event={event2} />
+        <Event event={event5} />
       </EventGroup>
       <HeaderGroup>
         <Header default value="today">
@@ -105,10 +106,12 @@ const Home = () => {
       <EventGroup title="Workshops">
         <Event event={event2} />
         <Event event={event4} />
+        <Event event={event5} />
         <Event event={event3} />
         <Event event={event1} />
         <Event event={event2} />
         <Event event={event4} />
+        <Event event={event5} />
         <Event event={event3} />
         <Event event={event1} />
       </EventGroup>
@@ -121,21 +124,26 @@ const Home = () => {
         <Event event={event4} />
         <Event event={event3} />
         <Event event={event2} />
+        <Event event={event5} />
         <Event event={event1} />
         <Event event={event4} />
         <Event event={event3} />
         <Event event={event2} />
+        <Event event={event5} />
         <Event event={event1} />
         <Event event={event4} />
         <Event event={event3} />
         <Event event={event2} />
+        <Event event={event5} />
         <Event event={event1} />
         <Event event={event4} />
         <Event event={event3} />
         <Event event={event2} />
+        <Event event={event5} />
         <Event event={event1} />
       </EventGroup>
       <EventGroup title="Gastvorträge">
+        <Event event={event5} />
         <Event event={event3} />
         <Event event={event1} />
         <Event event={event2} />
