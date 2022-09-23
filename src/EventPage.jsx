@@ -30,7 +30,11 @@ const EventDetails = ({ event, EventTemlate }) => {
         className="grid grid-cols-5 items-stretch justify-items-stretch"
         style={{ gridTemplateRows: "16rem max-content" }}
       >
-        <img className="col-span-2 object-cover" src={event.image} alt="" />
+        <img
+          className="col-span-2 object-cover row-span-2"
+          src={event.image}
+          alt=""
+        />
         <div className="bg-neutral-200 col-span-3 p-10 text-right">
           <div className="font-medium text-2xl">{event.title}</div>
           <Link
@@ -92,7 +96,7 @@ const EventDetails = ({ event, EventTemlate }) => {
               <a id="dirMapLink" target="_blank" href="https://www.bing.com/maps/directions?cp=49.999795027127405~4022.999725341797&amp;sty=r&amp;lvl=11&amp;rtp=~pos.49.999795027127405_4022.999725341797____&amp;FORM=MBEDLD">Get Directions</a>
             </div> */}
         <div
-          className="bg-neutral-200 col-span-2 gap-2 grid p-4 rounded-xl"
+          className="bg-neutral-200 col-start-4 col-span-2 gap-2 grid p-4 rounded-xl"
           style={{ gridTemplateColumns: "1fr 2fr" }}
         >
           <div className="text-neutral-600">Adresse:</div>

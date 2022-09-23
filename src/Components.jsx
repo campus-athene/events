@@ -1,12 +1,14 @@
 import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useState } from "react";
 import { createContext, useContext, useRef } from "react";
 import { Link } from "react-router-dom";
 
 const HeaderGroupContext = createContext(null);
 export const HeaderGroup = ({ children, defaultValue }) => {
+  const [value, setValue] = useState(defaultValue || "");
   return (
-    <HeaderGroupContext.Provider value={defaultValue || ""}>
+    <HeaderGroupContext.Provider value={{ value, setValue }}>
       <div className="flex gap-2 overflow-x-auto px-10 whitespace-nowrap">
         {children}
       </div>
@@ -19,10 +21,17 @@ export const Header = ({ children, className, value, ...props }) => {
   if (context === null)
     return <h2 className={"pt-8 text-lg " + className}>{children}</h2>;
 
-  return context === value || (context === "" && props.default) ? (
-    <button className={"pt-8 text-lg " + className}>{children}</button>
-  ) : (
-    <button className={"pt-8 text-lg text-slate-400 " + className}>
+  return (
+    <button
+      className={
+        "pt-8 text-lg transition-colors " +
+        (context.value === value || (context.value === "" && props.default)
+          ? ""
+          : "text-slate-400 ") +
+        className
+      }
+      onClick={() => context.setValue(value)}
+    >
       {children}
     </button>
   );
@@ -84,7 +93,7 @@ export const Event = ({
 }) => {
   return (
     <Link
-      className="bg-slate-200 block h-56 rounded-xl text-sm w-48 transition-transform"
+      className="bg-slate-200 block flex-shrink-0 h-56 rounded-xl text-sm w-48"
       onClick={onClick}
       to={`/event/${id}`}
     >

@@ -19,15 +19,26 @@ const OrganiserPage = () => {
 
   return (
     <>
-      <img alt="" src={organiser.headerImg} />
-      <div className="flex px-10">
-        <div className="flex-grow mr-4 mt-10">
-          <h1 className="mb-2 font-medium text-2xl">{organiser.name}</h1>
-          <p>{organiser.desc}</p>
+      <img
+        alt=""
+        className="max-h-96 object-cover w-full"
+        src={organiser.headerImg}
+      />
+      <h1 className="font-medium m-10 mb-2 text-2xl">{organiser.name}</h1>
+      <div className="flex px-10 gap-8">
+        <div className="flex-grow">
+          {organiser.desc
+            .split("\n")
+            .filter((d) => d)
+            .map((d, i) => (
+              <p className="mb-2" key={i}>
+                {d}{" "}
+              </p>
+            ))}
         </div>
         <div className="flex flex-col flex-shrink-0">
           <img alt="" className="h-72 w-72" src={organiser.logo} />
-          <div className="flex gap-2 justify-center text-2xl">
+          <div className="flex gap-2 justify-center mt-8 text-2xl">
             <FontAwesomeIcon icon={faGlobe} />
             <FontAwesomeIcon icon={faFacebookF} />
             <FontAwesomeIcon icon={faInstagram} />

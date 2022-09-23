@@ -15,19 +15,14 @@ const Home = () => {
 
   const Interest = ({ children, selected }) => {
     const [s, setS] = useState(selected);
-    return s ? (
+    return (
       <button
-        className="bg-amber-400 px-3 py-0.5 rounded-full"
+        className={
+          "px-3 py-0.5 rounded-full transition-colors " +
+          (s ? "bg-amber-400" : "bg-slate-200")
+        }
         type="checkbox"
-        onClick={() => setS(false)}
-      >
-        {children}
-      </button>
-    ) : (
-      <button
-        className="bg-slate-200 px-3 py-0.5 rounded-full"
-        type="checkbox"
-        onClick={() => setS(true)}
+        onClick={() => setS(!s)}
       >
         {children}
       </button>
