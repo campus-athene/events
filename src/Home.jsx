@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import {
-  DummyEvent,
-  DummyHighlight,
+  Event,
   EventGroup,
   Header,
   HeaderGroup,
-} from "./Event";
+  Highlight,
+} from "./Components";
+import { event1, event2, event3, event4 } from "./dummyData";
 
 const Home = () => {
   const Interest = ({ children, selected }) => {
@@ -39,8 +40,8 @@ const Home = () => {
         />
       </Link>
       <EventGroup title="Highlights">
-        <DummyHighlight />
-        <DummyHighlight />
+        <Highlight event={event1} />
+        <Highlight event={event2} />
       </EventGroup>
       <Header className="mx-10">Empfehlungen für Dich</Header>
       <div className="mx-10 text-sm">Was interessiert Dich?</div>
@@ -53,8 +54,8 @@ const Home = () => {
         <Interest>Logistik</Interest>
       </div>
       <EventGroup>
-        <DummyEvent />
-        <DummyEvent />
+        <Event event={event4} />
+        <Event event={event2} />
       </EventGroup>
       <HeaderGroup>
         <Header default value="today">
@@ -65,9 +66,9 @@ const Home = () => {
         <Header value="nextweek">Nächste Woche</Header>
       </HeaderGroup>
       <EventGroup>
-        <DummyEvent />
-        <DummyEvent />
-        <DummyEvent />
+        <Event event={event3} />
+        <Event event={event1} />
+        <Event event={event4} />
       </EventGroup>
       <div className="bg-violet mt-8 py-8 px-10 text-white">
         <div className="mb-2 text-lg">Verpasse keine weiteren Events mehr!</div>
@@ -85,41 +86,42 @@ const Home = () => {
         </button>
       </div>
       <EventGroup title="Workshops">
-        <DummyEvent />
-        <DummyEvent />
-        <DummyEvent />
-        <DummyEvent />
-        <DummyEvent />
-        <DummyEvent />
-        <DummyEvent />
-        <DummyEvent />
+        <Event event={event2} />
+        <Event event={event4} />
+        <Event event={event3} />
+        <Event event={event1} />
+        <Event event={event2} />
+        <Event event={event4} />
+        <Event event={event3} />
+        <Event event={event1} />
       </EventGroup>
       <EventGroup title="Sport">
-        <DummyEvent />
-        <DummyEvent />
-        <DummyEvent />
+        <Event event={event1} />
+        <Event event={event3} />
+        <Event event={event4} />
       </EventGroup>
       <EventGroup title="Hochschulgruppen">
-        <DummyEvent />
-        <DummyEvent />
-        <DummyEvent />
-        <DummyEvent />
-        <DummyEvent />
-        <DummyEvent />
-        <DummyEvent />
-        <DummyEvent />
-        <DummyEvent />
-        <DummyEvent />
-        <DummyEvent />
-        <DummyEvent />
-        <DummyEvent />
-        <DummyEvent />
-        <DummyEvent />
+        <Event event={event4} />
+        <Event event={event3} />
+        <Event event={event2} />
+        <Event event={event1} />
+        <Event event={event4} />
+        <Event event={event3} />
+        <Event event={event2} />
+        <Event event={event1} />
+        <Event event={event4} />
+        <Event event={event3} />
+        <Event event={event2} />
+        <Event event={event1} />
+        <Event event={event4} />
+        <Event event={event3} />
+        <Event event={event2} />
+        <Event event={event1} />
       </EventGroup>
       <EventGroup title="Gastvorträge">
-        <DummyEvent />
-        <DummyEvent />
-        <DummyEvent />
+        <Event event={event3} />
+        <Event event={event1} />
+        <Event event={event2} />
       </EventGroup>
     </>
   );

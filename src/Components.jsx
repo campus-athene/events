@@ -72,7 +72,15 @@ export const EventGroup = ({ className, children, title }) => {
   );
 };
 
-const Event = ({ id, title, organiser, date, image }) => {
+export const Event = ({
+  event: {
+    id,
+    title,
+    organiser: { id: oId, name },
+    date,
+    image,
+  },
+}) => {
   return (
     <Link
       className="bg-slate-200 block h-56 rounded-xl text-sm w-48 transition-transform"
@@ -89,9 +97,9 @@ const Event = ({ id, title, organiser, date, image }) => {
       <Link
         className="block overflow-hidden px-3 pt-1 text-ellipsis whitespace-nowrap text-neutral-500 text-xs hover:underline"
         onClick={(e) => e.stopPropagation()}
-        to="/organiser/1"
+        to={`/organiser/${oId}`}
       >
-        {organiser}
+        {name}
       </Link>
       <div className="overflow-hidden px-3 pt-1 text-ellipsis whitespace-nowrap text-xs">
         {date}
@@ -107,7 +115,15 @@ const Event = ({ id, title, organiser, date, image }) => {
   );
 };
 
-export const Highlight = ({ id, title, organiser, date, image }) => {
+export const Highlight = ({
+  event: {
+    id,
+    title,
+    organiser: { id: oId, name },
+    date,
+    image,
+  },
+}) => {
   return (
     <Link
       className="bg-slate-200 rounded-xl text-sm flex flex-shrink-0"
@@ -127,9 +143,9 @@ export const Highlight = ({ id, title, organiser, date, image }) => {
         <Link
           className="block overflow-hidden px-4 pt-1 text-ellipsis whitespace-nowrap text-neutral-500 text-lg hover:underline"
           onClick={(e) => e.stopPropagation()}
-          to="/organiser/1"
+          to={`/organiser/${oId}`}
         >
-          {organiser}
+          {name}
         </Link>
         <div className="overflow-hidden px-4 pt-1 text-ellipsis whitespace-nowrap">
           {date}
@@ -145,28 +161,3 @@ export const Highlight = ({ id, title, organiser, date, image }) => {
     </Link>
   );
 };
-
-export const DummyEvent = () => (
-  <Event
-    id={1}
-    title={"E-Learning Stammtisch"}
-    organiser={"Hochschuldidaktische Arbeitsstelle"}
-    date={"  14. Sept., 15:00 Uhr"}
-    image={
-      "https://www.hda.tu-darmstadt.de/media/hda/zz_hda_medienarchiv/img/news_5/elearning__Stammtisch_Square_web_870x0.jpg"
-    }
-  />
-);
-
-export const DummyHighlight = () => (
-  <Highlight
-    id={1}
-    title={"E-Learning Stammtisch"}
-    organiser={"Hochschuldidaktische Arbeitsstelle"}
-    date={"  14. Sept., 15:00 Uhr"}
-    image={
-      "https://www.hda.tu-darmstadt.de/media/hda/zz_hda_medienarchiv/img/news_5/elearning__Stammtisch_Square_web_870x0.jpg"
-    }
-  />
-);
-export default Event;

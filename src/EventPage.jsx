@@ -6,27 +6,27 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { DummyEvent, EventGroup } from "./Event";
+import { Event, EventGroup } from "./Components";
+import dummyData, {
+  event1,
+  event2,
+  event3,
+  event4,
+  getEventById,
+} from "./dummyData";
 import Home from "./Home";
 
 const EventPage = () => {
   const params = useParams();
   const navigate = useNavigate();
 
-  const event = {
-    id: params.id,
-    title: "E-Learning Stammtisch",
-    organiser: { id: 2, name: "Hochschuldidaktische Arbeitsstelle" },
-    date: "14. September, 15:00 Uhr",
-    venue: "Online Event",
-    desc: `
-    In hybriden Lehrsettings nimmt ein Teil der Studierenden in Präsenz vor Ort an der Universität, der andere Teil der Studierenden online (z.B. von zu Hause) an der jeweiligen Lehrveranstaltung teil. Je nach Charakter der Lehrveranstaltung sind unterschiedliche Szenarien hierbei geeignet. Die Online-Teilnahme kann synchron oder asynchron stattfinden. Online- und Präsenz-Teilnahme sind gegebenenfalls im Wechsel organisiert. Die Durchführung von hybrider Lehre stellt somit vielfältige didaktische und technische Herausforderungen an Lehrende und Studierende, bietet aber gleichzeitig neue Möglichkeiten und flexible Zugänge.
-    Im Rahmen dieses Stammtisches berichtet Prof. Dr. Andy Schürr aus dem Fachbereich Elektro- und Informationstechnik an der TU Darmstadt über seine gemachten Erfahrungen mit dem Einsatz hybrider Lehrkonzepte im Sommersemester 2022.`,
-    image:
-      "https://www.hda.tu-darmstadt.de/media/hda/zz_hda_medienarchiv/img/news_5/elearning__Stammtisch_Square_web_870x0.jpg",
-  };
+  const event = getEventById(Number.parseInt(params.id));
 
   const [fav, setFav] = useState(false);
+
+  const sameOrgEvents = dummyData.events.filter(
+    (e) => e.organiser.id === event.organiser.id && e.id !== event.id
+  );
 
   return (
     <>
@@ -53,7 +53,7 @@ const EventPage = () => {
               >
                 {event.organiser.name}
               </Link>
-              <div className="">S2|03&nbsp;123</div>
+              <div className="">{event.venue}</div>
               <div>{event.date}</div>
               <div className="flex-grow" />
               <div className="flex gap-10 justify-end mt-6">
@@ -110,22 +110,24 @@ const EventPage = () => {
               style={{ gridTemplateColumns: "1fr 2fr" }}
             >
               <div className="text-neutral-600">Adresse:</div>
-              <div>S2|03&nbsp;123</div>
+              <div>{event.venue}</div>
               <div className="text-neutral-600">Preis:</div>
-              <div>Kostenlos</div>
+              <div>{event.price}</div>
             </div>
           </div>
           <div className="pb-10">
-            <EventGroup title="Weitere Events von diesem Veranstalter">
-              <DummyEvent />
-              <DummyEvent />
-              <DummyEvent />
-            </EventGroup>
+            {!!sameOrgEvents.length && (
+              <EventGroup title="Weitere Events von diesem Veranstalter">
+                {sameOrgEvents.map((e) => (
+                  <Event key={e.id} event={e} />
+                ))}
+              </EventGroup>
+            )}
             <EventGroup title="Ähnliche Events, die Dich interessieren könnten">
-              <DummyEvent />
-              <DummyEvent />
-              <DummyEvent />
-              <DummyEvent />
+              <Event event={event3} />
+              <Event event={event4} />
+              <Event event={event1} />
+              <Event event={event2} />
             </EventGroup>
           </div>
         </div>

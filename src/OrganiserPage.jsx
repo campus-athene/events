@@ -8,18 +8,15 @@ import {
 import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
 import { faGlobe, faPhone } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { DummyEvent, EventGroup } from "./Event";
+import { useParams } from "react-router-dom";
+import { Event, EventGroup } from "./Components";
+import { event1, event2, event3, event4, getOrganiserById } from "./dummyData";
 
 const OrganiserPage = () => {
-  const organiser = {
-    name: "Hochschuldidaktische Arbeitsstelle",
-    desc: `
-        In hybriden Lehrsettings nimmt ein Teil der Studierenden in Präsenz vor Ort an der Universität, der andere Teil der Studierenden online (z.B. von zu Hause) an der jeweiligen Lehrveranstaltung teil. Je nach Charakter der Lehrveranstaltung sind unterschiedliche Szenarien hierbei geeignet. Die Online-Teilnahme kann synchron oder asynchron stattfinden. Online- und Präsenz-Teilnahme sind gegebenenfalls im Wechsel organisiert. Die Durchführung von hybrider Lehre stellt somit vielfältige didaktische und technische Herausforderungen an Lehrende und Studierende, bietet aber gleichzeitig neue Möglichkeiten und flexible Zugänge.
-        Im Rahmen dieses Stammtisches berichtet Prof. Dr. Andy Schürr aus dem Fachbereich Elektro- und Informationstechnik an der TU Darmstadt über seine gemachten Erfahrungen mit dem Einsatz hybrider Lehrkonzepte im Sommersemester 2022.`,
-    headerImg:
-      "https://www.hda.tu-darmstadt.de/media/hda/hda_dachseite/01_start_hda/StartseiteHDA_Buehnenbild_Campus-27_ellenlewis.jpg",
-    logo: "https://www.hda.tu-darmstadt.de/media/hda/zentrale_hda_medien/2013-10-hda-logo_1024px.png",
-  };
+  const params = useParams();
+
+  const organiser = getOrganiserById(Number.parseInt(params.id));
+
   return (
     <>
       <img alt="" src={organiser.headerImg} />
@@ -43,19 +40,19 @@ const OrganiserPage = () => {
         </div>
       </div>
       <EventGroup title="Workshops">
-        <DummyEvent />
-        <DummyEvent />
-        <DummyEvent />
+        <Event event={event3} />
+        <Event event={event1} />
+        <Event event={event4} />
       </EventGroup>
       <EventGroup title="Seminare">
-        <DummyEvent />
-        <DummyEvent />
+        <Event event={event1} />
+        <Event event={event2} />
       </EventGroup>
       <EventGroup title="Ähnliche Events von anderen Veranstaltern">
-        <DummyEvent />
-        <DummyEvent />
-        <DummyEvent />
-        <DummyEvent />
+        <Event event={event2} />
+        <Event event={event3} />
+        <Event event={event1} />
+        <Event event={event4} />
       </EventGroup>
     </>
   );
