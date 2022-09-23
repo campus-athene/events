@@ -25,14 +25,14 @@ function App() {
         </div>
       </header>
       <main
-        className="bg-white mt-12 pb-48 mx-auto overflow-x-clip"
+        className="bg-white mt-12 pb-10 mx-auto overflow-x-clip"
         style={{
           maxWidth: "72rem",
         }}
       >
         <Router />
       </main>
-      <footer className="absolute bottom-0 bg-violet flex justify-center w-full">
+      <footer className="bg-violet flex justify-center w-full">
         <div
           className="flex h-36 items-center justify-between px-10 text-sm text-white"
           style={{ width: "72rem" }}

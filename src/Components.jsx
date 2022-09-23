@@ -80,10 +80,12 @@ export const Event = ({
     date,
     image,
   },
+  onClick,
 }) => {
   return (
     <Link
       className="bg-slate-200 block h-56 rounded-xl text-sm w-48 transition-transform"
+      onClick={onClick}
       to={`/event/${id}`}
     >
       <img
@@ -123,10 +125,12 @@ export const Highlight = ({
     date,
     image,
   },
+  onClick,
 }) => {
   return (
     <Link
       className="bg-slate-200 rounded-xl text-sm flex flex-shrink-0"
+      onClick={onClick}
       to={`/event/${id}`}
       style={{ width: "33rem" }}
     >

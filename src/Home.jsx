@@ -1,15 +1,18 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import {
-  Event,
+  Event as EventTemplate,
   EventGroup,
   Header,
   HeaderGroup,
-  Highlight,
+  Highlight as HighlightTemplate,
 } from "./Components";
 import { event1, event2, event3, event4 } from "./dummyData";
+import { EventModal } from "./EventPage";
 
 const Home = () => {
+  const [openEvent, setOpenEvent] = useState(null);
+
   const Interest = ({ children, selected }) => {
     const [s, setS] = useState(selected);
     return s ? (
@@ -30,6 +33,25 @@ const Home = () => {
       </button>
     );
   };
+
+  const Event = ({ event }) => (
+    <EventTemplate
+      event={event}
+      onClick={(e) => {
+        e.preventDefault();
+        setOpenEvent(event);
+      }}
+    />
+  );
+  const Highlight = ({ event }) => (
+    <HighlightTemplate
+      event={event}
+      onClick={(e) => {
+        e.preventDefault();
+        setOpenEvent(event);
+      }}
+    />
+  );
 
   return (
     <>
@@ -123,6 +145,7 @@ const Home = () => {
         <Event event={event1} />
         <Event event={event2} />
       </EventGroup>
+      <EventModal event={openEvent} setEvent={setOpenEvent} />
     </>
   );
 };
