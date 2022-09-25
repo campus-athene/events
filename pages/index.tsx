@@ -1,17 +1,17 @@
+import Link from "next/link";
 import { ReactNode, useState } from "react";
-import { Link } from "react-router-dom";
 import {
   Event as EventTemplate,
   EventGroup,
   Header,
   HeaderGroup,
   Highlight as HighlightTemplate,
-} from "./Components";
-import { event1, event2, event3, event4, event5 } from "./dummyData";
-import { EventModal } from "./EventPage";
+} from "../components";
+import EventModal from "../components/EventModal";
+import { Event, event1, event2, event3, event4, event5 } from "../dummyData";
 
 const Home = () => {
-  const [openEvent, setOpenEvent] = useState(null);
+  const [openEvent, setOpenEvent] = useState<Event | null>(null);
 
   const Interest = (props: { children?: ReactNode; selected?: boolean }) => {
     const [s, setS] = useState(props.selected);
@@ -29,32 +29,34 @@ const Home = () => {
     );
   };
 
-  const Event = ({ event }) => (
+  const Event = (props: { event: Event }) => (
     <EventTemplate
-      event={event}
+      event={props.event}
       onClick={(e) => {
         e.preventDefault();
-        setOpenEvent(event);
+        setOpenEvent(props.event);
       }}
     />
   );
-  const Highlight = ({ event }) => (
+  const Highlight = (props: { event: Event }) => (
     <HighlightTemplate
-      event={event}
+      event={props.event}
       onClick={(e) => {
         e.preventDefault();
-        setOpenEvent(event);
+        setOpenEvent(props.event);
       }}
     />
   );
 
   return (
     <>
-      <Link to="/event/1">
-        <img
-          alt="Start-up &amp; Innovation Day 2022"
-          src="https://www.tu-darmstadt.de/media/daa_responsives_design/04_wissenstransfer_medien/highest/veranstaltungen_8/startup___innovation_da/bilder_26/Header-Innoday_0x570.jpg"
-        />
+      <Link href="/event/1">
+        <a>
+          <img
+            alt="Start-up &amp; Innovation Day 2022"
+            src="https://www.tu-darmstadt.de/media/daa_responsives_design/04_wissenstransfer_medien/highest/veranstaltungen_8/startup___innovation_da/bilder_26/Header-Innoday_0x570.jpg"
+          />
+        </a>
       </Link>
       <EventGroup title="Highlights">
         <Highlight event={event5} />

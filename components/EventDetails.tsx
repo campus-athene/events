@@ -4,10 +4,9 @@ import {
   faShareFromSquare,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useRef } from "react";
-import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import { Event as DefaultEventTemplate, EventGroup } from "./Components";
+import Link from "next/link";
+import { useState } from "react";
+import { Event as DefaultEventTemplate, EventGroup } from ".";
 import dummyData, {
   Event,
   event1,
@@ -15,8 +14,7 @@ import dummyData, {
   event3,
   event4,
   event5,
-  getEventById,
-} from "./dummyData";
+} from "../dummyData";
 
 const EventDetails = (props: {
   event: Event;
@@ -43,11 +41,10 @@ const EventDetails = (props: {
         />
         <div className="bg-neutral-200 col-span-3 p-10 text-right">
           <div className="font-medium text-2xl">{props.event.title}</div>
-          <Link
-            className="block hover:underline mb-4 text-neutral-500"
-            to={`/organiser/${props.event.organiser.id}`}
-          >
-            {props.event.organiser.name}
+          <Link href={`/organiser/${props.event.organiser.id}`}>
+            <a className="block hover:underline mb-4 text-neutral-500">
+              {props.event.organiser.name}
+            </a>
           </Link>
           <div className="">{props.event.venue}</div>
           <div>{props.event.date}</div>
@@ -140,76 +137,4 @@ const EventDetails = (props: {
   );
 };
 
-export const EventModal = ({ event, setEvent }) => {
-  const isOpen = !!event;
-
-  useEffect(() => {
-    document.body.style.overflowY = isOpen ? "hidden" : "";
-    return () => {
-      document.body.style.overflowY = "";
-    };
-  }, [isOpen]);
-
-  const scrollRef = useRef<HTMLDivElement>(null);
-
-  if (!isOpen) return null;
-
-  const EventTemplate = ({ event }) => (
-    <DefaultEventTemplate
-      event={event}
-      onClick={(e) => {
-        e.preventDefault();
-        setEvent(event);
-        scrollRef.current?.scrollTo(0, 0);
-      }}
-    />
-  );
-
-  return (
-    <div
-      className="bg-black bg-opacity-50 backdrop-blur-sm"
-      onClick={() => setEvent(null)}
-      ref={scrollRef}
-      style={{
-        position: "fixed",
-        inset: "0 0",
-        margin: "0 auto",
-        overflow: "auto",
-      }}
-    >
-      <div
-        className="mx-auto my-16 bg-white rounded-xl overflow-hidden"
-        style={{ width: "60rem" }}
-        onClick={(e) => e.stopPropagation()}
-      >
-        <EventDetails event={event} EventTemlate={EventTemplate} />
-      </div>
-    </div>
-  );
-};
-
-const EventPage = () => {
-  const params = useParams();
-  const event = getEventById(Number.parseInt(params.id));
-
-  const [openEvent, setOpenEvent] = useState(null);
-
-  const EventTemplate = ({ event }) => (
-    <DefaultEventTemplate
-      event={event}
-      onClick={(e) => {
-        e.preventDefault();
-        setOpenEvent(event);
-      }}
-    />
-  );
-
-  return (
-    <>
-      <EventDetails event={event} EventTemlate={EventTemplate} />
-      <EventModal event={openEvent} setEvent={setOpenEvent} />
-    </>
-  );
-};
-
-export default EventPage;
+export default EventDetails;

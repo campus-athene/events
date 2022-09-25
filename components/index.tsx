@@ -1,5 +1,6 @@
 import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Link from "next/link";
 import {
   createContext,
   MouseEventHandler,
@@ -8,8 +9,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { Link } from "react-router-dom";
-import { Event as EventType } from "./dummyData";
+import { Event as EventType } from "../dummyData";
 
 const HeaderGroupContext = createContext<{
   value: string;
@@ -68,7 +68,7 @@ export const EventGroup = (props: {
 }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  const scroll = (f) => {
+  const scroll = (f: number) => {
     if (!scrollRef.current) return;
     const tileWidth =
       (12 + 1) *
@@ -115,35 +115,28 @@ export const Event = (props: {
   onClick?: MouseEventHandler<HTMLAnchorElement>;
 }) => {
   return (
-    <Link
-      className="bg-slate-200 block flex-shrink-0 h-56 rounded-xl text-sm w-48"
-      onClick={props.onClick}
-      to={`/event/${props.event.id}`}
-    >
-      <img
-        className="h-32 object-cover rounded-t-xl w-48 mb-1"
-        src={props.event.image}
-        alt=""
-      />
-      <div className="overflow-hidden px-3 pt-1 text-ellipsis whitespace-nowrap font-medium">
-        {props.event.title}
-      </div>
-      <Link
-        className="block overflow-hidden px-3 pt-1 text-ellipsis whitespace-nowrap text-neutral-500 text-xs hover:underline"
-        onClick={(e) => e.stopPropagation()}
-        to={`/organiser/${props.event.organiser.id}`}
-      >
-        {props.event.organiser.name}
-      </Link>
-      <div className="overflow-hidden px-3 pt-1 text-ellipsis whitespace-nowrap text-xs">
-        {props.event.date}
-      </div>
+    <Link href={`/event/${props.event.id}`}>
       <a
-        className="block overflow-hidden px-3 pt-1 text-ellipsis whitespace-nowrap text-xs hover:underline"
-        href="https://maps.google.de"
-        onClick={(e) => e.stopPropagation()}
+        className="bg-slate-200 block flex-shrink-0 h-56 rounded-xl text-sm w-48"
+        onClick={props.onClick}
       >
-        S2|03&nbsp;123
+        <img
+          className="h-32 object-cover rounded-t-xl w-48 mb-1"
+          src={props.event.image}
+          alt=""
+        />
+        <div className="overflow-hidden px-3 pt-1 text-ellipsis whitespace-nowrap font-medium">
+          {props.event.title}
+        </div>
+        <div className="block overflow-hidden px-3 pt-1 text-ellipsis whitespace-nowrap text-neutral-500 text-xs">
+          {props.event.organiser.name}
+        </div>
+        <div className="overflow-hidden px-3 pt-1 text-ellipsis whitespace-nowrap text-xs">
+          {props.event.date}
+        </div>
+        <div className="block overflow-hidden px-3 pt-1 text-ellipsis whitespace-nowrap text-xs">
+          {props.event.venue}
+        </div>
       </a>
     </Link>
   );
@@ -154,40 +147,33 @@ export const Highlight = (props: {
   onClick: MouseEventHandler<HTMLAnchorElement>;
 }) => {
   return (
-    <Link
-      className="bg-slate-200 rounded-xl text-sm flex flex-shrink-0"
-      onClick={props.onClick}
-      to={`/event/${props.event.id}`}
-      style={{ width: "33rem" }}
-    >
-      <img
-        className="h-32 object-cover rounded-l-xl w-54 flex-shrink-0"
-        style={{ height: "9rem", width: "13.5rem" }}
-        src={props.event.image}
-        alt=""
-      />
-      <div className="flex-grow min-w-0">
-        <div className="overflow-hidden px-4 pt-3 text-ellipsis whitespace-nowrap text-xl font-medium">
-          {props.event.title}
+    <Link href={`/event/${props.event.id}`}>
+      <a
+        className="bg-slate-200 rounded-xl text-sm flex flex-shrink-0"
+        onClick={props.onClick}
+        style={{ width: "33rem" }}
+      >
+        <img
+          className="h-32 object-cover rounded-l-xl w-54 flex-shrink-0"
+          style={{ height: "9rem", width: "13.5rem" }}
+          src={props.event.image}
+          alt=""
+        />
+        <div className="flex-grow min-w-0">
+          <div className="overflow-hidden px-4 pt-3 text-ellipsis whitespace-nowrap text-xl font-medium">
+            {props.event.title}
+          </div>
+          <div className="block overflow-hidden px-4 pt-1 text-ellipsis whitespace-nowrap text-neutral-500 text-lg">
+            {props.event.organiser.name}
+          </div>
+          <div className="overflow-hidden px-4 pt-1 text-ellipsis whitespace-nowrap">
+            {props.event.date}
+          </div>
+          <div className="block overflow-hidden px-4 pt-1 text-ellipsis whitespace-nowrap hover:underline">
+            {props.event.venue}
+          </div>
         </div>
-        <Link
-          className="block overflow-hidden px-4 pt-1 text-ellipsis whitespace-nowrap text-neutral-500 text-lg hover:underline"
-          onClick={(e) => e.stopPropagation()}
-          to={`/organiser/${props.event.organiser.id}`}
-        >
-          {props.event.organiser.name}
-        </Link>
-        <div className="overflow-hidden px-4 pt-1 text-ellipsis whitespace-nowrap">
-          {props.event.date}
-        </div>
-        <a
-          className="block overflow-hidden px-4 pt-1 text-ellipsis whitespace-nowrap hover:underline"
-          href="https://maps.google.de"
-          onClick={(e) => e.stopPropagation()}
-        >
-          S2|03&nbsp;123
-        </a>
-      </div>
+      </a>
     </Link>
   );
 };

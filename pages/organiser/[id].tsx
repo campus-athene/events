@@ -8,14 +8,25 @@ import {
 import { faEnvelope } from "@fortawesome/free-regular-svg-icons";
 import { faGlobe, faPhone } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useParams } from "react-router-dom";
-import { Event, EventGroup } from "./Components";
-import { event1, event2, event3, event4, getOrganiserById } from "./dummyData";
+import { useRouter } from "next/router";
+import { Event, EventGroup } from "../../components";
+import {
+  event1,
+  event2,
+  event3,
+  event4,
+  getOrganiserById,
+} from "../../dummyData";
 
 const OrganiserPage = () => {
-  const params = useParams();
+  const { query } = useRouter();
 
-  const organiser = getOrganiserById(Number.parseInt(params.id));
+  const organiser =
+    typeof query.id === "string"
+      ? getOrganiserById(Number.parseInt(query.id))
+      : null;
+
+  if (!organiser) return null;
 
   return (
     <>
