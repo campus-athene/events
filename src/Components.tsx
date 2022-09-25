@@ -1,12 +1,28 @@
 import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
-import { createContext, useContext, useRef } from "react";
+import {
+  createContext,
+  MouseEventHandler,
+  ReactNode,
+  useContext,
+  useRef,
+  useState,
+} from "react";
 import { Link } from "react-router-dom";
+import { Event as EventType } from "./dummyData";
 
-const HeaderGroupContext = createContext(null);
-export const HeaderGroup = ({ children, defaultValue }) => {
-  const [value, setValue] = useState(defaultValue || "");
+const HeaderGroupContext = createContext<{
+  value: string;
+  setValue: React.Dispatch<string>;
+} | null>(null);
+export const HeaderGroup = ({
+  children,
+  defaultValue,
+}: {
+  children: React.ReactNode;
+  defaultValue?: string;
+}) => {
+  const [value, setValue] = useState<string>(defaultValue || "");
   return (
     <HeaderGroupContext.Provider value={{ value, setValue }}>
       <div className="flex gap-2 overflow-x-auto px-10 whitespace-nowrap">
@@ -15,29 +31,42 @@ export const HeaderGroup = ({ children, defaultValue }) => {
     </HeaderGroupContext.Provider>
   );
 };
-export const Header = ({ children, className, value, ...props }) => {
+export const Header = (props: {
+  children: ReactNode;
+  className?: string;
+  default?: boolean;
+  value?: string;
+}) => {
   const context = useContext(HeaderGroupContext);
+  const value = props.value;
 
-  if (context === null)
-    return <h2 className={"pt-8 text-lg " + className}>{children}</h2>;
+  if (context === null || value === undefined)
+    return (
+      <h2 className={"pt-8 text-lg " + props.className}>{props.children}</h2>
+    );
 
   return (
     <button
       className={
         "pt-8 text-lg transition-colors " +
-        (context.value === value || (context.value === "" && props.default)
+        (context.value === props.value ||
+        (context.value === "" && props.default)
           ? ""
           : "text-slate-400 ") +
-        className
+        props.className
       }
       onClick={() => context.setValue(value)}
     >
-      {children}
+      {props.children}
     </button>
   );
 };
-export const EventGroup = ({ className, children, title }) => {
-  const scrollRef = useRef();
+export const EventGroup = (props: {
+  className?: string;
+  children: ReactNode;
+  title?: ReactNode;
+}) => {
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   const scroll = (f) => {
     if (!scrollRef.current) return;
@@ -52,7 +81,7 @@ export const EventGroup = ({ className, children, title }) => {
 
   return (
     <>
-      {title && <Header className="mx-10">{title}</Header>}
+      {props.title && <Header className="mx-10">{props.title}</Header>}
       <div className="flex items-streach">
         <button
           className="flex-shrink-0 text-slate-300 hover:text-black w-10 transition-colors"
@@ -64,11 +93,11 @@ export const EventGroup = ({ className, children, title }) => {
           id="myscroll"
           className={
             "flex flex-grow flex-shrink gap-4 pt-2 overflow-x-hidden flex-nowrap" +
-            className
+            props.className
           }
           ref={scrollRef}
         >
-          {children}
+          {props.children}
         </div>
         <button
           className="flex-shrink-0 text-slate-300 hover:text-black w-10 transition-colors"
@@ -81,39 +110,33 @@ export const EventGroup = ({ className, children, title }) => {
   );
 };
 
-export const Event = ({
-  event: {
-    id,
-    title,
-    organiser: { id: oId, name },
-    date,
-    image,
-  },
-  onClick,
+export const Event = (props: {
+  event: EventType;
+  onClick?: MouseEventHandler<HTMLAnchorElement>;
 }) => {
   return (
     <Link
       className="bg-slate-200 block flex-shrink-0 h-56 rounded-xl text-sm w-48"
-      onClick={onClick}
-      to={`/event/${id}`}
+      onClick={props.onClick}
+      to={`/event/${props.event.id}`}
     >
       <img
         className="h-32 object-cover rounded-t-xl w-48 mb-1"
-        src={image}
+        src={props.event.image}
         alt=""
       />
       <div className="overflow-hidden px-3 pt-1 text-ellipsis whitespace-nowrap font-medium">
-        {title}
+        {props.event.title}
       </div>
       <Link
         className="block overflow-hidden px-3 pt-1 text-ellipsis whitespace-nowrap text-neutral-500 text-xs hover:underline"
         onClick={(e) => e.stopPropagation()}
-        to={`/organiser/${oId}`}
+        to={`/organiser/${props.event.organiser.id}`}
       >
-        {name}
+        {props.event.organiser.name}
       </Link>
       <div className="overflow-hidden px-3 pt-1 text-ellipsis whitespace-nowrap text-xs">
-        {date}
+        {props.event.date}
       </div>
       <a
         className="block overflow-hidden px-3 pt-1 text-ellipsis whitespace-nowrap text-xs hover:underline"
@@ -126,42 +149,36 @@ export const Event = ({
   );
 };
 
-export const Highlight = ({
-  event: {
-    id,
-    title,
-    organiser: { id: oId, name },
-    date,
-    image,
-  },
-  onClick,
+export const Highlight = (props: {
+  event: EventType;
+  onClick: MouseEventHandler<HTMLAnchorElement>;
 }) => {
   return (
     <Link
       className="bg-slate-200 rounded-xl text-sm flex flex-shrink-0"
-      onClick={onClick}
-      to={`/event/${id}`}
+      onClick={props.onClick}
+      to={`/event/${props.event.id}`}
       style={{ width: "33rem" }}
     >
       <img
         className="h-32 object-cover rounded-l-xl w-54 flex-shrink-0"
         style={{ height: "9rem", width: "13.5rem" }}
-        src={image}
+        src={props.event.image}
         alt=""
       />
       <div className="flex-grow min-w-0">
         <div className="overflow-hidden px-4 pt-3 text-ellipsis whitespace-nowrap text-xl font-medium">
-          {title}
+          {props.event.title}
         </div>
         <Link
           className="block overflow-hidden px-4 pt-1 text-ellipsis whitespace-nowrap text-neutral-500 text-lg hover:underline"
           onClick={(e) => e.stopPropagation()}
-          to={`/organiser/${oId}`}
+          to={`/organiser/${props.event.organiser.id}`}
         >
-          {name}
+          {props.event.organiser.name}
         </Link>
         <div className="overflow-hidden px-4 pt-1 text-ellipsis whitespace-nowrap">
-          {date}
+          {props.event.date}
         </div>
         <a
           className="block overflow-hidden px-4 pt-1 text-ellipsis whitespace-nowrap hover:underline"

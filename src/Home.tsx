@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import { Link } from "react-router-dom";
 import {
   Event as EventTemplate,
@@ -13,18 +13,18 @@ import { EventModal } from "./EventPage";
 const Home = () => {
   const [openEvent, setOpenEvent] = useState(null);
 
-  const Interest = ({ children, selected }) => {
-    const [s, setS] = useState(selected);
+  const Interest = (props: { children?: ReactNode; selected?: boolean }) => {
+    const [s, setS] = useState(props.selected);
     return (
       <button
         className={
           "px-3 py-0.5 rounded-full transition-colors " +
           (s ? "bg-amber-400" : "bg-slate-200")
         }
-        type="checkbox"
+        type="button"
         onClick={() => setS(!s)}
       >
-        {children}
+        {props.children}
       </button>
     );
   };

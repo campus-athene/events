@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Event as DefaultEventTemplate, EventGroup } from "./Components";
 import dummyData, {
+  Event,
   event1,
   event2,
   event3,
@@ -17,12 +18,16 @@ import dummyData, {
   getEventById,
 } from "./dummyData";
 
-const EventDetails = ({ event, EventTemlate }) => {
-  const Event = EventTemlate || DefaultEventTemplate;
+const EventDetails = (props: {
+  event: Event;
+  EventTemlate: ({ event }: { event: Event }) => JSX.Element;
+}) => {
+  const Event = props.EventTemlate || DefaultEventTemplate;
   const [fav, setFav] = useState(false);
 
   const sameOrgEvents = dummyData.events.filter(
-    (e) => e.organiser.id === event.organiser.id && e.id !== event.id
+    (e) =>
+      e.organiser.id === props.event.organiser.id && e.id !== props.event.id
   );
 
   return (
@@ -31,17 +36,21 @@ const EventDetails = ({ event, EventTemlate }) => {
         className="grid grid-cols-5 items-stretch justify-items-stretch"
         style={{ gridTemplateRows: "16rem max-content" }}
       >
-        <img className="col-span-2 object-cover" src={event.image} alt="" />
+        <img
+          className="col-span-2 object-cover"
+          src={props.event.image}
+          alt=""
+        />
         <div className="bg-neutral-200 col-span-3 p-10 text-right">
-          <div className="font-medium text-2xl">{event.title}</div>
+          <div className="font-medium text-2xl">{props.event.title}</div>
           <Link
             className="block hover:underline mb-4 text-neutral-500"
-            to={`/organiser/${event.organiser.id}`}
+            to={`/organiser/${props.event.organiser.id}`}
           >
-            {event.organiser.name}
+            {props.event.organiser.name}
           </Link>
-          <div className="">{event.venue}</div>
-          <div>{event.date}</div>
+          <div className="">{props.event.venue}</div>
+          <div>{props.event.date}</div>
           <div className="flex-grow" />
           <div className="flex gap-10 justify-end mt-6">
             <div />
@@ -75,7 +84,7 @@ const EventDetails = ({ event, EventTemlate }) => {
       >
         <div className="col-span-3 row-span-2">
           <p>
-            {event.desc
+            {props.event.desc
               .split("\n")
               .filter((d) => d)
               .map((d, i) => (
@@ -86,7 +95,7 @@ const EventDetails = ({ event, EventTemlate }) => {
           </p>
         </div>
         <img
-          alt={event.venue}
+          alt={props.event.venue}
           className="col-span-2 object-cover"
           src="https://tile.openstreetmap.org/16/34344/22261.png"
         />
@@ -106,9 +115,9 @@ const EventDetails = ({ event, EventTemlate }) => {
           style={{ gridTemplateColumns: "1fr 2fr" }}
         >
           <div className="text-neutral-600">Adresse:</div>
-          <div>{event.venue}</div>
+          <div>{props.event.venue}</div>
           <div className="text-neutral-600">Preis:</div>
-          <div>{event.price}</div>
+          <div>{props.event.price}</div>
         </div>
       </div>
       <div className="pb-10">
@@ -121,7 +130,7 @@ const EventDetails = ({ event, EventTemlate }) => {
         )}
         <EventGroup title="Ähnliche Events, die Dich interessieren könnten">
           {[event3, event4, event5, event1, event2]
-            .filter((e) => e.id !== event.id)
+            .filter((e) => e.id !== props.event.id)
             .map((e) => (
               <Event key={e.id} event={e} />
             ))}
@@ -141,7 +150,7 @@ export const EventModal = ({ event, setEvent }) => {
     };
   }, [isOpen]);
 
-  const scrollRef = useRef();
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   if (!isOpen) return null;
 

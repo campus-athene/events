@@ -1,4 +1,23 @@
-const dummyData = {
+export type Organiser = {
+  id: number;
+  name: string;
+  desc: string;
+  headerImg: string;
+  logo: string;
+};
+
+export type Event = {
+  id: number;
+  title: string;
+  organiser: { id: number; name: string };
+  date: string;
+  venue: string;
+  price: string;
+  desc: string;
+  image: string;
+};
+
+const dummyData: { events: Event[]; organisers: Organiser[] } = {
   events: [
     {
       id: 1,
@@ -157,7 +176,7 @@ const dummyData = {
   ],
 };
 
-export const getEventById = (id) =>
+export const getEventById = (id: number) =>
   dummyData.events.filter((e) => e.id === id)[0];
 export const event1 = getEventById(1);
 export const event2 = getEventById(2);
@@ -165,7 +184,7 @@ export const event3 = getEventById(33);
 export const event4 = getEventById(40);
 export const event5 = getEventById(5);
 
-export const getOrganiserById = (id) =>
+export const getOrganiserById = (id: number) =>
   dummyData.organisers.filter((o) => o.id === id)[0];
 
 export default dummyData;
