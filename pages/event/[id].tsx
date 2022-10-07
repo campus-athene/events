@@ -1,24 +1,50 @@
-import { NextPage } from "next";
-import { useRouter } from "next/router";
+import { PrismaClient } from "@prisma/client";
+import { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import { useState } from "react";
 import { Event as DefaultEventTemplate } from "../../components";
 import EventDetails from "../../components/EventDetails";
 import EventModal from "../../components/EventModal";
-import { Event, getEventById } from "../../dummyData";
+import { InterfaceEvent, mapPrismaEvent, prismaEventSelect } from "../../utils";
 
-const EventPage: NextPage = () => {
-  const { query } = useRouter();
+type Data = { event: InterfaceEvent };
 
-  const event =
-    typeof query.id === "string"
-      ? getEventById(Number.parseInt(query.id))
-      : null;
+const prisma = new PrismaClient();
 
-  const [openEvent, setOpenEvent] = useState<Event | null>(null);
+export const getStaticProps: GetStaticProps<Data> = async (context) => {
+  if (typeof context.params?.id !== "string")
+    return {
+      notFound: true,
+    };
 
-  if (!event) return null;
+  const prismaEvent = await prisma.event.findUnique({
+    select: prismaEventSelect,
+    where: { id: Number.parseInt(context.params.id) },
+  });
 
-  const EventTemplate = (props: { event: Event }) => (
+  if (!prismaEvent)
+    return {
+      notFound: true,
+    };
+
+  return {
+    props: { event: mapPrismaEvent(prismaEvent) },
+    revalidate: 60,
+  };
+};
+
+export const getStaticPaths: GetStaticPaths = async (context) => {
+  return {
+    paths: (await prisma.event.findMany({ select: { id: true } })).map(
+      ({ id }) => ({ params: { id: id.toString() } })
+    ),
+    fallback: "blocking",
+  };
+};
+
+const EventPage: NextPage<Data> = (props) => {
+  const [openEvent, setOpenEvent] = useState<InterfaceEvent | null>(null);
+
+  const EventTemplate = (props: { event: InterfaceEvent }) => (
     <DefaultEventTemplate
       event={props.event}
       onClick={(e) => {
@@ -30,7 +56,7 @@ const EventPage: NextPage = () => {
 
   return (
     <>
-      <EventDetails event={event} EventTemlate={EventTemplate} />
+      <EventDetails event={props.event} EventTemlate={EventTemplate} />
       <EventModal event={openEvent} setEvent={setOpenEvent} />
     </>
   );

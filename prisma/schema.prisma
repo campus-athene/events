@@ -14,6 +14,7 @@ model Organiser {
   logoImg         String  @map("logo_img") @db.Char(16)
   coverImg        String  @map("cover_img") @db.Char(16)
   eventLimit      Int     @default(10) @map("event_limit")
+  group           String? @db.VarChar(45)
   socialWebsite   String? @map("social_website") @db.VarChar(250)
   socialEmail     String? @map("social_email") @db.VarChar(250)
   socialPhone     String? @map("social_phone") @db.VarChar(250)

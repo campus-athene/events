@@ -1,46 +1,19 @@
 import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { utc } from "moment";
+import "moment/locale/de";
 import Link from "next/link";
-import {
-  createContext,
-  MouseEventHandler,
-  ReactNode,
-  useContext,
-  useRef,
-  useState,
-} from "react";
-import { Event as EventType } from "../dummyData";
+import { MouseEventHandler, ReactNode, useRef } from "react";
+import { InterfaceEvent as EventType } from "../utils";
 
-const HeaderGroupContext = createContext<{
-  value: string;
-  setValue: React.Dispatch<string>;
-} | null>(null);
-export const HeaderGroup = ({
-  children,
-  defaultValue,
-}: {
-  children: React.ReactNode;
-  defaultValue?: string;
-}) => {
-  const [value, setValue] = useState<string>(defaultValue || "");
-  return (
-    <HeaderGroupContext.Provider value={{ value, setValue }}>
-      <div className="flex gap-2 overflow-x-auto px-10 whitespace-nowrap">
-        {children}
-      </div>
-    </HeaderGroupContext.Provider>
-  );
-};
 export const Header = (props: {
   children: ReactNode;
   className?: string;
   default?: boolean;
-  value?: string;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
+  selected?: boolean;
 }) => {
-  const context = useContext(HeaderGroupContext);
-  const value = props.value;
-
-  if (context === null || value === undefined)
+  if (props.selected === undefined)
     return (
       <h2 className={"pt-8 text-lg " + props.className}>{props.children}</h2>
     );
@@ -49,13 +22,10 @@ export const Header = (props: {
     <button
       className={
         "pt-8 text-lg transition-colors " +
-        (context.value === props.value ||
-        (context.value === "" && props.default)
-          ? ""
-          : "text-slate-400 ") +
+        (props.selected ? "" : "text-slate-400 ") +
         props.className
       }
-      onClick={() => context.setValue(value)}
+      onClick={props.onClick}
     >
       {props.children}
     </button>
@@ -132,7 +102,7 @@ export const Event = (props: {
           {props.event.organiser.name}
         </div>
         <div className="overflow-hidden px-3 pt-1 text-ellipsis whitespace-nowrap text-xs">
-          {props.event.date.toLocaleString()}
+          {utc(props.event.date).local().locale("de").format("llll")}
         </div>
         <div className="block overflow-hidden px-3 pt-1 text-ellipsis whitespace-nowrap text-xs">
           {props.event.venue}
@@ -167,7 +137,7 @@ export const Highlight = (props: {
             {props.event.organiser.name}
           </div>
           <div className="overflow-hidden px-4 pt-1 text-ellipsis whitespace-nowrap">
-            {props.event.date.toLocaleString()}
+            {utc(props.event.date).local().locale("de").format("llll")}
           </div>
           <div className="block overflow-hidden px-4 pt-1 text-ellipsis whitespace-nowrap hover:underline">
             {props.event.venue}

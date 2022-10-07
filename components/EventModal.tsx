@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useEffect, useRef } from "react";
 import { Event as DefaultEventTemplate } from ".";
-import { Event } from "../dummyData";
+import { InterfaceEvent as Event } from "../utils";
 import EventDetails from "./EventDetails";
 
 const EventModal = (props: {

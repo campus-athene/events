@@ -1,33 +1,158 @@
+import { Prisma, PrismaClient } from "@prisma/client";
+import moment from "moment";
+import { GetStaticProps } from "next";
 import Link from "next/link";
-import { ReactNode, useState } from "react";
+import { useState } from "react";
 import {
   Event as EventTemplate,
   EventGroup,
   Header,
-  HeaderGroup,
   Highlight as HighlightTemplate,
 } from "../components";
 import EventModal from "../components/EventModal";
-import { Event, event1, event2, event3, event4, event5 } from "../dummyData";
+import {
+  InterfaceEvent as Event,
+  mapPrismaEvent,
+  prismaEventSelect,
+  takeEventsPerRow,
+} from "../utils";
 
-const Home = () => {
+type Data = {
+  highlights: Event[];
+  dateRanges: {
+    name: string;
+    events: Event[];
+  }[];
+  categories: { name: string; events: Event[] }[];
+};
+
+const prisma = new PrismaClient();
+
+export const getStaticProps: GetStaticProps<Data> = async () => {
+  const now = moment();
+
+  const select = prismaEventSelect;
+  const take = takeEventsPerRow;
+
+  /**
+   * Helper function to filter for values not null or undefined. null and undefined are excluded from type of returned elements.
+   * @param value
+   * @returns
+   */
+  function notEmpty<TValue>(value: TValue | null | undefined): value is TValue {
+    return value !== null && value !== undefined;
+  }
+
+  async function awaitAll<TResult>(
+    promises: Promise<TResult>[]
+  ): Promise<TResult[]> {
+    return (await Promise.allSettled(promises))
+      .map((r) => {
+        if (r.status === "fulfilled") return r.value;
+        console.warn(r.reason);
+        return null;
+      })
+      .filter(notEmpty);
+  }
+
+  return {
+    props: {
+      highlights: (
+        await prisma.event.findMany({
+          orderBy: { clicks: "desc" },
+          select,
+          take: 2,
+        })
+      ).map(mapPrismaEvent),
+      dateRanges: await awaitAll(
+        [
+          {
+            name: "Heute",
+            from: now.clone(),
+            to: now.clone().endOf("day"),
+          },
+          {
+            name: "Morgen",
+            from: now.clone().add(1, "day").startOf("day"),
+            to: now.clone().add(1, "day").endOf("day"),
+          },
+          {
+            name: "Diese Woche",
+            from: now.clone().startOf("week"),
+            to: now.clone().endOf("week"),
+          },
+          {
+            name: "Nächste Woche",
+            from: now.clone().add(1, "week").startOf("week"),
+            to: now.clone().add(1, "week").endOf("week"),
+          },
+        ].map(async ({ name, from, to }) => ({
+          name,
+          events: (
+            await prisma.event.findMany({
+              orderBy: { clicks: "desc" },
+              select,
+              take,
+              where: { date: { gte: from.toDate(), lt: to.toDate() } },
+            })
+          ).map(mapPrismaEvent),
+        }))
+      ),
+      categories: await awaitAll(
+        [
+          {
+            name: "Workshops",
+            where: { eventType: "Workshop" } as Prisma.EventWhereInput,
+          },
+          {
+            name: "Hochschulgruppen",
+            where: {
+              organiser: { group: "Hochschulgruppe" },
+            } as Prisma.EventWhereInput,
+          },
+          {
+            name: "Gastvorträge",
+            where: { eventType: "Gastvortrag" } as Prisma.EventWhereInput,
+          },
+        ].map(async ({ name, where }) => ({
+          name,
+          events: (
+            await prisma.event.findMany({
+              orderBy: { clicks: "desc" },
+              select,
+              take,
+              where,
+            })
+          ).map(mapPrismaEvent),
+        }))
+      ),
+    },
+    revalidate: 60,
+  };
+};
+
+const Home = (props: Data) => {
+  console.log(props.dateRanges);
+  const [dateRange, setDateRange] = useState(
+    props.dateRanges[0] ? props.dateRanges[0].name : ""
+  );
   const [openEvent, setOpenEvent] = useState<Event | null>(null);
 
-  const Interest = (props: { children?: ReactNode; selected?: boolean }) => {
-    const [s, setS] = useState(props.selected);
-    return (
-      <button
-        className={
-          "px-3 py-0.5 rounded-full transition-colors " +
-          (s ? "bg-amber-400" : "bg-slate-200")
-        }
-        type="button"
-        onClick={() => setS(!s)}
-      >
-        {props.children}
-      </button>
-    );
-  };
+  // const Interest = (props: { children?: ReactNode; selected?: boolean }) => {
+  //   const [s, setS] = useState(props.selected);
+  //   return (
+  //     <button
+  //       className={
+  //         "px-3 py-0.5 rounded-full transition-colors " +
+  //         (s ? "bg-amber-400" : "bg-slate-200")
+  //       }
+  //       type="button"
+  //       onClick={() => setS(!s)}
+  //     >
+  //       {props.children}
+  //     </button>
+  //   );
+  // };
 
   const Event = (props: { event: Event }) => (
     <EventTemplate
@@ -59,10 +184,11 @@ const Home = () => {
         </a>
       </Link>
       <EventGroup title="Highlights">
-        <Highlight event={event5} />
-        <Highlight event={event1} />
+        {props.highlights.map((e) => (
+          <Highlight event={e} key={e.id} />
+        ))}
       </EventGroup>
-      <Header className="mx-10">Empfehlungen für Dich</Header>
+      {/* <Header className="mx-10">Empfehlungen für Dich</Header>
       <div className="mx-10 text-sm">Was interessiert Dich?</div>
       <div className="flex gap-2 mx-10">
         <Interest selected>Workshop</Interest>
@@ -76,20 +202,29 @@ const Home = () => {
         <Event event={event4} />
         <Event event={event2} />
         <Event event={event5} />
-      </EventGroup>
-      <HeaderGroup>
-        <Header default value="today">
-          Heute
-        </Header>
-        <Header value="tomorow">Morgen</Header>
-        <Header value="thisweek">Diese Woche</Header>
-        <Header value="nextweek">Nächste Woche</Header>
-      </HeaderGroup>
-      <EventGroup>
-        <Event event={event3} />
-        <Event event={event1} />
-        <Event event={event4} />
-      </EventGroup>
+      </EventGroup> */}
+      {props.dateRanges[0] && (
+        <>
+          <div className="flex gap-2 overflow-x-auto px-10 whitespace-nowrap">
+            {props.dateRanges.map(({ name }) => (
+              <Header
+                key={name}
+                onClick={() => setDateRange(name)}
+                selected={dateRange === name}
+              >
+                {name}
+              </Header>
+            ))}
+          </div>
+          <EventGroup>
+            {props.dateRanges
+              .find((r) => r.name === dateRange)
+              ?.events.map((e) => (
+                <Event key={e.id} event={e} />
+              ))}
+          </EventGroup>
+        </>
+      )}
       <div className="bg-violet mt-8 py-8 px-10 text-white">
         <div className="mb-2 text-lg">Verpasse keine weiteren Events mehr!</div>
         <div className="mb-4">
@@ -105,51 +240,13 @@ const Home = () => {
           Abbonieren
         </button>
       </div>
-      <EventGroup title="Workshops">
-        <Event event={event2} />
-        <Event event={event4} />
-        <Event event={event5} />
-        <Event event={event3} />
-        <Event event={event1} />
-        <Event event={event2} />
-        <Event event={event4} />
-        <Event event={event5} />
-        <Event event={event3} />
-        <Event event={event1} />
-      </EventGroup>
-      <EventGroup title="Sport">
-        <Event event={event1} />
-        <Event event={event3} />
-        <Event event={event4} />
-      </EventGroup>
-      <EventGroup title="Hochschulgruppen">
-        <Event event={event4} />
-        <Event event={event3} />
-        <Event event={event2} />
-        <Event event={event5} />
-        <Event event={event1} />
-        <Event event={event4} />
-        <Event event={event3} />
-        <Event event={event2} />
-        <Event event={event5} />
-        <Event event={event1} />
-        <Event event={event4} />
-        <Event event={event3} />
-        <Event event={event2} />
-        <Event event={event5} />
-        <Event event={event1} />
-        <Event event={event4} />
-        <Event event={event3} />
-        <Event event={event2} />
-        <Event event={event5} />
-        <Event event={event1} />
-      </EventGroup>
-      <EventGroup title="Gastvorträge">
-        <Event event={event5} />
-        <Event event={event3} />
-        <Event event={event1} />
-        <Event event={event2} />
-      </EventGroup>
+      {props.categories.map(({ name, events }) => (
+        <EventGroup key={name} title={name}>
+          {events.map((e) => (
+            <Event key={e.id} event={e} />
+          ))}
+        </EventGroup>
+      ))}
       <EventModal event={openEvent} setEvent={setOpenEvent} />
     </>
   );

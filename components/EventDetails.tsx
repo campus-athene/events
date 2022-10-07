@@ -5,16 +5,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Event as DefaultEventTemplate, EventGroup } from ".";
-import dummyData, {
-  Event,
-  event1,
-  event2,
-  event3,
-  event4,
-  event5,
-} from "../dummyData";
+import { InterfaceEvent as Event } from "../utils";
 
 const EventDetails = (props: {
   event: Event;
@@ -23,10 +16,19 @@ const EventDetails = (props: {
   const Event = props.EventTemlate || DefaultEventTemplate;
   const [fav, setFav] = useState(false);
 
-  const sameOrgEvents = dummyData.events.filter(
-    (e) =>
-      e.organiser.id === props.event.organiser.id && e.id !== props.event.id
-  );
+  const [{ event: serverEvent, sameOrg, similar }, setServerData] = useState<{
+    event: Event | null;
+    sameOrg: Event[] | null;
+    similar: Event[] | null;
+  }>({ event: null, sameOrg: null, similar: null });
+
+  useEffect(() => {
+    fetch(`/api/eventRec/${props.event.id}`)
+      .then((res) => res.json())
+      .then((data) => setServerData(data));
+  }, [props.event.id]);
+
+  const event = serverEvent || props.event;
 
   return (
     <>
@@ -36,18 +38,18 @@ const EventDetails = (props: {
       >
         <img
           className="col-span-2 object-cover"
-          src={process.env.IMAGE_SOURCE + props.event.image}
+          src={process.env.IMAGE_SOURCE + event.image}
           alt=""
         />
         <div className="bg-neutral-200 col-span-3 p-10 text-right">
-          <div className="font-medium text-2xl">{props.event.title}</div>
-          <Link href={`/organiser/${props.event.organiser.id}`}>
+          <div className="font-medium text-2xl">{event.title}</div>
+          <Link href={`/organiser/${event.organiser.id}`}>
             <a className="block hover:underline mb-4 text-neutral-500">
-              {props.event.organiser.name}
+              {event.organiser.name}
             </a>
           </Link>
-          <div className="">{props.event.venue}</div>
-          <div>{props.event.date.toLocaleString()}</div>
+          <div className="">{event.venue}</div>
+          <div>{event.date.toLocaleString()}</div>
           <div className="flex-grow" />
           <div className="flex gap-10 justify-end mt-6">
             <div />
@@ -81,7 +83,7 @@ const EventDetails = (props: {
       >
         <div className="col-span-3 row-span-2">
           <p>
-            {props.event.desc
+            {event.desc
               .split("\n")
               .filter((d) => d)
               .map((d, i) => (
@@ -91,11 +93,13 @@ const EventDetails = (props: {
               ))}
           </p>
         </div>
-        <img
-          alt={props.event.venue}
-          className="col-span-2 object-cover"
-          src="https://tile.openstreetmap.org/16/34344/22261.png"
-        />
+        {event.venue && (
+          <img
+            alt={event.venue}
+            className="col-span-2 object-cover"
+            src="https://tile.openstreetmap.org/16/34344/22261.png"
+          />
+        )}
         {/* <iframe
               className="col-span-2 h-96 bg-slate-400"
               title="Veranstaltungsort"
@@ -112,26 +116,26 @@ const EventDetails = (props: {
           style={{ gridTemplateColumns: "1fr 2fr" }}
         >
           <div className="text-neutral-600">Adresse:</div>
-          <div>{props.event.venue}</div>
+          <div>{event.venue}</div>
           <div className="text-neutral-600">Preis:</div>
-          <div>{props.event.price}</div>
+          <div>{event.price}</div>
         </div>
       </div>
       <div className="pb-10">
-        {!!sameOrgEvents.length && (
+        {sameOrg && !!sameOrg.length && (
           <EventGroup title="Weitere Events von diesem Veranstalter">
-            {sameOrgEvents.map((e) => (
+            {sameOrg.map((e) => (
               <Event key={e.id} event={e} />
             ))}
           </EventGroup>
         )}
-        <EventGroup title="Ähnliche Events, die Dich interessieren könnten">
-          {[event3, event4, event5, event1, event2]
-            .filter((e) => e.id !== props.event.id)
-            .map((e) => (
+        {similar && !!similar.length && (
+          <EventGroup title="Ähnliche Events, die Dich interessieren könnten">
+            {similar.map((e) => (
               <Event key={e.id} event={e} />
             ))}
-        </EventGroup>
+          </EventGroup>
+        )}
       </div>
     </>
   );
