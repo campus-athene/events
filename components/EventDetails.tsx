@@ -36,7 +36,7 @@ const EventDetails = (props: {
       >
         <img
           className="col-span-2 object-cover"
-          src={props.event.image}
+          src={process.env.IMAGE_SOURCE + props.event.image}
           alt=""
         />
         <div className="bg-neutral-200 col-span-3 p-10 text-right">
@@ -47,7 +47,7 @@ const EventDetails = (props: {
             </a>
           </Link>
           <div className="">{props.event.venue}</div>
-          <div>{props.event.date}</div>
+          <div>{props.event.date.toLocaleString()}</div>
           <div className="flex-grow" />
           <div className="flex gap-10 justify-end mt-6">
             <div />

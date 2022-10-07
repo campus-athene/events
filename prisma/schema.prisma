@@ -1,0 +1,61 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Organiser {
+  id              Int     @id @default(autoincrement())
+  name            String  @db.Text
+  description     String  @db.Text
+  logoImg         String  @map("logo_img") @db.Char(16)
+  coverImg        String  @map("cover_img") @db.Char(16)
+  eventLimit      Int     @default(10) @map("event_limit")
+  socialWebsite   String? @map("social_website") @db.VarChar(250)
+  socialEmail     String? @map("social_email") @db.VarChar(250)
+  socialPhone     String? @map("social_phone") @db.VarChar(250)
+  socialFacebook  String? @map("social_facebook") @db.VarChar(250)
+  socialInstagram String? @map("social_instagram") @db.VarChar(250)
+  socialTwitter   String? @map("social_twitter") @db.VarChar(250)
+  socialLinkedin  String? @map("social_linkedin") @db.VarChar(250)
+  socialTiktok    String? @map("social_tiktok") @db.VarChar(250)
+  socialYoutube   String? @map("social_youtube") @db.VarChar(250)
+  socialTelegram  String? @map("social_telegram") @db.VarChar(250)
+  events          Event[]
+
+  @@map("event_organisers")
+}
+
+model Event {
+  id                   Int       @id @default(autoincrement())
+  title                String    @db.Text
+  desc                 String    @map("description") @db.Text
+  date                 DateTime  @db.DateTime(0)
+  online               Boolean   @default(dbgenerated("(b'0')")) @db.Bit(1)
+  eventType            String    @default("") @map("event_type") @db.Text
+  venue                String?   @db.Text
+  participationLink    String?   @map("participation_link") @db.Text
+  registrationDeadline DateTime? @map("registration_deadline") @db.DateTime(0)
+  registrationLink     String?   @map("registration_link") @db.Text
+  price                String    @default("") @db.Text
+  image                String    @db.Char(16)
+  clicks               Int       @default(0)
+  organiserId          Int       @map("organiser")
+  organiser            Organiser @relation(fields: [organiserId], references: [id], onUpdate: Restrict, map: "organiser")
+
+  @@index([organiserId], map: "organiser_idx")
+  @@map("events")
+}
+
+model Image {
+  id          String   @id @db.Char(16)
+  mimeType    String   @map("mime_type") @db.VarChar(150)
+  owner       Int
+  dateCreated DateTime @default(now()) @map("date_created") @db.Timestamp(0)
+
+  @@index([owner], map: "owner_idx")
+  @@map("images")
+}

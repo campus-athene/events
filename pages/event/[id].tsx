@@ -20,10 +20,10 @@ const EventPage: NextPage = () => {
 
   const EventTemplate = (props: { event: Event }) => (
     <DefaultEventTemplate
-      event={event}
+      event={props.event}
       onClick={(e) => {
         e.preventDefault();
-        setOpenEvent(event);
+        setOpenEvent(props.event);
       }}
     />
   );

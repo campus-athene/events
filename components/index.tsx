@@ -122,7 +122,7 @@ export const Event = (props: {
       >
         <img
           className="h-32 object-cover rounded-t-xl w-48 mb-1"
-          src={props.event.image}
+          src={process.env.IMAGE_SOURCE + props.event.image}
           alt=""
         />
         <div className="overflow-hidden px-3 pt-1 text-ellipsis whitespace-nowrap font-medium">
@@ -132,7 +132,7 @@ export const Event = (props: {
           {props.event.organiser.name}
         </div>
         <div className="overflow-hidden px-3 pt-1 text-ellipsis whitespace-nowrap text-xs">
-          {props.event.date}
+          {props.event.date.toLocaleString()}
         </div>
         <div className="block overflow-hidden px-3 pt-1 text-ellipsis whitespace-nowrap text-xs">
           {props.event.venue}
@@ -156,7 +156,7 @@ export const Highlight = (props: {
         <img
           className="h-32 object-cover rounded-l-xl w-54 flex-shrink-0"
           style={{ height: "9rem", width: "13.5rem" }}
-          src={props.event.image}
+          src={process.env.IMAGE_SOURCE + props.event.image}
           alt=""
         />
         <div className="flex-grow min-w-0">
@@ -167,7 +167,7 @@ export const Highlight = (props: {
             {props.event.organiser.name}
           </div>
           <div className="overflow-hidden px-4 pt-1 text-ellipsis whitespace-nowrap">
-            {props.event.date}
+            {props.event.date.toLocaleString()}
           </div>
           <div className="block overflow-hidden px-4 pt-1 text-ellipsis whitespace-nowrap hover:underline">
             {props.event.venue}

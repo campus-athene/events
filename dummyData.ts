@@ -10,7 +10,7 @@ export type Event = {
   id: number;
   title: string;
   organiser: { id: number; name: string };
-  date: string;
+  date: Date;
   venue: string;
   price: string;
   desc: string;
@@ -23,7 +23,7 @@ const dummyData: { events: Event[]; organisers: Organiser[] } = {
       id: 1,
       title: "E-Learning Stammtisch",
       organiser: { id: 1, name: "Hochschuldidaktische Arbeitsstelle" },
-      date: "14. September, 15:00 Uhr",
+      date: new Date("14. September, 15:00 Uhr"),
       venue: "Online Event",
       price: "Kostenlos",
       desc: `
@@ -39,7 +39,7 @@ const dummyData: { events: Event[]; organisers: Organiser[] } = {
         id: 2,
         name: "Fußball Verein",
       },
-      date: "10. September, 10:00 Uhr",
+      date: new Date("10. September, 10:00 Uhr"),
       venue: "Sportplatz",
       price: "Kostenlos",
       desc: `
@@ -64,7 +64,7 @@ const dummyData: { events: Event[]; organisers: Organiser[] } = {
         id: 4,
         name: "Fechtverein",
       },
-      date,
+      date: new Date(date),
       venue: "Sporthalle",
       price: "12 € pro Monat",
       desc: `
@@ -88,7 +88,7 @@ const dummyData: { events: Event[]; organisers: Organiser[] } = {
         id: 3,
         name: "Leseratte e.V.",
       },
-      date,
+      date: new Date(date),
       venue: "Bücherei",
       price: "Kostenlos",
       desc: `
@@ -105,7 +105,7 @@ const dummyData: { events: Event[]; organisers: Organiser[] } = {
         id: 5,
         name: "HIGHEST Innovations- & Gründungszentrum ",
       },
-      date: "20. Oktober 2022",
+      date: new Date("20. Oktober 2022"),
       venue: "darmstadtium",
       price: "Kostenlos",
       desc: `
