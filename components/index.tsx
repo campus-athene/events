@@ -5,6 +5,7 @@ import "moment/locale/de";
 import Link from "next/link";
 import { MouseEventHandler, ReactNode, useRef } from "react";
 import { InterfaceEvent as EventType } from "../utils";
+import Image from "./Image";
 
 export const Header = (props: {
   children: ReactNode;
@@ -90,10 +91,10 @@ export const Event = (props: {
         className="bg-slate-200 block flex-shrink-0 h-56 rounded-xl text-sm w-48"
         onClick={props.onClick}
       >
-        <img
+        <Image
           className="h-32 object-cover rounded-t-xl w-48 mb-1"
-          src={process.env.IMAGE_SOURCE + props.event.image}
-          alt=""
+          src={props.event.image}
+          width={48}
         />
         <div className="overflow-hidden px-3 pt-1 text-ellipsis whitespace-nowrap font-medium">
           {props.event.title}
@@ -123,11 +124,10 @@ export const Highlight = (props: {
         onClick={props.onClick}
         style={{ width: "33rem" }}
       >
-        <img
-          className="h-32 object-cover rounded-l-xl w-54 flex-shrink-0"
-          style={{ height: "9rem", width: "13.5rem" }}
-          src={process.env.IMAGE_SOURCE + props.event.image}
-          alt=""
+        <Image
+          className="h-36 object-cover rounded-l-xl w-54 flex-shrink-0"
+          src={props.event.image}
+          width={54}
         />
         <div className="flex-grow min-w-0">
           <div className="overflow-hidden px-4 pt-3 text-ellipsis whitespace-nowrap text-xl font-medium">

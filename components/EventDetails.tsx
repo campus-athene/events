@@ -8,6 +8,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Event as DefaultEventTemplate, EventGroup } from ".";
 import { InterfaceEvent as Event } from "../utils";
+import Image from "./Image";
 
 const EventDetails = (props: {
   event: Event;
@@ -36,10 +37,10 @@ const EventDetails = (props: {
         className="grid grid-cols-5 items-stretch justify-items-stretch"
         style={{ gridTemplateRows: "16rem max-content" }}
       >
-        <img
+        <Image
           className="col-span-2 object-cover"
-          src={process.env.IMAGE_SOURCE + event.image}
-          alt=""
+          src={event.image}
+          width={115.2}
         />
         <div className="bg-neutral-200 col-span-3 p-10 text-right">
           <div className="font-medium text-2xl">{event.title}</div>

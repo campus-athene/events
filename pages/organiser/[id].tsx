@@ -11,6 +11,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Organiser, PrismaClient } from "@prisma/client";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { Event, EventGroup } from "../../components";
+import Image from "../../components/Image";
 import { InterfaceEvent, mapPrismaEvent, prismaEventSelect } from "../../utils";
 
 const prisma = new PrismaClient();
@@ -96,10 +97,10 @@ const OrganiserPage = (props: Data) => {
 
   return (
     <>
-      <img
-        alt=""
+      <Image
         className="max-h-96 object-cover w-full"
         src={organiser.coverImg}
+        width={228}
       />
       <h1 className="font-medium m-10 mb-2 text-2xl">{organiser.name}</h1>
       <div className="flex px-10 gap-8">
@@ -114,7 +115,7 @@ const OrganiserPage = (props: Data) => {
             ))}
         </div>
         <div className="flex flex-col flex-shrink-0">
-          <img alt="" className="h-72 w-72" src={organiser.logoImg} />
+          <Image className="h-72 w-72" src={organiser.logoImg} width={72} />
           <div className="flex gap-2 justify-center mt-8 text-2xl">
             <FontAwesomeIcon icon={faGlobe} />
             <FontAwesomeIcon icon={faFacebookF} />
