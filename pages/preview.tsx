@@ -1,6 +1,6 @@
 import { Prisma, PrismaClient } from "@prisma/client";
 import moment from "moment";
-import { GetStaticProps } from "next";
+import { GetServerSideProps } from "next";
 import Link from "next/link";
 import { useState } from "react";
 import {
@@ -28,7 +28,7 @@ type Data = {
 
 const prisma = new PrismaClient();
 
-export const getStaticProps: GetStaticProps<Data> = async () => {
+export const getServerSideProps: GetServerSideProps<Data> = async () => {
   const now = moment();
 
   const select = prismaEventSelect;

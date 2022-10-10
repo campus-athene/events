@@ -34,9 +34,10 @@ export const getStaticProps: GetStaticProps<Data> = async (context) => {
 
 export const getStaticPaths: GetStaticPaths = async (context) => {
   return {
-    paths: (await prisma.event.findMany({ select: { id: true } })).map(
-      ({ id }) => ({ params: { id: id.toString() } })
-    ),
+    // paths: (await prisma.event.findMany({ select: { id: true } })).map(
+    //   ({ id }) => ({ params: { id: id.toString() } })
+    // ),
+    paths: [], // Disable build time generation
     fallback: "blocking",
   };
 };
