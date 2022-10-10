@@ -7,6 +7,8 @@ export type InterfaceEvent = {
   date: number;
   eventType: string;
   venue: string | null;
+  venueAddress: string | null;
+  venuePlaceId: string | null;
   price: string;
   desc: string;
   image: string;
@@ -24,6 +26,7 @@ export const prismaEventSelect = {
   date: true,
   eventType: true,
   venue: true,
+  venueData: true,
   price: true,
   desc: true,
   image: true,
@@ -42,7 +45,12 @@ type PrismaSelectedEvent = Pick<
 /** How many events to pull from database for every row. */
 export const takeEventsPerRow = 12;
 
-export const mapPrismaEvent = (e: PrismaSelectedEvent): InterfaceEvent => ({
-  ...e,
-  date: e.date.getTime(),
-});
+export const mapPrismaEvent = (e: PrismaSelectedEvent): InterfaceEvent => {
+  const venueData = e.venueData && JSON.parse(e.venueData);
+  return {
+    ...e,
+    date: e.date.getTime(),
+    venueAddress: venueData["formatted_address"],
+    venuePlaceId: venueData["place_id"],
+  };
+};

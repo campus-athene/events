@@ -94,24 +94,17 @@ const EventDetails = (props: {
               ))}
           </p>
         </div>
-        {event.venue && (
-          <img
-            alt={event.venue}
+        {event.venuePlaceId && (
+          <iframe
             className="col-span-2 object-cover"
-            src="https://tile.openstreetmap.org/16/34344/22261.png"
-          />
+            loading="lazy"
+            allowFullScreen
+            referrerPolicy="no-referrer-when-downgrade"
+            src={`https://www.google.com/maps/embed/v1/place?key=${encodeURIComponent(
+              process.env.NEXT_PUBLIC_GCP_API_KEY || ""
+            )}&q=place_id:${encodeURIComponent(event.venuePlaceId)}`}
+          ></iframe>
         )}
-        {/* <iframe
-              className="col-span-2 h-96 bg-slate-400"
-              title="Veranstaltungsort"
-              frameBorder="0"
-              src="https://www.bing.com/maps/embed?h=400&amp;w=500&amp;cp=49.999795027127405~4022.999725341797&amp;lvl=11&amp;typ=d&amp;sty=r&amp;src=SHELL&amp;FORM=MBEDV8"
-              scrolling="no"
-            ></iframe> */}
-        {/* <div style="white-space: nowrap; text-align: center; width: 500px; padding: 6px 0;">
-              <a id="largeMapLink" target="_blank" href="https://www.bing.com/maps?cp=49.999795027127405~4022.999725341797&amp;sty=r&amp;lvl=11&amp;FORM=MBEDLD">View Larger Map</a> &nbsp; | &nbsp;
-              <a id="dirMapLink" target="_blank" href="https://www.bing.com/maps/directions?cp=49.999795027127405~4022.999725341797&amp;sty=r&amp;lvl=11&amp;rtp=~pos.49.999795027127405_4022.999725341797____&amp;FORM=MBEDLD">Get Directions</a>
-            </div> */}
         <div
           className="bg-neutral-200 col-start-4 col-span-2 gap-2 grid p-4 rounded-xl self-start"
           style={{ gridTemplateColumns: "1fr 2fr" }}
