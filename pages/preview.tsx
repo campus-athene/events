@@ -127,7 +127,7 @@ export const getServerSideProps: GetServerSideProps<Data> = async () => {
         }))
       ),
     },
-    revalidate: 60,
+    // revalidate: 60, // Only use in getStaticProps
   };
 };
 
