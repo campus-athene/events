@@ -3,12 +3,15 @@ import { Event as PrismaEvent, Organiser } from "@prisma/client";
 export type InterfaceEvent = {
   id: number;
   title: string;
-  organiser: { id: number; name: string };
+  organiser: { id: number; name: string; socialEmail: string | null };
   date: number;
+  online: boolean;
   eventType: string;
   venue: string | null;
   venueAddress: string | null;
   venuePlaceId: string | null;
+  registrationDeadline: number | null;
+  registrationLink: string | null;
   price: string | null;
   desc: string;
   image: string;
@@ -21,12 +24,16 @@ export const prismaEventSelect = {
     select: {
       id: true,
       name: true,
+      socialEmail: true,
     },
   },
   date: true,
+  online: true,
   eventType: true,
   venue: true,
   venueData: true,
+  registrationDeadline: true,
+  registrationLink: true,
   price: true,
   desc: true,
   image: true,
@@ -52,5 +59,6 @@ export const mapPrismaEvent = (e: PrismaSelectedEvent): InterfaceEvent => {
     date: e.date.getTime(),
     venueAddress: venueData && venueData["formatted_address"],
     venuePlaceId: venueData && venueData["place_id"],
+    registrationDeadline: e.registrationDeadline?.getTime() || null,
   };
 };

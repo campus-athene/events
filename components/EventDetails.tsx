@@ -1,11 +1,20 @@
-import { faHeart as faRegularHeart } from "@fortawesome/free-regular-svg-icons";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import {
+  faEnvelope,
+  faHeart as faRegularHeart,
+} from "@fortawesome/free-regular-svg-icons";
+import {
+  faEuroSign,
   faHeart as faSolidHeart,
+  faMapLocationDot,
   faShareFromSquare,
+  faTicket,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { utc } from "moment";
+import "moment/locale/de";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { Event as DefaultEventTemplate, EventGroup } from ".";
 import { InterfaceEvent as Event } from "../utils";
 import Image from "./Image";
@@ -31,6 +40,27 @@ const EventDetails = (props: {
 
   const event = serverEvent || props.event;
 
+  const Information = (props: {
+    children: ReactNode;
+    href?: string;
+    icon: IconProp;
+  }) => (
+    <>
+      <div className="justify-self-center text-neutral-600">
+        <FontAwesomeIcon icon={props.icon} />
+      </div>
+      <div>
+        {props.href === undefined ? (
+          props.children
+        ) : (
+          <a className="hover:underline" href={props.href}>
+            {props.children}
+          </a>
+        )}
+      </div>
+    </>
+  );
+
   return (
     <>
       <div
@@ -50,7 +80,7 @@ const EventDetails = (props: {
             </a>
           </Link>
           <div className="">{event.venue}</div>
-          <div>{event.date.toLocaleString()}</div>
+          <div>{utc(event.date).local().locale("de").format("llll")}</div>
           <div className="flex-grow" />
           <div className="flex gap-10 justify-end mt-6">
             <div />
@@ -66,9 +96,14 @@ const EventDetails = (props: {
             <button className="text-neutral-600">
               <FontAwesomeIcon className="h-6" icon={faShareFromSquare} />
             </button>
-            <button className="bg-violet p-2 px-8 rounded-xl text-white">
-              Anmelden
-            </button>
+            {event.registrationLink && (
+              <a
+                className="bg-violet p-2 px-8 rounded-xl text-white"
+                href={event.registrationLink}
+              >
+                Anmelden
+              </a>
+            )}
           </div>
           {/* <Link
                 className="bg-slate-400 p-2 rounded-xl text-center"
@@ -96,7 +131,7 @@ const EventDetails = (props: {
         </div>
         {event.venuePlaceId && (
           <iframe
-            className="col-span-2 object-cover"
+            className="col-span-2 object-cover rounded-xl"
             loading="lazy"
             allowFullScreen
             referrerPolicy="no-referrer-when-downgrade"
@@ -107,12 +142,36 @@ const EventDetails = (props: {
         )}
         <div
           className="bg-neutral-200 col-start-4 col-span-2 gap-2 grid p-4 rounded-xl self-start"
-          style={{ gridTemplateColumns: "1fr 2fr" }}
+          style={{ gridTemplateColumns: "max-content 1fr" }}
         >
-          <div className="text-neutral-600">Adresse:</div>
-          <div>{event.venue}</div>
-          <div className="text-neutral-600">Preis:</div>
-          <div>{event.price}</div>
+          <Information icon={faTicket}>
+            {!event.registrationLink ? (
+              "Keine Anmeldung erforderlich"
+            ) : (
+              <a className="hover:underline" href={event.registrationLink}>
+                {event.registrationDeadline
+                  ? `Anmeldung bis ${utc(event.registrationDeadline)
+                      .local()
+                      .locale("de")
+                      .format("llll")}`
+                  : "Anmeldung erforderlich"}
+              </a>
+            )}
+          </Information>
+          <Information icon={faEuroSign}>
+            {event.price || "Kostenlos"}
+          </Information>
+          <Information icon={faMapLocationDot}>
+            {event.online ? event.venue : "Online"}
+          </Information>
+          {event.organiser.socialEmail && (
+            <Information
+              href={`mailto:${event.organiser.socialEmail}`}
+              icon={faEnvelope}
+            >
+              {event.organiser.socialEmail}
+            </Information>
+          )}
         </div>
       </div>
       <div className="pb-10">
