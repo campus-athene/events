@@ -4,7 +4,7 @@ import {
   mapPrismaEvent,
   prismaEventSelect,
   takeEventsPerRow,
-} from "../../utils";
+} from "../../../utils";
 
 const prisma = new PrismaClient();
 
@@ -36,7 +36,16 @@ export default async function handler(
         select: prismaEventSelect,
         take: takeEventsPerRow,
         where: {
-          organiserId: event.organiser.id,
+          AND: [
+            {
+              organiserId: event.organiser.id,
+            },
+            {
+              NOT: {
+                id: event.id,
+              },
+            },
+          ],
         },
       }),
       prisma.event.findMany({
