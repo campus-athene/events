@@ -12,7 +12,7 @@ model Organiser {
   name            String  @db.Text
   description     String  @db.Text
   logoImg         String  @map("logo_img") @db.Char(16)
-  coverImg        String  @map("cover_img") @db.Char(16)
+  coverImg        String? @map("cover_img") @db.Char(16)
   eventLimit      Int     @default(10) @map("event_limit")
   group           String? @db.VarChar(45)
   socialWebsite   String? @map("social_website") @db.VarChar(250)
@@ -43,7 +43,7 @@ model Event {
   participationLink    String?   @map("participation_link") @db.Text
   registrationDeadline DateTime? @map("registration_deadline") @db.DateTime(0)
   registrationLink     String?   @map("registration_link") @db.Text
-  price                String    @default("") @db.Text
+  price                String?   @db.Text
   image                String    @db.Char(16)
   clicks               Int       @default(0)
   organiserId          Int       @map("organiser")

@@ -9,7 +9,7 @@ export type InterfaceEvent = {
   venue: string | null;
   venueAddress: string | null;
   venuePlaceId: string | null;
-  price: string;
+  price: string | null;
   desc: string;
   image: string;
 };
@@ -50,7 +50,7 @@ export const mapPrismaEvent = (e: PrismaSelectedEvent): InterfaceEvent => {
   return {
     ...e,
     date: e.date.getTime(),
-    venueAddress: venueData["formatted_address"],
-    venuePlaceId: venueData["place_id"],
+    venueAddress: venueData && venueData["formatted_address"],
+    venuePlaceId: venueData && venueData["place_id"],
   };
 };

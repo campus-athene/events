@@ -98,11 +98,13 @@ const OrganiserPage = (props: Data) => {
 
   return (
     <>
-      <Image
-        className="max-h-96 object-cover w-full"
-        src={organiser.coverImg}
-        width={228}
-      />
+      {organiser.coverImg && (
+        <Image
+          className="max-h-96 object-cover w-full"
+          src={organiser.coverImg}
+          width={228}
+        />
+      )}
       <h1 className="font-medium m-10 mb-2 text-2xl">{organiser.name}</h1>
       <div className="flex px-10 gap-8">
         <div className="flex-grow">
