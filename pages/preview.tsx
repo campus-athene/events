@@ -247,6 +247,7 @@ const Home = (props: Data) => {
           ))}
         </EventGroup>
       ))}
+      <div className="h-10" />
       <EventModal event={openEvent} setEvent={setOpenEvent} />
     </>
   );

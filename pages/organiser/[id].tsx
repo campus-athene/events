@@ -138,6 +138,7 @@ const OrganiserPage = (props: Data) => {
           ))}
         </EventGroup>
       ))}
+      <div className="h-10" />
     </>
   );
 };

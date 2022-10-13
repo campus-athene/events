@@ -33,15 +33,9 @@ const EventModal = (props: {
 
   return (
     <div
-      className="bg-black bg-opacity-50 backdrop-blur-sm"
+      className="bg-black bg-opacity-50 backdrop-blur-sm fixed inset-0 mx-auto my-0 overflow-auto z-20"
       onClick={() => props.setEvent(null)}
       ref={scrollRef}
-      style={{
-        position: "fixed",
-        inset: "0 0",
-        margin: "0 auto",
-        overflow: "auto",
-      }}
     >
       <div
         className="mx-auto my-16 bg-white rounded-xl overflow-hidden"

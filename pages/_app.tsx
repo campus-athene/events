@@ -9,7 +9,7 @@ const App = ({ Component, pageProps }: AppProps) => {
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      <div className="min-h-screen relative">
+      <div className="overflow-auto relative">
         <header className="bg-violet fixed flex justify-center top-0 w-full">
           <div
             className="flex h-12 items-stretch px-10 space-x-4 text-white"
@@ -35,14 +35,15 @@ const App = ({ Component, pageProps }: AppProps) => {
           </div>
         </header>
         <main
-          className="bg-white mt-12 pb-10 mx-auto overflow-x-clip"
+          className="bg-white mt-12 mb-36 mx-auto overflow-x-clip"
           style={{
+            minHeight: "calc(100vh - 12rem)",
             maxWidth: "72rem",
           }}
         >
           <Component {...pageProps} />
         </main>
-        <footer className="bg-violet flex justify-center w-full">
+        <footer className="absolute bg-violet bottom-0 flex justify-center w-full">
           <div
             className="flex h-36 items-center justify-between px-10 text-sm text-white"
             style={{ width: "72rem" }}
