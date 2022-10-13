@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { NextApiRequest, NextApiResponse, PageConfig } from "next";
-import { join } from "path";
+import { join } from "path/posix";
 import { createClient } from "webdav";
 
 const prisma = new PrismaClient();
