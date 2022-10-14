@@ -66,40 +66,46 @@ export const getServerSideProps: GetServerSideProps<Data> = async () => {
           where: noPastFilter,
         })
       ).map(mapPrismaEvent),
-      dateRanges: await awaitAll(
-        [
-          {
-            name: "Heute",
-            from: now.clone(),
-            to: now.clone().endOf("day"),
-          },
-          {
-            name: "Morgen",
-            from: now.clone().add(1, "day").startOf("day"),
-            to: now.clone().add(1, "day").endOf("day"),
-          },
-          {
-            name: "Diese Woche",
-            from: now.clone().startOf("week"),
-            to: now.clone().endOf("week"),
-          },
-          {
-            name: "Nächste Woche",
-            from: now.clone().add(1, "week").startOf("week"),
-            to: now.clone().add(1, "week").endOf("week"),
-          },
-        ].map(async ({ name, from, to }) => ({
-          name,
-          events: (
-            await prisma.event.findMany({
-              orderBy: { clicks: "desc" },
-              select,
-              take,
-              where: { date: { gte: from.toDate(), lt: to.toDate() } },
-            })
-          ).map(mapPrismaEvent),
-        }))
-      ),
+      dateRanges: (
+        await awaitAll(
+          [
+            {
+              name: "Heute",
+              from: now.clone(),
+              to: now.clone().endOf("day"),
+            },
+            {
+              name: "Morgen",
+              from: now.clone().add(1, "day").startOf("day"),
+              to: now.clone().add(1, "day").endOf("day"),
+            },
+            ...(now.isoWeekday() <= 5
+              ? [
+                  {
+                    name: "Diese Woche",
+                    from: now.clone().startOf("week"),
+                    to: now.clone().endOf("week"),
+                  },
+                ]
+              : []),
+            {
+              name: "Nächste Woche",
+              from: now.clone().add(1, "week").startOf("week"),
+              to: now.clone().add(1, "week").endOf("week"),
+            },
+          ].map(async ({ name, from, to }) => ({
+            name,
+            events: (
+              await prisma.event.findMany({
+                orderBy: { clicks: "desc" },
+                select,
+                take,
+                where: { date: { gte: from.toDate(), lt: to.toDate() } },
+              })
+            ).map(mapPrismaEvent),
+          }))
+        )
+      ).filter((r) => r.events.length),
       categories: (
         await awaitAll(
           (
