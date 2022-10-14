@@ -26,13 +26,18 @@ const EventDetails = (props: {
 }) => {
   const Event = props.EventTemlate || DefaultEventTemplate;
 
+  const [canShare, setCanShare] = useState(true);
+
   const getFavEvents = (): string[] => {
-    const favEvents = localStorage.getItem("favEvents");
+    const favEvents =
+      typeof window === "object" ? localStorage.getItem("favEvents") : null;
     if (!favEvents) return [];
     return favEvents.split("|");
   };
   const [fav, setFavState] = useState(
-    getFavEvents().includes(props.event.id.toString())
+    typeof window === "object"
+      ? getFavEvents().includes(props.event.id.toString())
+      : false
   );
   const setFav = (fav: boolean) => {
     setFavState(fav);
@@ -44,6 +49,14 @@ const EventDetails = (props: {
       ).join("|")
     );
   };
+
+  useEffect(() => {
+    // Will only execute in browser environment.
+    // canShare and fav cannot be set while prerendering serverside.
+    // navigator.canShare is undefined when not serving via https.
+    navigator.canShare && setCanShare(navigator.canShare(shareData));
+    setFav(getFavEvents().includes(props.event.id.toString()));
+  }, []);
 
   const [{ event: serverEvent, sameOrg, similar }, setServerData] = useState<{
     event: Event | null;
@@ -114,7 +127,7 @@ const EventDetails = (props: {
                 icon={fav ? faSolidHeart : faRegularHeart}
               />
             </button>
-            {navigator.canShare(shareData) && (
+            {canShare && (
               <button
                 className="text-neutral-600"
                 onClick={() => navigator.share(shareData)}
