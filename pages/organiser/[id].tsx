@@ -10,6 +10,7 @@ import { faGlobe, faPhone } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Organiser, PrismaClient } from "@prisma/client";
 import { GetStaticPaths, GetStaticProps } from "next";
+import Head from "next/head";
 import { Event, EventGroup } from "../../components";
 import Image from "../../components/Image";
 import {
@@ -106,6 +107,22 @@ const OrganiserPage = (props: Data) => {
 
   return (
     <>
+      <Head>
+        <title>{props.organiser.name}</title>
+        <meta
+          name="description"
+          content={props.organiser.description.substring(0, 400)}
+        />
+        <meta property="og:type" content="website" />
+        <meta
+          property="og:url"
+          content={`https://events.study-campus.de/organiser/${props.organiser.id}`}
+        />
+        <meta
+          property="og:image"
+          content={`https://events.study-campus.de/api/image/72/${props.organiser.logoImg}`}
+        />
+      </Head>
       {organiser.coverImg && (
         <Image
           className="max-h-96 object-cover w-full"

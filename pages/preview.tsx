@@ -1,6 +1,7 @@
 import { Prisma, PrismaClient } from "@prisma/client";
 import moment from "moment";
 import { GetServerSideProps } from "next";
+import Head from "next/head";
 import Link from "next/link";
 import { useState } from "react";
 import {
@@ -211,6 +212,22 @@ const Home = (props: Data) => {
 
   return (
     <>
+      <Head>
+        <title>Campus Events</title>
+        <meta
+          name="description"
+          content="Du willst wissen, was auf dem Campus los ist? Hier findest Du von Parties über Exkursionen bis Workshops alles, was Dich interessiert."
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={`https://events.study-campus.de/`} />
+        <meta
+          property="og:image"
+          content={`https://events.study-campus.de/ogimage.png`}
+        />
+        <meta property="og:image:type" content="image/png" />
+        <meta property="og:image:width" content="999" />
+        <meta property="og:image:height" content="666" />
+      </Head>
       <Link href="/event/1">
         <a>
           <img

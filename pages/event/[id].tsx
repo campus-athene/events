@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { GetStaticPaths, GetStaticProps, NextPage } from "next";
+import Head from "next/head";
 import { useState } from "react";
 import { Event as DefaultEventTemplate } from "../../components";
 import EventDetails from "../../components/EventDetails";
@@ -57,6 +58,19 @@ const EventPage: NextPage<Data> = (props) => {
 
   return (
     <>
+      <Head>
+        <title>{props.event.title}</title>
+        <meta name="description" content={props.event.desc.substring(0, 400)} />
+        <meta property="og:type" content="website" />
+        <meta
+          property="og:url"
+          content={`https://events.study-campus.de/event/${props.event.id}`}
+        />
+        <meta
+          property="og:image"
+          content={`https://events.study-campus.de/api/image/48/${props.event.image}`}
+        />
+      </Head>
       <EventDetails event={props.event} EventTemlate={EventTemplate} />
       <EventModal event={openEvent} setEvent={setOpenEvent} />
     </>
