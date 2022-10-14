@@ -2,6 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import type { NextApiRequest, NextApiResponse } from "next";
 import {
   mapPrismaEvent,
+  noPastFilter,
   prismaEventSelect,
   takeEventsPerRow,
 } from "../../../utils";
@@ -45,6 +46,7 @@ export default async function handler(
                 id: event.id,
               },
             },
+            noPastFilter,
           ],
         },
       }),
@@ -60,6 +62,7 @@ export default async function handler(
               },
             },
             { eventType: event.eventType },
+            noPastFilter,
           ],
         },
       }),

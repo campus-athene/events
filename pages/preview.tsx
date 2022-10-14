@@ -13,6 +13,7 @@ import EventModal from "../components/EventModal";
 import {
   InterfaceEvent as Event,
   mapPrismaEvent,
+  noPastFilter,
   prismaEventSelect,
   takeEventsPerRow,
 } from "../utils";
@@ -62,6 +63,7 @@ export const getServerSideProps: GetServerSideProps<Data> = async () => {
           orderBy: { clicks: "desc" },
           select,
           take: 2,
+          where: noPastFilter,
         })
       ).map(mapPrismaEvent),
       dateRanges: await awaitAll(
@@ -98,34 +100,68 @@ export const getServerSideProps: GetServerSideProps<Data> = async () => {
           ).map(mapPrismaEvent),
         }))
       ),
-      categories: await awaitAll(
-        [
-          {
-            name: "Workshops",
-            where: { eventType: "Workshop" } as Prisma.EventWhereInput,
-          },
-          {
-            name: "Hochschulgruppen",
-            where: {
-              organiser: { group: "Hochschulgruppe" },
-            } as Prisma.EventWhereInput,
-          },
-          {
-            name: "Gastvorträge",
-            where: { eventType: "Gastvortrag" } as Prisma.EventWhereInput,
-          },
-        ].map(async ({ name, where }) => ({
-          name,
-          events: (
-            await prisma.event.findMany({
-              orderBy: { clicks: "desc" },
-              select,
-              take,
-              where,
-            })
-          ).map(mapPrismaEvent),
-        }))
-      ),
+      categories: (
+        await awaitAll(
+          (
+            [
+              {
+                name: "Workshops",
+                where: { eventType: "Workshop" },
+              },
+              {
+                name: "Präsenz",
+                where: {
+                  online: true,
+                },
+              },
+              {
+                name: "Hochschulgruppen",
+                where: {
+                  organiser: { group: "Hochschulgruppe" },
+                },
+              },
+              {
+                name: "Fachschaften",
+                where: {
+                  organiser: { group: "Fachschaft" },
+                },
+              },
+              {
+                name: "Exkursionen",
+                where: { eventType: "Exkursion" },
+              },
+              {
+                name: "Online",
+                where: { online: true },
+              },
+              ...(
+                await prisma.organiser.findMany({
+                  orderBy: { events: { _count: "desc" } },
+                  select: { id: true, name: true },
+                  where: {
+                    events: {
+                      some: noPastFilter,
+                    },
+                  },
+                })
+              ).map((o) => ({ name: o.name, where: { organiserId: o.id } })),
+            ] as { name: string; where: Prisma.EventWhereInput }[]
+          ).map(async ({ name, where }) => ({
+            name,
+            events: (
+              await prisma.event.findMany({
+                orderBy: { clicks: "desc" },
+                select,
+                take,
+                where: {
+                  ...noPastFilter,
+                  ...where,
+                },
+              })
+            ).map(mapPrismaEvent),
+          }))
+        )
+      ).filter((e) => e.events.length >= 2),
     },
     // revalidate: 60, // Only use in getStaticProps
   };

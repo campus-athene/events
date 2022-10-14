@@ -12,7 +12,12 @@ import { Organiser, PrismaClient } from "@prisma/client";
 import { GetStaticPaths, GetStaticProps } from "next";
 import { Event, EventGroup } from "../../components";
 import Image from "../../components/Image";
-import { InterfaceEvent, mapPrismaEvent, prismaEventSelect } from "../../utils";
+import {
+  InterfaceEvent,
+  mapPrismaEvent,
+  noPastFilter,
+  prismaEventSelect,
+} from "../../utils";
 
 const prisma = new PrismaClient();
 
@@ -53,7 +58,10 @@ export const getStaticProps: GetStaticProps<Data> = async (context) => {
     };
 
   const resp = await prisma.organiser.findUnique({
-    select: { ...select, events: { select: prismaEventSelect } },
+    select: {
+      ...select,
+      events: { select: prismaEventSelect, where: noPastFilter },
+    },
     where: { id: Number.parseInt(context.params.id) },
   });
 

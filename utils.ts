@@ -1,4 +1,4 @@
-import { Event as PrismaEvent, Organiser } from "@prisma/client";
+import { Event as PrismaEvent, Organiser, Prisma } from "@prisma/client";
 
 export type InterfaceEvent = {
   id: number;
@@ -37,6 +37,18 @@ export const prismaEventSelect = {
   price: true,
   desc: true,
   image: true,
+};
+
+export const noPastFilter: Prisma.EventWhereInput = {
+  AND: [
+    {
+      date: { gte: new Date() },
+      OR: [
+        { registrationDeadline: null },
+        { registrationDeadline: { gte: new Date() } },
+      ],
+    },
+  ],
 };
 
 type PrismaSelectedEvent = Pick<
