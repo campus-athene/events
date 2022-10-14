@@ -12,17 +12,19 @@ const App = ({ Component, pageProps }: AppProps) => {
       <div className="overflow-auto relative">
         <header className="bg-violet fixed flex justify-center top-0 w-full">
           <div
-            className="flex h-12 items-stretch px-10 space-x-4 text-white"
+            className="flex h-14 items-stretch px-10 space-x-4 text-white"
             style={{ width: "72rem" }}
           >
             <Link href="/">
               <a className="align-center flex flex-grow items-center">
                 <img
-                  className="h-8 inline-block mr-2 w-8"
+                  className="h-10 inline-block mr-4 w-10"
                   src="/logo.svg"
                   alt="Logo"
                 />
-                <div>Events</div>
+                <div className="text-lg">
+                  <span className="opacity-70">Campus</span> <span>Events</span>
+                </div>
               </a>
             </Link>
             {/* <input
