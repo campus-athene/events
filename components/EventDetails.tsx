@@ -25,7 +25,25 @@ const EventDetails = (props: {
   EventTemlate: ({ event }: { event: Event }) => JSX.Element;
 }) => {
   const Event = props.EventTemlate || DefaultEventTemplate;
-  const [fav, setFav] = useState(false);
+
+  const getFavEvents = (): string[] => {
+    const favEvents = localStorage.getItem("favEvents");
+    if (!favEvents) return [];
+    return favEvents.split("|");
+  };
+  const [fav, setFavState] = useState(
+    getFavEvents().includes(props.event.id.toString())
+  );
+  const setFav = (fav: boolean) => {
+    setFavState(fav);
+    localStorage.setItem(
+      "favEvents",
+      (fav
+        ? [...getFavEvents(), props.event.id]
+        : getFavEvents().filter((e) => e !== props.event.id.toString())
+      ).join("|")
+    );
+  };
 
   const [{ event: serverEvent, sameOrg, similar }, setServerData] = useState<{
     event: Event | null;
@@ -40,6 +58,12 @@ const EventDetails = (props: {
   }, [props.event.id]);
 
   const event = serverEvent || props.event;
+
+  const shareData = {
+    title: props.event.title,
+    text: props.event.desc.substring(0, 400),
+    url: `https://events.study-campus.de/event/${props.event.id}`,
+  };
 
   const Information = (props: {
     children: ReactNode;
@@ -94,9 +118,14 @@ const EventDetails = (props: {
                 icon={fav ? faSolidHeart : faRegularHeart}
               />
             </button>
-            <button className="text-neutral-600">
-              <FontAwesomeIcon className="h-6" icon={faShareFromSquare} />
-            </button>
+            {navigator.canShare(shareData) && (
+              <button
+                className="text-neutral-600"
+                onClick={() => navigator.share(shareData)}
+              >
+                <FontAwesomeIcon className="h-6" icon={faShareFromSquare} />
+              </button>
+            )}
             {event.registrationLink && (
               <a
                 className="bg-violet p-2 px-8 rounded-xl text-white"
