@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import type { NextApiRequest, NextApiResponse } from "next";
 import {
+  InterfaceEvent,
   mapPrismaEvent,
   noPastFilter,
   prismaEventSelect,
@@ -9,7 +10,11 @@ import {
 
 const prisma = new PrismaClient();
 
-export type ResponseBody = {};
+export type ResponseBody = {
+  event: InterfaceEvent;
+  sameOrg: InterfaceEvent[];
+  similar: InterfaceEvent[];
+};
 
 export default async function handler(
   req: NextApiRequest,
@@ -70,7 +75,7 @@ export default async function handler(
   ).map((g) => g.map(mapPrismaEvent));
 
   res.json({
-    event,
+    event: mapPrismaEvent(event),
     sameOrg,
     similar,
   });

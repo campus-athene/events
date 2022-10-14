@@ -16,6 +16,7 @@ import "moment/locale/de";
 import Link from "next/link";
 import { ReactNode, useEffect, useState } from "react";
 import { Event as DefaultEventTemplate, EventGroup } from ".";
+import { ResponseBody } from "../pages/api/eventRec/[id]";
 import { InterfaceEvent as Event } from "../utils";
 import Image from "./Image";
 
@@ -35,7 +36,7 @@ const EventDetails = (props: {
   useEffect(() => {
     fetch(`/api/eventRec/${props.event.id}`)
       .then((res) => res.json())
-      .then((data) => setServerData(data));
+      .then((data) => setServerData(data as ResponseBody));
   }, [props.event.id]);
 
   const event = serverEvent || props.event;
@@ -115,7 +116,7 @@ const EventDetails = (props: {
       </div>
       <div
         className="gap-10 grid grid-cols-5 items-stretch justify-items-stretch p-10 pb-0"
-        style={{ gridTemplateRows: "20.5rem max-content" }}
+        style={{ gridTemplateRows: "max-content 20.5rem" }}
       >
         <div className="col-span-3 row-span-2">
           <p>
@@ -129,17 +130,6 @@ const EventDetails = (props: {
               ))}
           </p>
         </div>
-        {event.venuePlaceId && (
-          <iframe
-            className="col-span-2 object-cover rounded-xl"
-            loading="lazy"
-            allowFullScreen
-            referrerPolicy="no-referrer-when-downgrade"
-            src={`https://www.google.com/maps/embed/v1/place?key=${encodeURIComponent(
-              process.env.NEXT_PUBLIC_GCP_API_KEY || ""
-            )}&q=place_id:${encodeURIComponent(event.venuePlaceId)}`}
-          ></iframe>
-        )}
         <div
           className="bg-neutral-200 col-start-4 col-span-2 gap-2 grid p-4 rounded-xl self-start"
           style={{ gridTemplateColumns: "max-content 1fr" }}
@@ -162,7 +152,19 @@ const EventDetails = (props: {
             {event.price || "Kostenlos"}
           </Information>
           <Information icon={faMapLocationDot}>
-            {event.online ? event.venue : "Online"}
+            {event.online ? (
+              "Online"
+            ) : (
+              <>
+                {event.venue}
+                {event.venueAddress ? (
+                  <>
+                    <br />
+                    {event.venueAddress}
+                  </>
+                ) : null}
+              </>
+            )}
           </Information>
           {event.organiser.socialEmail && (
             <Information
@@ -173,6 +175,17 @@ const EventDetails = (props: {
             </Information>
           )}
         </div>
+        {event.venuePlaceId && (
+          <iframe
+            className="col-span-2 object-cover rounded-xl"
+            loading="lazy"
+            allowFullScreen
+            referrerPolicy="no-referrer-when-downgrade"
+            src={`https://www.google.com/maps/embed/v1/place?key=${encodeURIComponent(
+              process.env.NEXT_PUBLIC_GCP_API_KEY || ""
+            )}&q=place_id:${encodeURIComponent(event.venuePlaceId)}`}
+          ></iframe>
+        )}
       </div>
       <div className="pb-10">
         {sameOrg && !!sameOrg.length && (
