@@ -62,7 +62,7 @@ export const getServerSideProps: GetServerSideProps<Data> = async () => {
         await prisma.event.findMany({
           orderBy: { clicks: "desc" },
           select,
-          take: 2,
+          take: 6,
           where: noPastFilter,
         })
       ).map(mapPrismaEvent),
@@ -227,11 +227,11 @@ const Home = (props: Data) => {
         <meta property="og:image:width" content="999" />
         <meta property="og:image:height" content="666" />
       </Head>
-      <EventGroup title="Highlights">
+      <div className="gap-4 grid grid-cols-2 px-10 pt-16">
         {props.highlights.map((e) => (
           <Highlight event={e} key={e.id} />
         ))}
-      </EventGroup>
+      </div>
       {/* <Header className="mx-10">Empfehlungen für Dich</Header>
       <div className="mx-10 text-sm">Was interessiert Dich?</div>
       <div className="flex gap-2 mx-10">
