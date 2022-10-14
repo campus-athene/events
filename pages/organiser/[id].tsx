@@ -145,14 +145,46 @@ const OrganiserPage = (props: Data) => {
         <div className="flex flex-col flex-shrink-0">
           <Image className="h-72 w-72" src={organiser.logoImg} width={72} />
           <div className="flex gap-2 justify-center mt-8 text-2xl">
-            <FontAwesomeIcon icon={faGlobe} />
-            <FontAwesomeIcon icon={faFacebookF} />
-            <FontAwesomeIcon icon={faInstagram} />
-            <FontAwesomeIcon icon={faTwitter} />
-            <FontAwesomeIcon icon={faLinkedinIn} />
-            <FontAwesomeIcon icon={faTiktok} />
-            <FontAwesomeIcon icon={faEnvelope} />
-            <FontAwesomeIcon icon={faPhone} />
+            {props.organiser.socialWebsite && (
+              <a href={props.organiser.socialWebsite}>
+                <FontAwesomeIcon icon={faGlobe} />
+              </a>
+            )}
+            {props.organiser.socialFacebook && (
+              <a href={props.organiser.socialFacebook}>
+                <FontAwesomeIcon icon={faFacebookF} />
+              </a>
+            )}
+            {props.organiser.socialInstagram && (
+              <a href={props.organiser.socialInstagram}>
+                <FontAwesomeIcon icon={faInstagram} />
+              </a>
+            )}
+            {props.organiser.socialTwitter && (
+              <a href={props.organiser.socialTwitter}>
+                <FontAwesomeIcon icon={faTwitter} />
+              </a>
+            )}
+            {props.organiser.socialLinkedin && (
+              <a href={props.organiser.socialLinkedin}>
+                <FontAwesomeIcon icon={faLinkedinIn} />
+              </a>
+            )}
+            {props.organiser.socialTiktok && (
+              <a href={props.organiser.socialTiktok}>
+                <FontAwesomeIcon icon={faTiktok} />
+              </a>
+            )}
+            {props.organiser.socialEmail && (
+              <a href={`mailto:${props.organiser.socialEmail}`}>
+                <FontAwesomeIcon icon={faEnvelope} />
+              </a>
+            )}
+            {props.organiser.socialPhone && (
+              <a href={`tel:${props.organiser.socialPhone}`}>
+                <FontAwesomeIcon icon={faPhone} />
+              </a>
+            )}
           </div>
         </div>
       </div>
