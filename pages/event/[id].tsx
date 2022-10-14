@@ -50,6 +50,7 @@ const EventPage: NextPage<Data> = (props) => {
     <DefaultEventTemplate
       event={props.event}
       onClick={(e) => {
+        if (window.innerWidth < 640) return;
         e.preventDefault();
         setOpenEvent(props.event);
       }}

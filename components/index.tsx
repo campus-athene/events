@@ -16,14 +16,20 @@ export const Header = (props: {
 }) => {
   if (props.selected === undefined)
     return (
-      <h2 className={"pt-8 text-lg " + props.className}>{props.children}</h2>
+      <h2
+        className={
+          "font-medium pt-8 text-base text-slate-600 " + props.className
+        }
+      >
+        {props.children}
+      </h2>
     );
 
   return (
     <button
       className={
-        "pt-8 text-lg transition-colors " +
-        (props.selected ? "" : "text-slate-400 ") +
+        "font-medium pt-8 text-base transition-colors " +
+        (props.selected ? "text-slate-600 " : "text-slate-400 ") +
         props.className
       }
       onClick={props.onClick}
@@ -52,10 +58,10 @@ export const EventGroup = (props: {
 
   return (
     <>
-      {props.title && <Header className="mx-10">{props.title}</Header>}
+      {props.title && <Header className="mx-4 sm:mx-10">{props.title}</Header>}
       <div className="flex items-streach">
         <button
-          className="flex-shrink-0 text-slate-300 hover:text-black w-10 transition-colors"
+          className="flex-shrink-0 hidden sm:block text-slate-300 hover:text-black w-4 sm:w-10 transition-colors"
           onClick={() => scroll(-1)}
         >
           <FontAwesomeIcon icon={faAngleLeft} />
@@ -63,7 +69,7 @@ export const EventGroup = (props: {
         <div
           id="myscroll"
           className={
-            "flex flex-grow flex-shrink gap-4 pt-2 overflow-x-hidden flex-nowrap" +
+            "flex flex-grow flex-shrink gap-4 px-4 sm:px-0 pt-2 overflow-x-scroll sm:overflow-hidden flex-nowrap" +
             props.className
           }
           ref={scrollRef}
@@ -71,7 +77,7 @@ export const EventGroup = (props: {
           {props.children}
         </div>
         <button
-          className="flex-shrink-0 text-slate-300 hover:text-black w-10 transition-colors"
+          className="flex-shrink-0 hidden sm:block text-slate-300 hover:text-black w-4 sm:w-10 transition-colors"
           onClick={() => scroll(1)}
         >
           <FontAwesomeIcon icon={faAngleRight} />
@@ -114,15 +120,18 @@ export const Event = (props: {
 };
 
 export const Highlight = (props: {
+  className?: string;
   event: EventType;
   onClick: MouseEventHandler<HTMLAnchorElement>;
 }) => {
   return (
     <Link href={`/event/${props.event.id}`}>
       <a
-        className="bg-slate-200 rounded-xl text-sm flex flex-shrink-0"
+        className={
+          "bg-slate-200 rounded-xl text-sm flex flex-shrink-0 " +
+          props.className
+        }
         onClick={props.onClick}
-        style={{ width: "33rem" }}
       >
         <Image
           className="h-36 object-cover rounded-l-xl w-54 flex-shrink-0"

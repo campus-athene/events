@@ -130,8 +130,10 @@ const OrganiserPage = (props: Data) => {
           width={228}
         />
       )}
-      <h1 className="font-medium m-10 mb-2 text-2xl">{organiser.name}</h1>
-      <div className="flex px-10 gap-8">
+      <h1 className="font-medium mx-4 sm:mx-10 my-10 mb-2 text-2xl">
+        {organiser.name}
+      </h1>
+      <div className="flex flex-col sm:flex-row px-4 sm:px-10 gap-8">
         <div className="flex-grow">
           {organiser.description
             .split("\n")
@@ -143,7 +145,11 @@ const OrganiserPage = (props: Data) => {
             ))}
         </div>
         <div className="flex flex-col flex-shrink-0">
-          <Image className="h-72 w-72" src={organiser.logoImg} width={72} />
+          <Image
+            className="hidden sm:block h-72 w-72"
+            src={organiser.logoImg}
+            width={72}
+          />
           <div className="flex gap-2 justify-center mt-8 text-2xl">
             {props.organiser.socialWebsite && (
               <a href={props.organiser.socialWebsite}>

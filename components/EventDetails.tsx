@@ -88,16 +88,13 @@ const EventDetails = (props: {
 
   return (
     <>
-      <div
-        className="grid grid-cols-5 items-stretch justify-items-stretch"
-        style={{ gridTemplateRows: "16rem max-content" }}
-      >
+      <div className="grid sm:grid-cols-5 items-stretch justify-items-stretch">
         <Image
-          className="col-span-2 object-cover"
+          className="sm:col-span-2 object-cover"
           src={event.image}
           width={115.2}
         />
-        <div className="bg-neutral-200 col-span-3 p-10 text-right">
+        <div className="bg-neutral-200 sm:col-span-3 p-4 sm:p-10 sm:text-right">
           <div className="font-medium text-2xl">{event.title}</div>
           <Link href={`/organiser/${event.organiser.id}`}>
             <a className="block hover:underline mb-4 text-neutral-500">
@@ -107,8 +104,7 @@ const EventDetails = (props: {
           <div className="">{event.venue}</div>
           <div>{utc(event.date).local().locale("de").format("llll")}</div>
           <div className="flex-grow" />
-          <div className="flex gap-10 justify-end mt-6">
-            <div />
+          <div className="flex flex-row-reverse sm:flex-row gap-8 sm:gap-10 justify-end mt-6">
             <button
               className={fav ? "text-red-700" : "text-neutral-600"}
               onClick={() => setFav(!fav)}
@@ -143,11 +139,8 @@ const EventDetails = (props: {
               </Link> */}
         </div>
       </div>
-      <div
-        className="gap-10 grid grid-cols-5 items-stretch justify-items-stretch p-10 pb-0"
-        style={{ gridTemplateRows: "max-content 20.5rem" }}
-      >
-        <div className="col-span-3 row-span-2">
+      <div className="gap-4 sm:gap-10 grid sm:grid-cols-4 md:grid-cols-5 items-stretch justify-items-stretch px-4 sm:px-10 py-10 pb-0">
+        <div className="sm:col-span-2 md:col-span-3 sm:row-span-2">
           <p>
             {event.desc
               .split("\n")
@@ -160,7 +153,7 @@ const EventDetails = (props: {
           </p>
         </div>
         <div
-          className="bg-neutral-200 col-start-4 col-span-2 gap-2 grid p-4 rounded-xl self-start"
+          className="bg-neutral-200 sm:col-start-3 md:col-start-4 sm:col-span-2 gap-2 grid p-4 rounded-xl self-start"
           style={{ gridTemplateColumns: "max-content 1fr" }}
         >
           <Information icon={faTicket}>
@@ -206,7 +199,7 @@ const EventDetails = (props: {
         </div>
         {event.venuePlaceId && (
           <iframe
-            className="col-span-2 object-cover rounded-xl"
+            className="sm:col-span-2 h-64 object-cover rounded-xl min-w-0"
             loading="lazy"
             allowFullScreen
             referrerPolicy="no-referrer-when-downgrade"

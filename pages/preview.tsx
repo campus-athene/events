@@ -200,15 +200,18 @@ const Home = (props: Data) => {
     <EventTemplate
       event={props.event}
       onClick={(e) => {
+        if (window.innerWidth < 640) return;
         e.preventDefault();
         setOpenEvent(props.event);
       }}
     />
   );
-  const Highlight = (props: { event: Event }) => (
+  const Highlight = (props: { className?: string; event: Event }) => (
     <HighlightTemplate
       event={props.event}
+      className={props.className}
       onClick={(e) => {
+        if (window.innerWidth < 640) return;
         e.preventDefault();
         setOpenEvent(props.event);
       }}
@@ -233,9 +236,9 @@ const Home = (props: Data) => {
         <meta property="og:image:width" content="999" />
         <meta property="og:image:height" content="666" />
       </Head>
-      <div className="gap-4 grid grid-cols-2 px-10 pt-16">
-        {props.highlights.map((e) => (
-          <Highlight event={e} key={e.id} />
+      <div className="gap-4 grid grid-cols-1 sm:grid-cols-2 px-4 sm:px-10 pt-16">
+        {props.highlights.map((e, i) => (
+          <Highlight className={i >= 2 ? "hidden" : ""} event={e} key={e.id} />
         ))}
       </div>
       {/* <Header className="mx-10">Empfehlungen für Dich</Header>
@@ -255,7 +258,7 @@ const Home = (props: Data) => {
       </EventGroup> */}
       {props.dateRanges[0] && (
         <>
-          <div className="flex gap-2 overflow-x-auto px-10 whitespace-nowrap">
+          <div className="flex gap-2 overflow-x-auto px-4 sm:px-10 whitespace-nowrap">
             {props.dateRanges.map(({ name }) => (
               <Header
                 key={name}
@@ -275,17 +278,17 @@ const Home = (props: Data) => {
           </EventGroup>
         </>
       )}
-      <div className="bg-violet mt-8 mx-10 py-10 px-10 rounded-xl text-white">
+      <div className="bg-violet mt-8 mx-4 sm:mx-10 py-10 px-10 rounded-xl text-white">
         <div className="mb-2 text-lg">Verpasse keine weiteren Events mehr!</div>
         <div className="mb-8">
           Erhalte wöchentlich unseren Newsletter mit den kommenden Highlights.
         </div>
         <input
-          className="bg-slate-600 rounded-l-full py-2 pl-6 pr-2 placeholder-slate-300"
+          className="bg-slate-600 block sm:inline-block mx-auto sm:mx-0 rounded-full sm:rounded-r-none py-2 pl-6 pr-2 placeholder-slate-300 w-full sm:w-64 max-w-xs"
           placeholder="E-Mail-Adresse"
           type="text"
         />
-        <button className="bg-amber-500 py-2 pl-8 pr-9 rounded-r-full text-white font-medium">
+        <button className="bg-amber-500 block sm:inline-block mx-auto sm:mx-0 mt-4 sm:mt-0 py-2 pl-8 pr-9 rounded-full sm:rounded-l-none text-white font-medium">
           Abbonieren
         </button>
       </div>

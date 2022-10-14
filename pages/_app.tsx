@@ -12,7 +12,7 @@ const App = ({ Component, pageProps }: AppProps) => {
       <div className="overflow-auto relative">
         <header className="bg-violet fixed flex justify-center top-0 w-full">
           <div
-            className="flex h-14 items-stretch px-10 space-x-4 text-white"
+            className="flex h-14 items-stretch px-4 sm:px-10 space-x-4 text-white"
             style={{ width: "72rem" }}
           >
             <Link href="/">
@@ -37,7 +37,7 @@ const App = ({ Component, pageProps }: AppProps) => {
           </div>
         </header>
         <main
-          className="bg-white mt-12 mb-36 mx-auto overflow-x-clip"
+          className="bg-white mt-12 mb-36 mx-auto overflow-x-clip overflow-y-auto"
           style={{
             minHeight: "calc(100vh - 12rem)",
             maxWidth: "72rem",
@@ -47,7 +47,7 @@ const App = ({ Component, pageProps }: AppProps) => {
         </main>
         <footer className="absolute bg-violet bottom-0 flex justify-center w-full">
           <div
-            className="flex h-36 items-center justify-between px-10 text-sm text-white"
+            className="flex flex-col sm:flex-row gap-4 h-36 items-center justify-center sm:justify-between px-10 text-sm text-center text-white"
             style={{ width: "72rem" }}
           >
             <div>
