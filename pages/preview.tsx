@@ -10,6 +10,7 @@ import {
   Highlight as HighlightTemplate,
 } from "../components";
 import EventModal from "../components/EventModal";
+import SubscribeNews from "../components/SubscribeNews";
 import {
   InterfaceEvent as Event,
   mapPrismaEvent,
@@ -278,20 +279,7 @@ const Home = (props: Data) => {
           </EventGroup>
         </>
       )}
-      <div className="bg-violet mt-8 mx-4 sm:mx-10 py-10 px-10 rounded-xl text-white">
-        <div className="mb-2 text-lg">Verpasse keine weiteren Events mehr!</div>
-        <div className="mb-8">
-          Erhalte wöchentlich unseren Newsletter mit den kommenden Highlights.
-        </div>
-        <input
-          className="bg-slate-600 block sm:inline-block mx-auto sm:mx-0 rounded-full sm:rounded-r-none py-2 pl-6 pr-2 placeholder-slate-300 w-full sm:w-64 max-w-xs"
-          placeholder="E-Mail-Adresse"
-          type="text"
-        />
-        <button className="bg-amber-500 block sm:inline-block mx-auto sm:mx-0 mt-4 sm:mt-0 py-2 pl-8 pr-9 rounded-full sm:rounded-l-none text-white font-medium">
-          Abbonieren
-        </button>
-      </div>
+      <SubscribeNews />
       {props.categories.map(({ name, events }) => (
         <EventGroup key={name} title={name}>
           {events.map((e) => (

@@ -53,6 +53,14 @@ model Event {
   @@map("events")
 }
 
+model EventNewsletter {
+  id             Int      @id @default(autoincrement())
+  email          String   @db.Text
+  dateSubscribed DateTime @default(now()) @map("date_subscribed") @db.DateTime(0)
+
+  @@map("event_newsletter")
+}
+
 model Image {
   id          String   @id @db.Char(16)
   mimeType    String   @map("mime_type") @db.VarChar(150)
