@@ -210,7 +210,7 @@ const EventDetails = (props: {
             </Information>
           )}
         </div>
-        {event.venuePlaceId && (
+        {process.env.NEXT_PUBLIC_GCP_API_KEY && event.venuePlaceId && (
           <iframe
             className="sm:col-span-2 h-64 object-cover rounded-xl min-w-0"
             loading="lazy"
