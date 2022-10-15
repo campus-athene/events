@@ -237,9 +237,14 @@ const Home = (props: Data) => {
         <meta property="og:image:width" content="999" />
         <meta property="og:image:height" content="666" />
       </Head>
-      <div className="gap-4 grid grid-cols-1 sm:grid-cols-2 px-4 sm:px-10 pt-16">
+      <Header className="px-4 sm:px-10">Highlights</Header>
+      <div className="gap-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-2 px-4 sm:px-10 pt-2">
         {props.highlights.map((e, i) => (
-          <Highlight className={i >= 2 ? "hidden" : ""} event={e} key={e.id} />
+          <Highlight
+            className={i >= 4 ? "hidden sm:flex" : ""}
+            event={e}
+            key={e.id}
+          />
         ))}
       </div>
       {/* <Header className="mx-10">Empfehlungen für Dich</Header>

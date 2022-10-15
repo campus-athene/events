@@ -10,7 +10,7 @@ const App = ({ Component, pageProps }: AppProps) => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <div className="overflow-auto relative">
-        <header className="bg-violet fixed flex justify-center top-0 w-full">
+        <header className="bg-violet sm:fixed flex justify-center top-0 w-full">
           <div
             className="flex h-14 items-stretch px-4 sm:px-10 space-x-4 text-white"
             style={{ width: "72rem" }}
@@ -37,7 +37,7 @@ const App = ({ Component, pageProps }: AppProps) => {
           </div>
         </header>
         <main
-          className="bg-white mt-12 mb-36 mx-auto overflow-x-clip overflow-y-auto"
+          className="bg-white sm:mt-12 mb-36 mx-auto overflow-x-clip overflow-y-auto"
           style={{
             minHeight: "calc(100vh - 12rem)",
             maxWidth: "72rem",

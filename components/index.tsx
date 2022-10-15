@@ -128,27 +128,27 @@ export const Highlight = (props: {
     <Link href={`/event/${props.event.id}`}>
       <a
         className={
-          "bg-slate-200 rounded-xl text-sm flex flex-shrink-0 " +
+          "bg-slate-200 flex flex-col lg:flex-row flex-shrink-0 overflow-clip rounded-xl text-xs lg:text-sm " +
           props.className
         }
         onClick={props.onClick}
       >
         <Image
-          className="h-36 object-cover rounded-l-xl w-54 flex-shrink-0"
+          className="aspect-[3/2] flex-shrink-0 lg:h-36 object-cover rounded-t-xl lg:rounded-l-xl lg:rounded-tr-none"
           src={props.event.image}
           width={54}
         />
-        <div className="flex-grow min-w-0">
-          <div className="overflow-hidden px-4 pt-3 text-ellipsis whitespace-nowrap text-xl font-medium">
+        <div className="flex-grow min-w-0 px-2 sm:px-4">
+          <div className="overflow-hidden pt-2 lg:pt-3 text-ellipsis whitespace-nowrap text-sm lg:text-xl font-medium">
             {props.event.title}
           </div>
-          <div className="block overflow-hidden px-4 pt-1 text-ellipsis whitespace-nowrap text-neutral-500 text-lg">
+          <div className="block overflow-hidden pt-1 text-ellipsis whitespace-nowrap text-neutral-500 lg:text-lg">
             {props.event.organiser.name}
           </div>
-          <div className="overflow-hidden px-4 pt-1 text-ellipsis whitespace-nowrap">
+          <div className="overflow-hidden pt-1 text-ellipsis whitespace-nowrap">
             {utc(props.event.date).local().locale("de").format("llll")}
           </div>
-          <div className="block overflow-hidden px-4 pt-1 text-ellipsis whitespace-nowrap hover:underline">
+          <div className="block overflow-hidden pt-1 pb-2 lg:text-base text-ellipsis whitespace-nowrap hover:underline">
             {props.event.venue}
           </div>
         </div>
