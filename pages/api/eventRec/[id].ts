@@ -25,7 +25,8 @@ export default async function handler(
     return;
   }
 
-  const event = await prisma.event.findUnique({
+  const event = await prisma.event.update({
+    data: { clicks: { increment: 1 } },
     select: prismaEventSelect,
     where: { id: Number.parseInt(req.query.id) },
   });
