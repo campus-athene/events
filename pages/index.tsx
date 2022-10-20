@@ -175,7 +175,6 @@ export const getServerSideProps: GetServerSideProps<Data> = async () => {
 };
 
 const Home = (props: Data) => {
-  console.log(props.dateRanges);
   const [dateRange, setDateRange] = useState(
     props.dateRanges[0] ? props.dateRanges[0].name : ""
   );
