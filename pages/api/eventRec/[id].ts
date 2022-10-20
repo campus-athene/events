@@ -80,5 +80,13 @@ export default async function handler(
     sameOrg,
     similar,
   });
-  return;
+
+  // Non-blocking, the response has already been sent
+  await prisma.eventClick.create({
+    data: {
+      page: "/api/eventRec/[id]",
+      arg: event.id.toString(),
+      sid: req.cookies["sid"],
+    },
+  });
 }

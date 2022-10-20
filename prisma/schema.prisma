@@ -53,6 +53,16 @@ model Event {
   @@map("events")
 }
 
+model EventClick {
+  id        Int      @id @default(autoincrement())
+  sid       String?  @db.Text
+  timestamp DateTime @default(now()) @db.Timestamp(0)
+  page      String   @db.Text
+  arg       String?  @db.Text
+
+  @@map("event_clicks")
+}
+
 model EventNewsletter {
   id             Int      @id @default(autoincrement())
   email          String   @db.Text
