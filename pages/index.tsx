@@ -2,6 +2,7 @@ import { Prisma, PrismaClient } from "@prisma/client";
 import moment from "moment";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
+import Link from "next/link";
 import { useState } from "react";
 import {
   Event as EventTemplate,
@@ -236,6 +237,20 @@ const Home = (props: Data) => {
         <meta property="og:image:width" content="999" />
         <meta property="og:image:height" content="666" />
       </Head>
+      {Date.now() < 1666836000000 && (
+        <Link href="/event/72">
+          <a>
+            <picture>
+              <source srcSet="/banner/x1.webp x1, /banner/x2.webp x2" />
+              <source srcSet="/banner/x1.png x1, /banner/x2.png x2" />
+              <img
+                src="/banner/x1.png"
+                alt="Teaminfoabend konaktiva - Organisiere eine der größten Unternehmenskontaktmessen Deutschlands."
+              />
+            </picture>
+          </a>
+        </Link>
+      )}
       <Header className="px-4 sm:px-10">Highlights</Header>
       <div className="gap-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-2 px-4 sm:px-10 pt-2">
         {props.highlights.map((e, i) => (
