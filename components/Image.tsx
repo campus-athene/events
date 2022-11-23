@@ -1,4 +1,3 @@
-import NextImage from "next/image";
 import { CSSProperties } from "react";
 
 const Image = (props: {
