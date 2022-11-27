@@ -33,7 +33,7 @@ model Organiser {
 model Event {
   id                   Int       @id @default(autoincrement())
   title                String    @db.Text
-  desc                 String    @map("description") @db.Text
+  description          String    @db.Text
   date                 DateTime  @db.DateTime(0)
   online               Boolean   @default(dbgenerated("(b'0')")) @db.Bit(1)
   eventType            String    @default("") @map("event_type") @db.Text

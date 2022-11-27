@@ -13,7 +13,7 @@ export type InterfaceEvent = {
   registrationDeadline: number | null;
   registrationLink: string | null;
   price: string | null;
-  desc: string;
+  description: string;
   image: string;
 };
 
@@ -35,7 +35,7 @@ export const prismaEventSelect = {
   registrationDeadline: true,
   registrationLink: true,
   price: true,
-  desc: true,
+  description: true,
   image: true,
 };
 

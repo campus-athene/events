@@ -61,7 +61,10 @@ const EventPage: NextPage<Data> = (props) => {
     <>
       <Head>
         <title>{props.event.title}</title>
-        <meta name="description" content={props.event.desc.substring(0, 400)} />
+        <meta
+          name="description"
+          content={props.event.description.substring(0, 400)}
+        />
         <meta property="og:type" content="website" />
         <meta
           property="og:url"
