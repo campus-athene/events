@@ -119,8 +119,12 @@ export const getServerSideProps: GetServerSideProps<Data> = async () => {
               {
                 name: "Präsenz",
                 where: {
-                  online: true,
+                  online: false,
                 },
+              },
+              {
+                name: "Kostenlos",
+                where: { price: null },
               },
               {
                 name: "Hochschulgruppen",
@@ -169,7 +173,7 @@ export const getServerSideProps: GetServerSideProps<Data> = async () => {
             ).map(mapPrismaEvent),
           }))
         )
-      ).filter((e) => e.events.length >= 2),
+      ).filter((e) => e.events.length),
     },
     // revalidate: 60, // Only use in getStaticProps
   };
