@@ -12,9 +12,9 @@ import {
 import EventModal from "../components/EventModal";
 import SubscribeNews from "../components/SubscribeNews";
 import {
+  getNoPastFilter,
   InterfaceEvent as Event,
   mapPrismaEvent,
-  noPastFilter,
   prismaEventSelect,
   takeEventsPerRow,
 } from "../utils";
@@ -35,6 +35,7 @@ export const getServerSideProps: GetServerSideProps<Data> = async () => {
 
   const select = prismaEventSelect;
   const take = takeEventsPerRow;
+  const noPastFilter = getNoPastFilter(now.toDate());
 
   /**
    * Helper function to filter for values not null or undefined. null and undefined are excluded from type of returned elements.

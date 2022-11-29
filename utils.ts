@@ -39,17 +39,19 @@ export const prismaEventSelect = {
   image: true,
 };
 
-export const noPastFilter: Prisma.EventWhereInput = {
+export const getNoPastFilter: (
+  now: ConstructorParameters<DateConstructor>[0]
+) => Prisma.EventWhereInput = (now) => ({
   AND: [
     {
       date: { gte: new Date() },
       OR: [
         { registrationDeadline: null },
-        { registrationDeadline: { gte: new Date() } },
+        { registrationDeadline: { gte: new Date(now) } },
       ],
     },
   ],
-};
+});
 
 type PrismaSelectedEvent = Pick<
   PrismaEvent & {
