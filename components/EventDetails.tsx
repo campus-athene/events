@@ -74,7 +74,7 @@ const EventDetails = (props: {
 
   const shareData = {
     title: props.event.title,
-    text: props.event.desc.substring(0, 400),
+    text: props.event.description.substring(0, 400),
     url: `https://events.study-campus.de/event/${props.event.id}`,
   };
 
@@ -155,7 +155,7 @@ const EventDetails = (props: {
       <div className="gap-4 sm:gap-10 grid sm:grid-cols-4 md:grid-cols-5 items-stretch justify-items-stretch px-4 sm:px-10 py-10 pb-0">
         <div className="sm:col-span-2 md:col-span-3 sm:row-span-2">
           <p>
-            {event.desc
+            {event.description
               .split("\n")
               .filter((d) => d)
               .map((d, i) => (
