@@ -1,9 +1,9 @@
 import { PrismaClient } from "@prisma/client";
 import type { NextApiRequest, NextApiResponse } from "next";
 import {
+  getNoPastFilter,
   InterfaceEvent,
   mapPrismaEvent,
-  noPastFilter,
   prismaEventSelect,
   takeEventsPerRow,
 } from "../../../utils";
@@ -35,6 +35,8 @@ export default async function handler(
     res.status(404).end(); // 404 Not Found
     return;
   }
+
+  const noPastFilter = getNoPastFilter(new Date());
 
   const [sameOrg, similar] = (
     await Promise.all([

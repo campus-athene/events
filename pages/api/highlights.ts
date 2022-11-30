@@ -1,9 +1,9 @@
 import { PrismaClient } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
 import {
+  getNoPastFilter,
   InterfaceEvent,
   mapPrismaEvent,
-  noPastFilter,
   prismaEventSelect as select,
 } from "../../utils";
 
@@ -14,6 +14,8 @@ const handler = async (
   res: NextApiResponse<{ highlights: InterfaceEvent[] }>
 ) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
+
+  const noPastFilter = getNoPastFilter(new Date());
 
   res.json({
     highlights: (

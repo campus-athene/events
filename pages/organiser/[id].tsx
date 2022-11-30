@@ -14,9 +14,9 @@ import Head from "next/head";
 import { Event, EventGroup } from "../../components";
 import Image from "../../components/Image";
 import {
+  getNoPastFilter,
   InterfaceEvent,
   mapPrismaEvent,
-  noPastFilter,
   prismaEventSelect,
 } from "../../utils";
 
@@ -53,6 +53,8 @@ type Data = {
 };
 
 export const getStaticProps: GetStaticProps<Data> = async (context) => {
+  const noPastFilter = getNoPastFilter(new Date());
+
   if (typeof context.params?.id !== "string")
     return {
       notFound: true,
