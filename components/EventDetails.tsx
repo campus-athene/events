@@ -14,7 +14,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { utc } from "moment";
 import "moment/locale/de";
 import Link from "next/link";
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useCallback, useEffect, useMemo, useState } from "react";
 import { Event as DefaultEventTemplate, EventGroup } from ".";
 import { ResponseBody } from "../pages/api/eventRec/[id]";
 import { InterfaceEvent as Event } from "../utils";
@@ -28,6 +28,17 @@ const EventDetails = (props: {
 
   const [canShare, setCanShare] = useState(true);
 
+  // Wrap as memo so that it can be used as effect dependency. If it was not a memo,
+  // the effect would be recalled on every render.
+  const shareData = useMemo(
+    () => ({
+      title: props.event.title,
+      text: props.event.description.substring(0, 400),
+      url: `https://events.study-campus.de/event/${props.event.id}`,
+    }),
+    [props.event]
+  );
+
   const getFavEvents = (): string[] => {
     const favEvents =
       typeof window === "object" ? localStorage.getItem("favEvents") : null;
@@ -39,16 +50,21 @@ const EventDetails = (props: {
       ? getFavEvents().includes(props.event.id.toString())
       : false
   );
-  const setFav = (fav: boolean) => {
-    setFavState(fav);
-    localStorage.setItem(
-      "favEvents",
-      (fav
-        ? [...getFavEvents(), props.event.id]
-        : getFavEvents().filter((e) => e !== props.event.id.toString())
-      ).join("|")
-    );
-  };
+  // Wrap as callback so that it can be used as effect dependency. If it was not a
+  // callback, the effect would be recalled on every render.
+  const setFav = useCallback(
+    (fav: boolean) => {
+      setFavState(fav);
+      localStorage.setItem(
+        "favEvents",
+        (fav
+          ? [...getFavEvents(), props.event.id]
+          : getFavEvents().filter((e) => e !== props.event.id.toString())
+        ).join("|")
+      );
+    },
+    [props.event.id]
+  );
 
   useEffect(() => {
     // Will only execute in browser environment.
@@ -56,7 +72,7 @@ const EventDetails = (props: {
     // navigator.canShare is undefined when not serving via https.
     navigator.canShare && setCanShare(navigator.canShare(shareData));
     setFav(getFavEvents().includes(props.event.id.toString()));
-  }, []);
+  }, [setFav, props.event.id, shareData]);
 
   const [{ event: serverEvent, sameOrg, similar }, setServerData] = useState<{
     event: Event | null;
@@ -71,12 +87,6 @@ const EventDetails = (props: {
   }, [props.event.id]);
 
   const event = serverEvent || props.event;
-
-  const shareData = {
-    title: props.event.title,
-    text: props.event.description.substring(0, 400),
-    url: `https://events.study-campus.de/event/${props.event.id}`,
-  };
 
   const Information = (props: {
     children: ReactNode;
