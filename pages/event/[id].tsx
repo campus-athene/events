@@ -19,6 +19,7 @@ import { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import { ReactNode, useCallback, useEffect, useMemo, useState } from "react";
+import ReactMarkdown from "react-markdown";
 import { Event as EventTemplate, EventGroup } from "../../components";
 import Image from "../../components/Image";
 import {
@@ -220,15 +221,8 @@ const EventPage: NextPage<Data> = (props) => {
         </div>
       </div>
       <div className="gap-4 sm:gap-10 grid sm:grid-cols-4 md:grid-cols-5 items-stretch justify-items-stretch px-4 sm:px-10 py-10 pb-0">
-        <div className="sm:col-span-2 md:col-span-3 sm:row-span-2">
-          {event.description
-            .split("\n")
-            .filter((d) => d)
-            .map((d, i) => (
-              <p className="mb-2" key={i}>
-                {d}{" "}
-              </p>
-            ))}
+        <div className="sm:col-span-2 md:col-span-3 sm:row-span-2 markdown">
+          <ReactMarkdown>{event.description}</ReactMarkdown>
         </div>
         <div
           className="bg-neutral-200 sm:col-start-3 md:col-start-4 sm:col-span-2 gap-2 grid p-4 rounded-xl self-start"

@@ -11,6 +11,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Organiser, PrismaClient } from "@prisma/client";
 import { GetStaticPaths, GetStaticProps } from "next";
 import Head from "next/head";
+import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import { Event, EventGroup } from "../../components";
 import Image from "../../components/Image";
 import {
@@ -136,15 +137,8 @@ const OrganiserPage = (props: Data) => {
         {organiser.name}
       </h1>
       <div className="flex flex-col sm:flex-row px-4 sm:px-10 gap-8">
-        <div className="flex-grow">
-          {organiser.description
-            .split("\n")
-            .filter((d) => d)
-            .map((d, i) => (
-              <p className="mb-2" key={i}>
-                {d}{" "}
-              </p>
-            ))}
+        <div className="flex-grow markdown">
+          <ReactMarkdown>{organiser.description}</ReactMarkdown>
         </div>
         <div className="flex flex-col flex-shrink-0">
           <Image

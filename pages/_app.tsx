@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import HomePage from "../components/HomePage";
 import "../res/index.css";
+import "../res/markdown.css";
 import { HomePageData } from "./api/home";
 
 export type AppPageProps = {
@@ -61,17 +62,19 @@ const App = ({ Component, pageProps }: AppProps<AppPageProps>) => {
           <Component {...pageProps} />
         </div>
         {/* Home page */}
-        <div
-          className="hidden lg:block col-start-1 row-start-1 bg-white mx-auto mt-14 mb-36 overflow-x-clip overflow-y-auto"
-          style={{
-            display: "hideModal" in pageProps ? "block" : undefined,
-            minHeight: "calc(100vh - 12rem)",
-            maxWidth: "72rem",
-            overflowY: "hideModal" in pageProps ? undefined : "hidden",
-          }}
-        >
-          <HomePage data={pageProps.homePageData} />
-        </div>
+        {"hideModal" in pageProps && (
+          <div
+            className="hidden lg:block col-start-1 row-start-1 bg-white mx-auto mt-14 mb-36 overflow-x-clip overflow-y-auto"
+            style={{
+              display: "hideModal" in pageProps ? "block" : undefined,
+              minHeight: "calc(100vh - 12rem)",
+              maxWidth: "72rem",
+              overflowY: "hideModal" in pageProps ? undefined : "hidden",
+            }}
+          >
+            <HomePage data={pageProps.homePageData} />
+          </div>
+        )}
       </main>
       <footer className="absolute bg-violet bottom-0 flex justify-center inset-x-0">
         <div

@@ -1,0 +1,40 @@
+.markdown p,
+.markdown blockquote,
+.markdown h1,
+.markdown h2,
+.markdown h3,
+.markdown h4,
+.markdown h5,
+.markdown h6,
+.markdown ol,
+.markdown ul {
+  @apply mb-2;
+}
+
+.markdown a {
+  @apply underline hover:text-violet;
+}
+
+.markdown blockquote {
+  @apply border-l-2 border-black border-opacity-20 pl-2;
+}
+
+.markdown h1 {
+  @apply mt-4 text-2xl font-semibold;
+}
+.markdown h2 {
+  @apply mt-4 text-xl font-semibold;
+}
+.markdown h3,
+.markdown h4,
+.markdown h5,
+.markdown h6 {
+  @apply mt-4 text-lg font-semibold;
+}
+
+.markdown ol {
+  @apply list-inside list-decimal;
+}
+.markdown ul {
+  @apply list-inside list-disc;
+}
