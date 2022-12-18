@@ -13,7 +13,7 @@ const Document = () => {
         */}
         <link rel="manifest" href="/manifest.json" />
       </Head>
-      <body className="bg-slate-200">
+      <body className="relative bg-slate-200">
         <Main />
         <NextScript />
       </body>

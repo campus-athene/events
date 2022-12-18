@@ -122,7 +122,7 @@ export const Event = (props: {
 export const Highlight = (props: {
   className?: string;
   event: EventType;
-  onClick: MouseEventHandler<HTMLAnchorElement>;
+  onClick?: MouseEventHandler<HTMLAnchorElement>;
 }) => {
   return (
     <Link href={`/event/${props.event.id}`}>

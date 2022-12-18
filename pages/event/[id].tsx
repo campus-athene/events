@@ -1,10 +1,8 @@
 import { PrismaClient } from "@prisma/client";
 import { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import Head from "next/head";
-import { useState } from "react";
-import { Event as DefaultEventTemplate } from "../../components";
+import { Event as EventTemplate } from "../../components";
 import EventDetails from "../../components/EventDetails";
-import EventModal from "../../components/EventModal";
 import { InterfaceEvent, mapPrismaEvent, prismaEventSelect } from "../../utils";
 
 type Data = { event: InterfaceEvent };
@@ -44,19 +42,6 @@ export const getStaticPaths: GetStaticPaths = async (context) => {
 };
 
 const EventPage: NextPage<Data> = (props) => {
-  const [openEvent, setOpenEvent] = useState<InterfaceEvent | null>(null);
-
-  const EventTemplate = (props: { event: InterfaceEvent }) => (
-    <DefaultEventTemplate
-      event={props.event}
-      onClick={(e) => {
-        if (window.innerWidth < 640) return;
-        e.preventDefault();
-        setOpenEvent(props.event);
-      }}
-    />
-  );
-
   return (
     <>
       <Head>
@@ -76,7 +61,6 @@ const EventPage: NextPage<Data> = (props) => {
         />
       </Head>
       <EventDetails event={props.event} EventTemlate={EventTemplate} />
-      <EventModal event={openEvent} setEvent={setOpenEvent} />
     </>
   );
 };
