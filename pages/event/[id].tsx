@@ -84,11 +84,11 @@ const EventPage: NextPage<Data> = (props) => {
     if (!favEvents) return [];
     return favEvents.split("|");
   };
-  const [fav, setFavState] = useState(
-    typeof window === "object"
-      ? getFavEvents().includes(props.event.id.toString())
-      : false
+  const [fav, setFavState] = useState(false);
+  useEffect(() =>
+    setFavState(getFavEvents().includes(props.event.id.toString()))
   );
+
   // Wrap as callback so that it can be used as effect dependency. If it was not a
   // callback, the effect would be recalled on every render.
   const setFav = useCallback(
@@ -219,16 +219,14 @@ const EventPage: NextPage<Data> = (props) => {
       </div>
       <div className="gap-4 sm:gap-10 grid sm:grid-cols-4 md:grid-cols-5 items-stretch justify-items-stretch px-4 sm:px-10 py-10 pb-0">
         <div className="sm:col-span-2 md:col-span-3 sm:row-span-2">
-          <p>
-            {event.description
-              .split("\n")
-              .filter((d) => d)
-              .map((d, i) => (
-                <p className="mb-2" key={i}>
-                  {d}{" "}
-                </p>
-              ))}
-          </p>
+          {event.description
+            .split("\n")
+            .filter((d) => d)
+            .map((d, i) => (
+              <p className="mb-2" key={i}>
+                {d}{" "}
+              </p>
+            ))}
         </div>
         <div
           className="bg-neutral-200 sm:col-start-3 md:col-start-4 sm:col-span-2 gap-2 grid p-4 rounded-xl self-start"
