@@ -1,5 +1,7 @@
 import { Event as PrismaEvent, Organiser, Prisma } from "@prisma/client";
 
+export const timezone = "Europe/Berlin";
+
 export type InterfaceEvent = {
   id: number;
   title: string;

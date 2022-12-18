@@ -13,6 +13,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { PrismaClient } from "@prisma/client";
 import { utc } from "moment";
+import "moment-timezone";
 import "moment/locale/de";
 import { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import Head from "next/head";
@@ -25,6 +26,7 @@ import {
   InterfaceEvent,
   mapPrismaEvent,
   prismaEventSelect,
+  timezone,
 } from "../../utils";
 import { ResponseBody } from "../api/eventRec/[id]";
 
@@ -180,7 +182,7 @@ const EventPage: NextPage<Data> = (props) => {
             </a>
           </Link>
           <div className="">{event.venue}</div>
-          <div>{utc(event.date).local().locale("de").format("llll")}</div>
+          <div>{utc(event.date).tz(timezone).locale("de").format("llll")}</div>
           <div className="flex-grow" />
           <div className="flex flex-row-reverse sm:flex-row gap-8 sm:gap-10 justify-end mt-6">
             <button
@@ -239,7 +241,7 @@ const EventPage: NextPage<Data> = (props) => {
               <a className="hover:underline" href={event.registrationLink}>
                 {event.registrationDeadline
                   ? `Anmeldung bis ${utc(event.registrationDeadline)
-                      .local()
+                      .tz(timezone)
                       .locale("de")
                       .format("llll")}`
                   : "Anmeldung erforderlich"}

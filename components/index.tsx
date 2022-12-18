@@ -1,10 +1,11 @@
 import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { utc } from "moment";
+import "moment-timezone";
 import "moment/locale/de";
 import Link from "next/link";
 import { MouseEventHandler, ReactNode, useRef } from "react";
-import { InterfaceEvent as EventType } from "../utils";
+import { InterfaceEvent as EventType, timezone } from "../utils";
 import Image from "./Image";
 
 export const Header = (props: {
@@ -109,7 +110,7 @@ export const Event = (props: {
           {props.event.organiser.name}
         </div>
         <div className="overflow-hidden px-3 pt-1 text-ellipsis whitespace-nowrap text-xs">
-          {utc(props.event.date).local().locale("de").format("llll")}
+          {utc(props.event.date).tz(timezone).locale("de").format("llll")}
         </div>
         <div className="block overflow-hidden px-3 pt-1 text-ellipsis whitespace-nowrap text-xs">
           {props.event.venue}
@@ -146,7 +147,7 @@ export const Highlight = (props: {
             {props.event.organiser.name}
           </div>
           <div className="overflow-hidden pt-1 text-ellipsis whitespace-nowrap">
-            {utc(props.event.date).local().locale("de").format("llll")}
+            {utc(props.event.date).tz(timezone).locale("de").format("llll")}
           </div>
           <div className="block overflow-hidden pt-1 pb-2 lg:text-base text-ellipsis whitespace-nowrap hover:underline">
             {props.event.venue}

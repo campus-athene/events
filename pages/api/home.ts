@@ -1,5 +1,6 @@
 import { Prisma, PrismaClient } from "@prisma/client";
 import moment from "moment";
+import "moment-timezone";
 import { NextApiRequest, NextApiResponse } from "next";
 import {
   getNoPastFilter,
@@ -8,6 +9,7 @@ import {
   mapPrismaEvent,
   prismaEventSelect,
   takeEventsPerRow,
+  timezone,
 } from "../../utils";
 
 export type HomePageData = {
@@ -22,7 +24,7 @@ export type HomePageData = {
 const prisma = new PrismaClient();
 
 export const getHomeData = async (): Promise<HomePageData> => {
-  const now = moment();
+  const now = moment().tz(timezone);
 
   const select = prismaEventSelect;
   const take = takeEventsPerRow;
