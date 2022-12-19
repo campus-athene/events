@@ -88,8 +88,9 @@ const EventPage: NextPage<Data> = (props) => {
     return favEvents.split("|");
   };
   const [fav, setFavState] = useState(false);
-  useEffect(() =>
-    setFavState(getFavEvents().includes(props.event.id.toString()))
+  useEffect(
+    () => setFavState(getFavEvents().includes(props.event.id.toString())),
+    [props.event.id]
   );
 
   // Wrap as callback so that it can be used as effect dependency. If it was not a
