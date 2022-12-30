@@ -62,7 +62,7 @@ const App = ({ Component, pageProps }: AppProps<AppPageProps>) => {
           <Component {...pageProps} />
         </div>
         {/* Home page */}
-        {"hideModal" in pageProps && (
+        {
           <div
             className="hidden lg:block col-start-1 row-start-1 bg-white mx-auto mt-14 mb-36 overflow-x-clip overflow-y-auto"
             style={{
@@ -74,7 +74,7 @@ const App = ({ Component, pageProps }: AppProps<AppPageProps>) => {
           >
             <HomePage data={pageProps.homePageData} />
           </div>
-        )}
+        }
       </main>
       <footer className="absolute bg-violet bottom-0 flex justify-center inset-x-0">
         <div
