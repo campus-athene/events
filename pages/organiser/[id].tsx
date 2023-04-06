@@ -128,25 +128,25 @@ const OrganiserPage = (props: Data) => {
       </Head>
       {organiser.coverImg && (
         <Image
-          className="max-h-96 object-cover w-full"
+          className="max-h-96 w-full object-cover"
           src={organiser.coverImg}
           width={228}
         />
       )}
-      <h1 className="font-medium mx-4 sm:mx-10 my-10 mb-2 text-2xl">
+      <h1 className="mx-4 my-10 mb-2 text-2xl font-medium sm:mx-10">
         {organiser.name}
       </h1>
-      <div className="flex flex-col sm:flex-row px-4 sm:px-10 gap-8">
-        <div className="flex-grow markdown">
+      <div className="flex flex-col gap-8 px-4 sm:flex-row sm:px-10">
+        <div className="markdown flex-grow">
           <ReactMarkdown>{organiser.description}</ReactMarkdown>
         </div>
-        <div className="flex flex-col flex-shrink-0">
+        <div className="flex flex-shrink-0 flex-col">
           <Image
-            className="hidden sm:block h-72 w-72"
+            className="hidden h-72 w-72 sm:block"
             src={organiser.logoImg}
             width={72}
           />
-          <div className="flex gap-2 justify-center mt-8 text-2xl">
+          <div className="mt-8 flex justify-center gap-2 text-2xl">
             {props.organiser.socialWebsite && (
               <a href={props.organiser.socialWebsite}>
                 <FontAwesomeIcon icon={faGlobe} />

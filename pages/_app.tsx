@@ -20,15 +20,15 @@ const App = ({ Component, pageProps }: AppProps<AppPageProps>) => {
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      <header className="absolute lg:fixed bg-violet flex justify-center top-0 inset-x-0 z-10">
+      <header className="absolute inset-x-0 top-0 z-10 flex justify-center bg-violet lg:fixed">
         <div
-          className="flex h-14 items-stretch px-4 lg:px-10 space-x-4 text-white"
+          className="flex h-14 items-stretch space-x-4 px-4 text-white lg:px-10"
           style={{ width: "72rem" }}
         >
           <Link href="/">
             <a className="align-center flex flex-grow items-center">
               <img
-                className="h-10 inline-block mr-4 w-10"
+                className="mr-4 inline-block h-10 w-10"
                 src="/logo.svg"
                 alt="Logo"
               />
@@ -48,14 +48,14 @@ const App = ({ Component, pageProps }: AppProps<AppPageProps>) => {
       </header>
       {/* Backdrop */}
       <div
-        className="hidden lg:block bg-black bg-opacity-50 backdrop-blur-sm fixed inset-0 overflow-auto z-20"
+        className="fixed inset-0 z-20 hidden overflow-auto bg-black bg-opacity-50 backdrop-blur-sm lg:block"
         onClick={() => router.push("/")}
         style={{ display: "hideModal" in pageProps ? "none" : undefined }}
       />
       <main className="grid items-start">
         {/* Dialog */}
         <div
-          className="col-start-1 row-start-1 lg:mx-auto mt-14 mb-36 bg-white lg:rounded-xl overflow-hidden lg:w-[60rem] z-30"
+          className="z-30 col-start-1 row-start-1 mt-14 mb-36 overflow-hidden bg-white lg:mx-auto lg:w-[60rem] lg:rounded-xl"
           onClick={(e) => e.stopPropagation()}
           style={{ display: "hideModal" in pageProps ? "none" : undefined }}
         >
@@ -64,7 +64,7 @@ const App = ({ Component, pageProps }: AppProps<AppPageProps>) => {
         {/* Home page */}
         {
           <div
-            className="hidden lg:block col-start-1 row-start-1 bg-white mx-auto mt-14 mb-36 w-full overflow-x-hidden overflow-y-auto"
+            className="col-start-1 row-start-1 mx-auto mt-14 mb-36 hidden w-full overflow-y-auto overflow-x-hidden bg-white lg:block"
             style={{
               display: "hideModal" in pageProps ? "block" : undefined,
               minHeight: "calc(100vh - 12rem)",
@@ -76,9 +76,9 @@ const App = ({ Component, pageProps }: AppProps<AppPageProps>) => {
           </div>
         }
       </main>
-      <footer className="absolute bg-violet bottom-0 flex justify-center inset-x-0">
+      <footer className="absolute inset-x-0 bottom-0 flex justify-center bg-violet">
         <div
-          className="flex flex-col lg:flex-row gap-4 h-36 items-center justify-center lg:justify-between px-10 text-sm text-center text-white"
+          className="flex h-36 flex-col items-center justify-center gap-4 px-10 text-center text-sm text-white lg:flex-row lg:justify-between"
           style={{ width: "72rem" }}
         >
           <div>

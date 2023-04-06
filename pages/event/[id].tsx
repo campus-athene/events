@@ -170,23 +170,23 @@ const EventPage: NextPage<Data> = (props) => {
           content={`https://events.study-campus.de/api/image/48/${props.event.image}`}
         />
       </Head>
-      <div className="grid sm:grid-cols-5 items-stretch justify-items-stretch">
+      <div className="grid items-stretch justify-items-stretch sm:grid-cols-5">
         <Image
-          className="sm:col-span-2 object-cover"
+          className="object-cover sm:col-span-2"
           src={event.image}
           width={115.2}
         />
-        <div className="bg-neutral-200 sm:col-span-3 p-4 sm:p-10 sm:text-right">
-          <div className="font-medium text-2xl">{event.title}</div>
+        <div className="bg-neutral-200 p-4 sm:col-span-3 sm:p-10 sm:text-right">
+          <div className="text-2xl font-medium">{event.title}</div>
           <Link href={`/organiser/${event.organiser.id}`}>
-            <a className="block hover:underline mb-4 text-neutral-500">
+            <a className="mb-4 block text-neutral-500 hover:underline">
               {event.organiser.name}
             </a>
           </Link>
           <div className="">{event.venue}</div>
           <div>{utc(event.date).tz(timezone).locale("de").format("llll")}</div>
           <div className="flex-grow" />
-          <div className="flex flex-row-reverse sm:flex-row gap-8 sm:gap-10 justify-end mt-6">
+          <div className="mt-6 flex flex-row-reverse justify-end gap-8 sm:flex-row sm:gap-10">
             <button
               className={fav ? "text-red-700" : "text-neutral-600"}
               onClick={() => setFav(!fav)}
@@ -206,7 +206,7 @@ const EventPage: NextPage<Data> = (props) => {
             )}
             {event.registrationLink && (
               <a
-                className="bg-violet p-2 px-8 rounded-xl text-white"
+                className="rounded-xl bg-violet p-2 px-8 text-white"
                 href={event.registrationLink}
               >
                 Anmelden
@@ -221,12 +221,12 @@ const EventPage: NextPage<Data> = (props) => {
               </Link> */}
         </div>
       </div>
-      <div className="gap-4 sm:gap-10 grid sm:grid-cols-4 md:grid-cols-5 items-stretch justify-items-stretch px-4 sm:px-10 py-10 pb-0">
-        <div className="sm:col-span-2 md:col-span-3 sm:row-span-2 markdown">
+      <div className="grid items-stretch justify-items-stretch gap-4 px-4 py-10 pb-0 sm:grid-cols-4 sm:gap-10 sm:px-10 md:grid-cols-5">
+        <div className="markdown sm:col-span-2 sm:row-span-2 md:col-span-3">
           <ReactMarkdown>{event.description}</ReactMarkdown>
         </div>
         <div
-          className="bg-neutral-200 sm:col-start-3 md:col-start-4 sm:col-span-2 gap-2 grid p-4 rounded-xl self-start"
+          className="grid gap-2 self-start rounded-xl bg-neutral-200 p-4 sm:col-span-2 sm:col-start-3 md:col-start-4"
           style={{ gridTemplateColumns: "max-content 1fr" }}
         >
           <Information icon={faTicket}>
@@ -272,7 +272,7 @@ const EventPage: NextPage<Data> = (props) => {
         </div>
         {process.env.NEXT_PUBLIC_GCP_API_KEY && event.venuePlaceId && (
           <iframe
-            className="sm:col-span-2 h-64 object-cover rounded-xl min-w-0"
+            className="h-64 min-w-0 rounded-xl object-cover sm:col-span-2"
             loading="lazy"
             allowFullScreen
             referrerPolicy="no-referrer-when-downgrade"

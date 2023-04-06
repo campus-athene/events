@@ -19,7 +19,7 @@ export const Header = (props: {
     return (
       <h2
         className={
-          "font-medium pt-8 text-base text-slate-600 " + props.className
+          "pt-8 text-base font-medium text-slate-600 " + props.className
         }
       >
         {props.children}
@@ -29,7 +29,7 @@ export const Header = (props: {
   return (
     <button
       className={
-        "font-medium pt-8 text-base transition-colors " +
+        "pt-8 text-base font-medium transition-colors " +
         (props.selected ? "text-slate-600 " : "text-slate-400 ") +
         props.className
       }
@@ -60,9 +60,9 @@ export const EventGroup = (props: {
   return (
     <>
       {props.title && <Header className="mx-4 sm:mx-10">{props.title}</Header>}
-      <div className="flex items-streach">
+      <div className="items-streach flex">
         <button
-          className="flex-shrink-0 hidden sm:block text-slate-300 hover:text-black w-4 sm:w-10 transition-colors"
+          className="hidden w-4 flex-shrink-0 text-slate-300 transition-colors hover:text-black sm:block sm:w-10"
           onClick={() => scroll(-1)}
         >
           <FontAwesomeIcon icon={faAngleLeft} />
@@ -70,7 +70,7 @@ export const EventGroup = (props: {
         <div
           id="myscroll"
           className={
-            "flex flex-grow flex-shrink gap-4 px-4 sm:px-0 pt-2 overflow-x-scroll sm:overflow-hidden flex-nowrap" +
+            "flex flex-shrink flex-grow flex-nowrap gap-4 overflow-x-scroll px-4 pt-2 sm:overflow-hidden sm:px-0" +
             props.className
           }
           ref={scrollRef}
@@ -78,7 +78,7 @@ export const EventGroup = (props: {
           {props.children}
         </div>
         <button
-          className="flex-shrink-0 hidden sm:block text-slate-300 hover:text-black w-4 sm:w-10 transition-colors"
+          className="hidden w-4 flex-shrink-0 text-slate-300 transition-colors hover:text-black sm:block sm:w-10"
           onClick={() => scroll(1)}
         >
           <FontAwesomeIcon icon={faAngleRight} />
@@ -95,24 +95,24 @@ export const Event = (props: {
   return (
     <Link href={`/event/${props.event.id}`}>
       <a
-        className="bg-slate-200 block flex-shrink-0 h-56 rounded-xl text-sm w-48"
+        className="block h-56 w-48 flex-shrink-0 rounded-xl bg-slate-200 text-sm"
         onClick={props.onClick}
       >
         <Image
-          className="h-32 object-cover rounded-t-xl w-48 mb-1"
+          className="mb-1 h-32 w-48 rounded-t-xl object-cover"
           src={props.event.image}
           width={48}
         />
-        <div className="overflow-hidden px-3 pt-1 text-ellipsis whitespace-nowrap font-medium">
+        <div className="overflow-hidden text-ellipsis whitespace-nowrap px-3 pt-1 font-medium">
           {props.event.title}
         </div>
-        <div className="block overflow-hidden px-3 pt-1 text-ellipsis whitespace-nowrap text-neutral-500 text-xs">
+        <div className="block overflow-hidden text-ellipsis whitespace-nowrap px-3 pt-1 text-xs text-neutral-500">
           {props.event.organiser.name}
         </div>
-        <div className="overflow-hidden px-3 pt-1 text-ellipsis whitespace-nowrap text-xs">
+        <div className="overflow-hidden text-ellipsis whitespace-nowrap px-3 pt-1 text-xs">
           {utc(props.event.date).tz(timezone).locale("de").format("llll")}
         </div>
-        <div className="block overflow-hidden px-3 pt-1 text-ellipsis whitespace-nowrap text-xs">
+        <div className="block overflow-hidden text-ellipsis whitespace-nowrap px-3 pt-1 text-xs">
           {props.event.venue}
         </div>
       </a>
@@ -129,27 +129,27 @@ export const Highlight = (props: {
     <Link href={`/event/${props.event.id}`}>
       <a
         className={
-          "bg-slate-200 flex flex-col lg:flex-row flex-shrink-0 overflow-clip rounded-xl text-xs lg:text-sm " +
+          "flex flex-shrink-0 flex-col overflow-clip rounded-xl bg-slate-200 text-xs lg:flex-row lg:text-sm " +
           props.className
         }
         onClick={props.onClick}
       >
         <Image
-          className="aspect-[3/2] flex-shrink-0 lg:h-36 object-cover rounded-t-xl lg:rounded-l-xl lg:rounded-tr-none"
+          className="aspect-[3/2] flex-shrink-0 rounded-t-xl object-cover lg:h-36 lg:rounded-l-xl lg:rounded-tr-none"
           src={props.event.image}
           width={54}
         />
-        <div className="flex-grow min-w-0 px-2 sm:px-4">
-          <div className="overflow-hidden pt-2 lg:pt-3 text-ellipsis whitespace-nowrap text-sm lg:text-xl font-medium">
+        <div className="min-w-0 flex-grow px-2 sm:px-4">
+          <div className="overflow-hidden text-ellipsis whitespace-nowrap pt-2 text-sm font-medium lg:pt-3 lg:text-xl">
             {props.event.title}
           </div>
-          <div className="block overflow-hidden pt-1 text-ellipsis whitespace-nowrap text-neutral-500 lg:text-lg">
+          <div className="block overflow-hidden text-ellipsis whitespace-nowrap pt-1 text-neutral-500 lg:text-lg">
             {props.event.organiser.name}
           </div>
-          <div className="overflow-hidden pt-1 text-ellipsis whitespace-nowrap">
+          <div className="overflow-hidden text-ellipsis whitespace-nowrap pt-1">
             {utc(props.event.date).tz(timezone).locale("de").format("llll")}
           </div>
-          <div className="block overflow-hidden pt-1 pb-2 lg:text-base text-ellipsis whitespace-nowrap hover:underline">
+          <div className="block overflow-hidden text-ellipsis whitespace-nowrap pt-1 pb-2 hover:underline lg:text-base">
             {props.event.venue}
           </div>
         </div>

@@ -51,7 +51,7 @@ const HomePage = (props: { data?: HomePageData }) => {
   return (
     <>
       <Header className="px-4 sm:px-10">Highlights</Header>
-      <div className="gap-4 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-2 px-4 sm:px-10 pt-2">
+      <div className="grid grid-cols-2 gap-4 px-4 pt-2 sm:grid-cols-3 sm:px-10 lg:grid-cols-2">
         {data.highlights.map((e, i) => (
           <Highlight
             className={i >= 4 ? "hidden sm:flex" : ""}
@@ -77,7 +77,7 @@ const HomePage = (props: { data?: HomePageData }) => {
       </EventGroup> */}
       {data.dateRanges[0] && (
         <>
-          <div className="flex gap-2 overflow-x-auto px-4 sm:px-10 whitespace-nowrap">
+          <div className="flex gap-2 overflow-x-auto whitespace-nowrap px-4 sm:px-10">
             {data.dateRanges.map(({ name }) => (
               <Header
                 key={name}
