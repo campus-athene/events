@@ -51,7 +51,7 @@ const App = ({ Component, pageProps }: AppProps<AppPageProps>) => {
         className="hidden lg:block bg-black bg-opacity-50 backdrop-blur-sm fixed inset-0 overflow-auto z-20"
         onClick={() => router.push("/")}
         style={{ display: "hideModal" in pageProps ? "none" : undefined }}
-      ></div>
+      />
       <main className="grid items-start">
         {/* Dialog */}
         <div
@@ -64,7 +64,7 @@ const App = ({ Component, pageProps }: AppProps<AppPageProps>) => {
         {/* Home page */}
         {
           <div
-            className="hidden lg:block col-start-1 row-start-1 bg-white mx-auto mt-14 mb-36 overflow-x-clip overflow-y-auto"
+            className="hidden lg:block col-start-1 row-start-1 bg-white mx-auto mt-14 mb-36 w-full overflow-x-hidden overflow-y-auto"
             style={{
               display: "hideModal" in pageProps ? "block" : undefined,
               minHeight: "calc(100vh - 12rem)",
