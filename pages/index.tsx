@@ -1,17 +1,15 @@
-import { GetServerSideProps } from "next";
+import { GetStaticProps } from "next";
 import Head from "next/head";
 import { getHomeData } from "./api/home";
 import { AppPageProps } from "./_app";
 
-export const getServerSideProps: GetServerSideProps<
-  AppPageProps
-> = async () => {
+export const getStaticProps: GetStaticProps<AppPageProps> = async () => {
   return {
     props: {
       hideModal: true,
       homePageData: await getHomeData(),
     },
-    // revalidate: 60, // Only use in getStaticProps
+    revalidate: 60,
   };
 };
 
