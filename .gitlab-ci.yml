@@ -12,6 +12,8 @@ service:
   allow_failure: false
   only:
     - release
+  tags:
+    - database_access
 
 dev_service:
   stage: deploy
@@ -24,3 +26,5 @@ dev_service:
   allow_failure: false
   only:
     - main
+  tags:
+    - database_access
