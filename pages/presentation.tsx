@@ -79,12 +79,27 @@ const Presentation: NextPage<Data> = (props) => {
 
   const setScale = () => {
     if (!child.current || !parent.current) return;
-    child.current.style.transform = `scale(${
-      parent.current.offsetHeight / child.current.offsetHeight
-    })`;
+    const vScale = parent.current.offsetHeight / child.current.offsetHeight;
+    const hScale = parent.current.offsetWidth / child.current.offsetWidth;
+    child.current.style.transform = `scale(${Math.min(vScale, hScale)})`;
   };
 
-  useEffect(setScale, []);
+  useEffect(() => {
+    const resizeObserver = new ResizeObserver(() => setScale());
+    resizeObserver.observe(parent.current!);
+    return () => resizeObserver.disconnect();
+  }, [parent.current]);
+
+  const openPresentationView = () => {
+    const elem = parent.current;
+    if (!elem) return;
+
+    if (elem.requestFullscreen) elem.requestFullscreen();
+    // @ts-ignore
+    else if (elem.webkitRequestFullscreen) elem.webkitRequestFullscreen();
+    // @ts-ignore
+    else if (elem.msRequestFullscreen) elem.msRequestFullscreen();
+  };
 
   return (
     <>
@@ -102,17 +117,16 @@ const Presentation: NextPage<Data> = (props) => {
         </p>
         <button
           className="mt-8 rounded-xl bg-violet px-8 py-2 text-white"
-          onClick={() => parent.current?.requestFullscreen()}
+          onClick={() => openPresentationView()}
         >
           Präsentations-Ansicht aktivieren
         </button>
 
-        {/* Hidden fullscreen view */}
+        {/* Hidden presentation view */}
         <div className="h-0 w-0 overflow-hidden">
           <div
             ref={parent}
             onClick={() => document.exitFullscreen()}
-            onResize={setScale}
             className="text-center"
           >
             <div
