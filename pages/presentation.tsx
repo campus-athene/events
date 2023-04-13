@@ -127,40 +127,43 @@ const Presentation: NextPage<Data> = (props) => {
           <div
             ref={parent}
             onClick={() => document.exitFullscreen()}
-            className="text-center"
+            className="bg-black text-center"
           >
             <div
               ref={child}
-              className="inline-grid origin-top grid-cols-3 grid-rows-2 place-items-center gap-12 bg-black text-left"
+              className="inline-grid origin-top grid-cols-3 grid-rows-2 place-items-center gap-12 text-left"
             >
               {highlights.map((event) => (
                 <Event key={event.id} event={event} />
               ))}
               <div className="col-start-2 row-start-2 text-center">
-                <svg className="w-30" viewBox="0 0 200 200">
+                <svg className="w-30" viewBox="0 0 29 29">
                   <path
                     fill="#fff"
-                    d="M16,56h8h8h8h8h8v-8v-8v-8v-8v-8V8V0h-8h-8h-8h-8h-8H8H0v8v8v8v8v8v8v8h8H16z M8,40v-8v-8v-8V8h8h8h8h8h8v8v8v8v8v8h-8h-8
-                    h-8h-8H8V40z M16,64v8H8H0v-8h8H16z M16,80v8H8v-8H16z M8,104H0v-8h8h8v8H8z M24,80h-8v-8h8V80z M24,96h-8v-8h8V96z M24,40h-8v-8v-8
-                    v-8h8h8h8v8v8v8h-8H24z M32,160h8v8v8v8h-8h-8h-8v-8v-8v-8h8H32z M32,72h-8v-8h8h8v8v8v8v8h-8v-8h-8v-8h8V72z M48,104v8h-8h-8v8h-8
-                    v8v8h-8H8v-8v-8h8v-8h8v-8h8h8H48z M48,120v8h-8v-8H48z M40,144h-8h-8h-8H8H0v8v8v8v8v8v8v8h8h8h8h8h8h8h8v-8v-8v-8v-8v-8v-8v-8h-8
-                    H40z M48,160v8v8v8v8h-8h-8h-8h-8H8v-8v-8v-8v-8v-8h8h8h8h8h8V160z M56,64v8h-8v-8H56z M48,80h8v8h-8V80z M56,104h-8v-8h8V104z
-                    M56,120h-8v-8h8V120z M56,80v-8h8v8H56z M56,112v-8h8h8v-8v-8h8v-8h8h8v8v8h8v8h-8v8h-8v-8v-8h-8v8v8v8h-8h-8v-8H56z M72,0v8h-8V0
-                    H72z M72,56v8h-8v-8v-8h8V56z M72,136v8h-8v-8h-8h-8v-8h8v-8h8v8h8V136z M72,184h8v8h-8v8h-8v-8v-8H72z M80,8h8v8v8h-8v-8h-8V8H80z
-                    M80,32v8h-8v-8H80z M80,72v8h-8v-8v-8h8v-8v-8v-8h8v8v8h8v8h8v8v8h-8v-8h-8H80z M96,40h-8v-8h8V40z M88,192h8v8h-8V192z M104,0v8
-                    h-8h-8V0h8H104z M104,56h-8v-8v-8h8h8v8h-8V56z M96,192v-8h8v8H96z M104,32h-8v-8v-8h8V8h8v8h8h8V8V0h8v8v8v8h-8v8h-8v-8h-8v8H104z
-                    M112,64h-8v-8h8V64z M112,128v8h-8h-8h-8h-8v-8v-8h8v8h8h8H112z M120,8h-8V0h8V8z M120,40h-8v-8h8V40z M112,56v-8h8v8H112z M128,40
-                    v-8h8v8v8v8v8v8h-8v8h8v8h-8h-8v8h-8v-8v-8v-8v-8h8h8v-8v-8V40z M128,200v-8h8h8v8h-8H128z M136,80v-8h8v8H136z M136,176h8v8h-8V176
-                    z M152,72h-8v-8h8V72z M144,96h8v8h-8V96z M144,144h8v8h-8V144z M160,120h-8v8h-8v-8h8v-8h-8v-8h-8h-8v-8h-8v8h-8v8h-8h-8v8h8h8h8h8
-                    h8v8h-8h-8v8h-8v8h-8h-8h-8h-8h-8v8v8h-8v8v8h8h8v8h8h8v-8h8v-8v-8h-8v-8h8v8h8v8h8v8v8h-8v8h8h8v-8v-8v-8h8h8v8h8v-8h8h8v-8v-8v-8
-                    v-8v-8h-8V120z M88,160h-8v-8h8V160z M128,144v8h-8v-8H128z M160,144v8v8h-8h-8h-8v-8v-8v-8h8h8h8V144z M176,16h8v8v8v8h-8h-8h-8v-8
-                    v-8v-8h8H176z M168,192h8v8h-8V192z M184,72h8v8h-8h-8v8h8h8v-8h8v8v8v8h-8v-8h-8h-8h-8v-8v-8h-8v8v8h-8v-8h-8v-8h8v-8h8h8h8H184z
-                    M184,104h8v8h8v8v8h-8v-8h-8v8h8v8v8h-8h-8v-8v-8h-8v-8h-8v-8v-8h8v8h8h8V104z M184,152h8v8h-8V152z M192,168h8v8v8v8v8h-8v-8h-8
-                    h-8v-8h-8v8h-8h-8v-8h8v-8h8h8h8v-8H192z M192,0h-8h-8h-8h-8h-8h-8v8v8v8v8v8v8v8h8h8h8h8h8h8h8v-8v-8v-8v-8v-8V8V0H192z M192,16v8
-                    v8v8v8h-8h-8h-8h-8h-8v-8v-8v-8v-8V8h8h8h8h8h8V16z M192,64h8v8h-8V64z M192,152v-8h8v8H192z"
+                    d="M9,1v1H8V1V0h1h1v1H9z M15,0h-1h-1v1v1h1V1h1h1V0H15z M20,1h1V0h-1h-1h-1v1h1H20z M11,3h1V2V1h-1v1h-1H9v1h1H11z M17,2h1V1
+                      h-1h-1v1v1h1V2z M19,3V2h-1v1H19z M8,3v1h1V3H8z M13,4V3h-1v1H13z M17,4h1V3h-1V4z M15,4h1V3h-1h-1v1v1h1V4z M16,5h-1v1h1v1h-1v1v1
+                      h-1V8h-1v1v1v1h1v-1h1h1V9V8h1v1h1h1V8V7V6h1v1h1V6V5h-1V4h-1v1h-1v1v1h-1V6V5V4h-1V5z M14,5h-1v1h1V5z M11,6V5h1V4h-1h-1H9v1h1v1v1
+                      h1V6z M14,6v1h1V6H14z M12,8h1V7V6h-1v1h-1v1H12z M4,9V8H3H2v1h1H4z M6,8H5v1h1h1h1V8H7H6z M10,8V7H9V6H8v1v1h1v1v1h1V9V8z M26,8h-1
+                      v1h1V8z M28,8h-1v1h1v1h1V9V8H28z M12,9h-1v1h1V9z M20,10V9h-1v1H20z M6,10H5v1h1h1v-1H6z M11,10h-1v1v1h1v-1V10z M21,10v1h1v-1H21z
+                      M25,10V9h-1h-1V8h-1v1v1h1v1h-1v1h1h1h1v-1V10z M26,10v1h1h1v-1h-1H26z M4,12H3v-1v-1H2H1V9V8H0v1v1v1h1v1v1H0v1h1v1h1v1v1h1v-1v-1
+                      h1v-1H3H2v-1h1h1h1v-1v-1H4V12z M8,11H7v1h1h1v-1H8z M16,12h1v-1h1v-1h-1h-1v1V12z M29,12v-1h-1v1H29z M6,13h1v-1H6V13z M9,13h1v-1
+                      H9V13z M15,12h-1v1v1h1v-1h1v-1H15z M28,13h1v1v1h-1v1v1v1h-1v1v1v1h1h1v1h-1v1h-1v-1h-1v1v1h-1v1h1v1h-1h-1v-1h-1h-1v1v1v1h1v1h-1
+                      h-1h-1h-1h-1v-1v-1v-1h1v1h1h1v-1h-1v-1v-1v-1h-1h-1v-1h-1h-1v1v1h-1h-1h-1v-1h1v-1h1v-1h1v-1h1v-1h-1h-1v1v1h-1h-1v1h-1v-1v-1h1v-1
+                      h-1h-1h-1v-1H9v1H8v-1H7v-1H6v-1h1v-1h1v1v1h1v-1v-1H8v-1h1h1v1h1v-1h1v-1h-1v-1h1v-1h1v1v1v1h1v1h-1h-1v1v1h1v1h1v-1v-1v-1h1v1h1
+                      v-1h-1v-1h1v-1h1v-1h1v1h1v-1v-1h1v1h1v1h-1v1v1h-1h-1v-1h-1v1v1v1v1h1v-1v-1h1v1v1v1v1h-1v1h1v-1h1h1h1v-1v-1h1v1v1h1h1h1v-1v-1h-1
+                      v-1h-1v1h-1v-1v-1h-1v-1v-1h-1v-1h1h1v1h1v1h1v1h1v1h1v-1v-1h-1v-1v-1h-1v-1h1h1v1H28z M16,18v-1h-1v1H16z M24,24v-1v-1v-1h-1h-1h-1
+                      v1v1v1h1h1H24z M6,14v1h1v-1H6z M0,16v1h1v-1v-1H0V16z M5,16v-1H4v1H5z M20,17v1v1h1v-1v-1v-1v-1h-1v1V17z M1,18H0v1h1V18z M5,18v-1
+                      H4v1H3v1h1h1V18z M6,18v1h1v-1H6z M7,20H6H5v1h1h1h1v1v1v1h1v-1h1v-1v-1v-1H9H8v-1H7V20z M1,21h1v-1H1V21z M3,21h1v-1H3V21z M22,23
+                      h1v-1h-1V23z M11,24v1h1v-1v-1h-1h-1v1H11z M18,24h-1v1v1h1v-1V24z M27,25v-1h-1v1H27z M29,24h-1v1h1V24z M8,26v1h1v-1v-1H8V26z
+                      M10,25v1h1v-1H10z M28,26v-1h-1v1H28z M11,26v1h-1v1h1v1h1v-1v-1h1v-1v-1h-1v1H11z M26,26v1h1v-1H26z M29,27v-1h-1v1H29z M14,28v1
+                      h1v-1h1h1v-1h-1h-1v-1h-1v1h-1v1H14z M24,27v-1h-1v1v1h1h1h1v-1h-1H24z M27,28v1h1v-1v-1h-1V28z M8,29h1v-1H8V29z M1,0H0v1v4.9V7h1
+                      h4.9H7V5.9V1V0H5.9H1z M5.9,5.9H1V1h4.9V5.9z M28,0H23h-1v1v4.9V7h1H28h1V5.9V1V0H28z M28,5.9H23V1H28V5.9z M1,22H0v1V28v1h1h4.9H7
+                      v-1V23v-1H5.9H1z M5.9,28H1V23h4.9V28z M5,2H2v3h3V2z M27,2h-3v3h3V2z M5,24H2v3h3V24z"
                   />
                 </svg>
-                <p className="mt-6 text-sm text-white">www.study-campus.de</p>
+                <p className="mt-6 text-sm text-white">
+                  events.study-campus.de
+                </p>
               </div>
             </div>
           </div>
