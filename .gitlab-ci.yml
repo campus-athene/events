@@ -28,6 +28,7 @@ dev_service:
   allow_failure: false
   only:
     - main
+    - ci
   tags:
     - database_access
   variables:
