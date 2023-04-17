@@ -32,5 +32,3 @@ dev_service:
     - ci
   tags:
     - database_access
-  variables:
-    DATABASE_URL: $DATABASE_URL
