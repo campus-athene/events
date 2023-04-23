@@ -16,6 +16,7 @@ RUN npm ci
 
 # Rebuild the source code only when needed
 FROM node:16-alpine3.16 AS builder
+ARG DATABASE_URL
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
@@ -25,6 +26,7 @@ COPY . .
 # Uncomment the following line in case you want to disable telemetry during the build.
 # ENV NEXT_TELEMETRY_DISABLED 1
 
+RUN echo $DATABASE_URL
 RUN npm run build
 
 # Production image, copy all the files and run next

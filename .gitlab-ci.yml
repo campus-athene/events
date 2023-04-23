@@ -12,6 +12,10 @@ service:
   allow_failure: false
   only:
     - release
+  tags:
+    - database_access
+  variables:
+    DATABASE_URL: $DATABASE_URL
 
 dev_service:
   stage: deploy
@@ -19,8 +23,12 @@ dev_service:
     name: gcr.io/kaniko-project/executor:debug
     entrypoint: [""]
   script:
+    - echo $DATABASE_URL
     - echo "{\"auths\":{\"$CI_REGISTRY\":{\"username\":\"$CI_REGISTRY_USER\",\"password\":\"$CI_REGISTRY_PASSWORD\"}}}" > /kaniko/.docker/config.json
-    - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY_IMAGE:dev
+    - /kaniko/executor --context $CI_PROJECT_DIR --build-arg DATABASE_URL=$DATABASE_URL --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY_IMAGE:dev
   allow_failure: false
   only:
     - main
+    - ci
+  tags:
+    - database_access
