@@ -4,6 +4,17 @@ import { getHomeData } from "./api/home";
 import { AppPageProps } from "./_app";
 
 export const getStaticProps: GetStaticProps<AppPageProps> = async () => {
+  const homePageData = await getHomeData();
+
+  if (homePageData.highlights.length < 4)
+    return {
+      redirect: {
+        destination: "https://www.study-campus.de/",
+        basePath: false,
+        permanent: false,
+      },
+    };
+
   return {
     props: {
       hideModal: true,
