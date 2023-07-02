@@ -6,13 +6,18 @@ import { AppPageProps } from "./_app";
 export const getStaticProps: GetStaticProps<AppPageProps> = async () => {
   const homePageData = await getHomeData();
 
-  if (homePageData.highlights.length < 4)
+  // Next.js does not support redirects in getStaticProps during build
+  if (
+    homePageData.highlights.length < 4 &&
+    process.env.npm_lifecycle_event !== "build"
+  )
     return {
       redirect: {
         destination: "https://www.study-campus.de/",
         basePath: false,
         permanent: false,
       },
+      revalidate: 60,
     };
 
   return {
